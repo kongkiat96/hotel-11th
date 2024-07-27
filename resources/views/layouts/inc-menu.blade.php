@@ -73,7 +73,17 @@
                             <div data-i18n="กำหนดค่าภายในองค์กร">กำหนดค่าภายในองค์กร</div>
                         </a>
                     </li>
+
+                    <li class="menu-item {{ @$urlSubLink == 'bank-list' ? 'active' : '' }}">
+                        <a href="{{ url('settings-system/bank-list') }}" class="menu-link">
+                            <i class='menu-icon tf-icons bx bx-buildings'></i>
+                            <div data-i18n="กำหนดรายชื่อธนาคาร">กำหนดรายชื่อธนาคาร</div>
+                        </a>
+                    </li>
+                    
                 </ul>
+
+                
             </li>
 
             <li class="menu-item">

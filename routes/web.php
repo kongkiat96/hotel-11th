@@ -77,8 +77,25 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete-flag-type/{flagTypeID}', 'Settings\SetStatusController@deleteFlagType');
         });
 
+        Route::prefix('/bank-list')->group(function () {
+            Route::get('', 'Settings\SetMasterAllController@setBankListIndex');
+        });
+
         Route::prefix('/menu')->group(function () {
             Route::get('', 'Settings\MenuController@index');
+            Route::get('/menu-modal', 'Settings\MenuController@showMenuModal');
+            Route::get('/menu-sub-modal', 'Settings\MenuController@showMenuSubModal');
+
+            Route::post('/save-menu-main', 'Settings\MenuController@saveDataMenuMain');
+            Route::get('/show-edit-menu-main/{menuMainID}', 'Settings\MenuController@showEditMenuMain');
+            Route::post('/edit-menu-main/{menuMainID}', 'Settings\MenuController@editMenuMain');
+            Route::post('/delete-menu-main/{menuMainID}', 'Settings\MenuController@deleteMenuMain');
+
+            Route::post('/save-menu-sub', 'Settings\MenuController@saveDataMenuSub');
+
+            Route::get('/table-menu', 'Settings\MenuController@showDataMenu');
+            Route::get('/table-menu-sub', 'Settings\MenuController@showDataMenuSub');
+
         });
 
         Route::prefix('/about-company')->group(function () {

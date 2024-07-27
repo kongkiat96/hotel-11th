@@ -188,6 +188,15 @@ class getDataMasterModel extends Model
         return $returnGroup;
     }
 
+    public function getMenuMain(){
+
+        $getMenuMain = $this->getDatabase->table('tbm_menu_main')
+            ->select('ID', 'menu_name')
+            ->where('deleted', 0)
+            ->get();
+        return $getMenuMain;
+    }
+
     public function getGroupMapID($groupDepartment){
         dd($groupDepartment);
     }

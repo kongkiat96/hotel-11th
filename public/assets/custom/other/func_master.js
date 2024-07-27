@@ -200,6 +200,15 @@ function renderStatusBadge(data, type, full, row) {
     return `<span class="badge ${status.className}">${status.title}</span>`;
 }
 
+function renderDeletedBadge(data, type, full, row) {
+    const statusMap = {
+        0: { title: 'กำลังใช้งาน', className: 'bg-label-success' },
+        1: { title: 'ปิดการใช้งาน', className: 'bg-label-danger' }
+    };
+    const status = statusMap[data] || { title: 'Undefined', className: 'bg-label-secondary' };
+    return `<span class="badge ${status.className}">${status.title}</span>`;
+}
+
 function renderStatusWorkBadge(data, type, full, row) {
     const statusMap = {
         all: { title: 'ใช้งานทั้งหมด', className: 'bg-label-success' },

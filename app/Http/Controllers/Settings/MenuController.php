@@ -3,94 +3,90 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Master\getDataMasterModel;
+use App\Models\Settings\MenuModel;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $menuModel;
+    private $getMaster;
+    public function __construct()
+    {
+        $this->menuModel = new MenuModel();
+        $this->getMaster = new getDataMasterModel();
+    }
     public function index()
     {
         $url = request()->segments();
-        // dd($url);
         $urlName = "รายการเข้าถึงเมนู";
         $urlSubLink = "menu";
-        // $getFlagType = $this->getMaster->getDataFlagType();
-        // dd($url);
         return view('app.settings.menu.setMenu', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink
-            // 'flagType'  => $getFlagType
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function showMenuModal()
     {
-        //
+        if (request()->ajax()) {
+            return view('app.settings.menu.dialog.save.addMenuMain');
+        }
+        return abort(404);
+    }
+    public function showMenuSubModal()
+    {
+        if (request()->ajax()) {
+            $getMenuMain     = $this->getMaster->getMenuMain();
+            return view('app.settings.menu.dialog.save.addMenuSub',[
+                'getMenuMain'    => $getMenuMain
+            ]);
+        }
+        return abort(404);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function showDataMenu(Request $request)
     {
-        //
+        $getDataToTable = $this->menuModel->getDataMenuMain($request);
+        return response()->json($getDataToTable);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function showDataMenuSub(Request $request)
     {
-        //
+        $getDataToTable = $this->menuModel->getDataMenuSub($request);
+        return response()->json($getDataToTable);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function saveDataMenuMain(Request $request){
+        $saveData = $this->menuModel->saveMenuMain($request->input());
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function saveDataMenuSub(Request $request){
+        $saveData = $this->menuModel->saveMenuSub($request->input());
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function showEditMenuMain($menuMainID)
     {
-        //
+        if (request()->ajax()) {
+            $returnData     =  $this->menuModel->showEditMenuMain($menuMainID);
+            return view('app.settings.menu.dialog.edit.editMenuMain', [
+                'dataMenuMain'        => $returnData,
+            ]);
+        }
+        return abort(404);
+    }
+
+    public function editMenuMain(Request $request,$menuMainID)
+    {
+        $saveData = $this->menuModel->saveEditDataMenuMain($request->input(), $menuMainID);
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
+    }
+
+    public function deleteMenuMain($menuMainID)
+    {
+        $saveData = $this->menuModel->deleteMenuMain($menuMainID);
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
 }

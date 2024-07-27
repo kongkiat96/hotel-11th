@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Login Hotel 11TH System Internal </title>
 
     <meta name="description" content="" />
 
@@ -117,7 +117,7 @@
                         </div>
                         <!-- /Logo -->
                         <dir class="mx-auto">
-                            <h4 class="mb-2">Welcome to Web Service IT</h4>
+                            <h5 class="mb-2">Welcome to Web Service Internal</h5>
                         </dir>
                         <div class="alert alert-warning" role="alert">
                             กรุณาเข้าสู่ระบบเพื่อใช้งาน.

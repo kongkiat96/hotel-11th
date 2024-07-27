@@ -18,10 +18,12 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $url = request()->segments();
+        $urlName = "ข้อมูลผู้ใช้งาน";
         // dd($user);
         return view('app.home.index',[
-            'name'  => $user->name,
-            'url'   => $url
+            'name'      => $user->name,
+            'urlName'   => $urlName,
+            'url'       => $url
         ]);
     }
 }

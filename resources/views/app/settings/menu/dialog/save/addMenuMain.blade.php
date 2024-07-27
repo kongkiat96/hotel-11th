@@ -31,8 +31,8 @@
                     <select id="statusMenu" name="statusMenu" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>
-                        <option value="0">กำลังใช้งาน</option>
-                        <option value="1">ปิดการใช้งาน</option>
+                        <option value="1">กำลังใช้งาน</option>
+                        <option value="0">ปิดการใช้งาน</option>
                     </select>
                 </div>
             </div>

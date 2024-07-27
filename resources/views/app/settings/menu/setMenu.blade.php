@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="modal fade" id="accessMenuModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="modal fade" id="menuMainModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
@@ -14,6 +31,12 @@
     </div>
 
     <div class="modal fade" id="editMenuMainModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="editMenuSubModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
@@ -100,25 +123,26 @@
                     </div>
                     <div class="tab-pane fade" id="flag-type" role="tabpanel">
                         <div class="inline-spacing text-end">
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                            {{-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                 data-bs-target="#addFlagType">
                                 <i class='menu-icon tf-icons bx bxs-purchase-tag'></i> เพิ่มรายการรูปแบบสถานะงาน
-                            </button>
+                            </button> --}}
+                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createApp">Show</button> --}}
+
+                            <button type="button" class="btn btn-info" id="addAccessMenuModal"><i
+                                    class='menu-icon tf-icons bx bxs-layer'></i> เพิ่มรายชื่อผู้ใช้เข้าถึงเมนู</button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingFlagType table table-bordered">
+                            {{-- <table class="dt-settingFlagType table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
                                         <th>รายการสถานะ</th>
                                         <th>รูปแบบของสถานะ</th>
-                                        {{-- <th>รูปแบบการใช้งาน</th>
-                                        <th>การใช้งานระบบ</th>
-                                        <th>รูปแบบสถานะงาน</th> --}}
                                         <th>จัดการ</th>
                                     </tr>
                                 </thead>
-                            </table>
+                            </table> --}}
                         </div>
                     </div>
 

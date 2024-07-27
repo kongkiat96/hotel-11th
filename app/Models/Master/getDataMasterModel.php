@@ -197,6 +197,15 @@ class getDataMasterModel extends Model
         return $getMenuMain;
     }
 
+    public function getMenuToAccess(){
+        $getMenu = $this->getDatabase->table('tbm_menu_sub AS tms')
+        ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_id', '=', 'tmm.ID')
+        ->select('tms.ID','tms.menu_sub_name','tms.menu_sub_link','tms.menu_main_ID','tmm.menu_name','tmm.menu_icon','tmm.menu_link','tms.menu_sub_icon','tms.status')
+        ->where('tms.deleted', 0)
+        ->get();
+        return $getMenu;
+    }
+
     public function getGroupMapID($groupDepartment){
         dd($groupDepartment);
     }

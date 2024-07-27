@@ -134,6 +134,10 @@ $(document).ready(function () {
     $('#addMenuSubModal').click(function () {
         showModalWithAjax('#menuSubModal', '/settings-system/menu/menu-sub-modal', ['#menuMain', '#statusMenu']);
     });
+
+    $('#addAccessMenuModal').click(function () {
+        showModalWithAjax('#accessMenuModal', '/settings-system/menu/access-menu-modal', ['#selectEmployee']);
+    });
 });
 
 function funcEditMenuMain(menuMainID) {
@@ -142,4 +146,12 @@ function funcEditMenuMain(menuMainID) {
 
 function funcDeleteMenuMain(menuMainID) {
     handleAjaxDeleteResponse(menuMainID, "/settings-system/menu/delete-menu-main/" + menuMainID);
+}
+
+function funcEditMenuSub(menuSubID) {
+    showModalWithAjax('#editMenuSubModal', '/settings-system/menu/show-edit-menu-sub/' + menuSubID, ['#menuMain', '#edit_statusMenu']);
+}
+
+function funcDeleteMenuSub(menuSubID) {
+    handleAjaxDeleteResponse(menuSubID, "/settings-system/menu/delete-menu-sub/" + menuSubID);
 }

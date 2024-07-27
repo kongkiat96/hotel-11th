@@ -45,6 +45,17 @@ class MenuController extends Controller
         return abort(404);
     }
 
+    public function showAccessMenuModal()
+    {
+        if (request()->ajax()) {
+            $getMenuToAccess     = $this->getMaster->getMenuToAccess();
+            return view('app.settings.menu.dialog.save.addAccessMenu',[
+                'getMenuToAccess'    => $getMenuToAccess
+            ]);
+        }
+        return abort(404);
+    }
+
     public function showDataMenu(Request $request)
     {
         $getDataToTable = $this->menuModel->getDataMenuMain($request);
@@ -87,6 +98,31 @@ class MenuController extends Controller
     public function deleteMenuMain($menuMainID)
     {
         $saveData = $this->menuModel->deleteMenuMain($menuMainID);
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
+    }
+
+    public function showEditMenuSub($menuSubID)
+    {
+        if (request()->ajax()) {
+            $returnData     =  $this->menuModel->showEditMenuSub($menuSubID);
+            $getMenuMain     = $this->getMaster->getMenuMain();
+            return view('app.settings.menu.dialog.edit.editMenuSub', [
+                'dataMenuSub'        => $returnData,
+                'getMenuMain'        => $getMenuMain
+            ]);
+        }
+        return abort(404);
+    }
+
+    public function editMenuSub(Request $request,$menuSubID)
+    {
+        $saveData = $this->menuModel->saveEditDataMenuSub($request->input(), $menuSubID);
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
+    }
+
+    public function deleteMenuSub($menuSubID)
+    {
+        $saveData = $this->menuModel->deleteMenuSub($menuSubID);
         return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
 }

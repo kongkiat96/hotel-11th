@@ -85,6 +85,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('', 'Settings\MenuController@index');
             Route::get('/menu-modal', 'Settings\MenuController@showMenuModal');
             Route::get('/menu-sub-modal', 'Settings\MenuController@showMenuSubModal');
+            Route::get('/access-menu-modal','Settings\MenuController@showAccessMenuModal');
 
             Route::post('/save-menu-main', 'Settings\MenuController@saveDataMenuMain');
             Route::get('/show-edit-menu-main/{menuMainID}', 'Settings\MenuController@showEditMenuMain');
@@ -92,6 +93,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete-menu-main/{menuMainID}', 'Settings\MenuController@deleteMenuMain');
 
             Route::post('/save-menu-sub', 'Settings\MenuController@saveDataMenuSub');
+            Route::get('/show-edit-menu-sub/{menuSubID}', 'Settings\MenuController@showEditMenuSub');
+            Route::post('/edit-menu-sub/{menuSubID}', 'Settings\MenuController@editMenuSub');
+            Route::post('/delete-menu-sub/{menuSubID}', 'Settings\MenuController@deleteMenuSub');
 
             Route::get('/table-menu', 'Settings\MenuController@showDataMenu');
             Route::get('/table-menu-sub', 'Settings\MenuController@showDataMenuSub');

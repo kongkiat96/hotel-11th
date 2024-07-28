@@ -45,12 +45,18 @@ class MenuController extends Controller
         return abort(404);
     }
 
-    public function showAccessMenuModal()
+    public function showAccessMenuModal($idMapEmployee)
     {
+        // dd($idMapEmployee);
         if (request()->ajax()) {
-            $getMenuToAccess     = $this->getMaster->getMenuToAccess();
+            $getMenuToAccess    = $this->getMaster->getMenuToAccess();
+            $getUser = $this->getMaster->getUserList($idMapEmployee);
+            $getAccessMenu = $this->getMaster->getAccessMenu($getUser[0]->emp_code);
+            // dd($getAccessMenu);
             return view('app.settings.menu.dialog.save.addAccessMenu',[
-                'getMenuToAccess'    => $getMenuToAccess
+                'getMenuToAccess'    => $getMenuToAccess,
+                'getUser'            => $getUser,
+                'getAccessMenu'      => $getAccessMenu
             ]);
         }
         return abort(404);
@@ -76,6 +82,16 @@ class MenuController extends Controller
     public function saveDataMenuSub(Request $request){
         $saveData = $this->menuModel->saveMenuSub($request->input());
         return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
+    }
+
+    public function saveDataAccessMenu(Request $request){
+        // if(!empty($request->input('access_menu_list'))){
+            $saveData = $this->menuModel->saveAccessMenu($request->input());
+            return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
+        // } else {
+            // return response()->json(['status' => 4001, 'message' => 'กรุณาเลือกเมนูที่ต้องการ']);
+        // }
+        
     }
 
     public function showEditMenuMain($menuMainID)

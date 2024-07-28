@@ -259,6 +259,17 @@ function renderGroupActionButtons(data, type, row, useFunc) {
 `;
 }
 
+function renderGroupActionAccessMenuButtons(data, type, row, useFunc) {
+    // console.log(data)
+    // console.log(type)
+    const accessMenuFunction = `func${useFunc}`;
+    return `
+    <button type="button" class="btn btn-icon btn-label-danger btn-outline-danger" onclick="${accessMenuFunction}(${row.ID})">
+        <span class="tf-icons bx bx-sitemap"></span>
+    </button>
+`;
+}
+
 function mapSelectedCompanyDepartment(disabledElement, selectElement, disableStatus) {
     var originalContent = $(disabledElement).html();
     $(disabledElement).prop('disabled', disableStatus);

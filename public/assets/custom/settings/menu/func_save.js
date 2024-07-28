@@ -30,7 +30,23 @@ $(document).ready(function () {
             }
         });
     });
-    
+
+    $("#saveAccessMenu").on("click", function (e) {
+        e.preventDefault();
+        removeValidationFeedback();
+        const form = $("#formAddAccessMenu")[0];
+        // const fv = setupFormValidationAccessMenu(form);
+        const formData = new FormData(form);
+
+        // fv.validate().then(function (status) {
+        // if (status === 'Valid') {
+        postFormData("/settings-system/menu/save-access-menu", formData)
+            .done(onSaveAccessMenuSuccess)
+            .fail(handleAjaxSaveError);
+        // }
+        // });
+    });
+
 })
 
 function setupFormValidationMenuMain(formElement) {
@@ -152,6 +168,29 @@ function setupFormValidationMenuSub(formElement) {
     });
 }
 
+// function setupFormValidationAccessMenu(formElement) {
+//     return FormValidation.formValidation(formElement, {
+//         fields: {
+//             selectUser: {
+//                 validators: {
+//                     notEmpty: {
+//                         message: 'เลือกข้อมูล ผู้ใช้งาน'
+//                     }
+//                 }
+//             },
+//         },
+//         plugins: {
+//             trigger: new FormValidation.plugins.Trigger(),
+//             bootstrap5: new FormValidation.plugins.Bootstrap5({
+//                 eleValidClass: '',
+//                 rowSelector: '.col-md-12'
+//             }),
+//             submitButton: new FormValidation.plugins.SubmitButton(),
+//             autoFocus: new FormValidation.plugins.AutoFocus()
+//         },
+//     });
+// }
+
 function onSaveMenuMainSuccess(response) {
     handleAjaxSaveResponse(response);
     closeAndResetModal("#menuMainModal", "#formAddMenuMain");
@@ -160,4 +199,8 @@ function onSaveMenuMainSuccess(response) {
 function onSaveMenuSubSuccess(response) {
     handleAjaxSaveResponse(response);
     closeAndResetModal("#menuSubModal", "#formAddMenuSub");
+}
+function onSaveAccessMenuSuccess(response) {
+    handleAjaxSaveResponse(response);
+    closeAndResetModal("#accessMenuModal", "#formAddAccessMenu");
 }

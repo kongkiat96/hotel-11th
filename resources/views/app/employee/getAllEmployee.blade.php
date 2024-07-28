@@ -31,7 +31,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="employee-current" role="tabpanel">
                         <div class="text-nowrap">
-                            <table class="dt-employee-current table table-bordered">
+                            <table class="dt-employee-current table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
@@ -54,7 +54,7 @@
 
                     <div class="tab-pane fade" id="employee-disable" role="tabpanel">
                         <div class="text-nowrap">
-                            <table class="dt-employee-disable table table-bordered">
+                            <table class="dt-employee-disable table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>

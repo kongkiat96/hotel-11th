@@ -7,17 +7,6 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
     <div class="modal fade" id="menuMainModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
@@ -83,7 +72,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingMenu table table-bordered">
+                            <table class="dt-settingMenu table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
@@ -104,7 +93,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingMenuSub table table-bordered">
+                            <table class="dt-settingMenuSub table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
@@ -122,27 +111,28 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="flag-type" role="tabpanel">
-                        <div class="inline-spacing text-end">
-                            {{-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#addFlagType">
-                                <i class='menu-icon tf-icons bx bxs-purchase-tag'></i> เพิ่มรายการรูปแบบสถานะงาน
-                            </button> --}}
-                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createApp">Show</button> --}}
-
-                            <button type="button" class="btn btn-info" id="addAccessMenuModal"><i
-                                    class='menu-icon tf-icons bx bxs-layer'></i> เพิ่มรายชื่อผู้ใช้เข้าถึงเมนู</button>
-                        </div>
+                        {{-- <div class="inline-spacing text-end">
+                            <button type="button" class="btn btn-info" id="addAccessMenuModal"><i class='menu-icon tf-icons bx bxs-layer'></i> เพิ่มรายชื่อผู้ใช้เข้าถึงเมนู</button>
+                        </div> --}}
                         <div class="text-nowrap">
-                            {{-- <table class="dt-settingFlagType table table-bordered">
+                            <table class="dt-user-access-menu table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
-                                        <th>รายการสถานะ</th>
-                                        <th>รูปแบบของสถานะ</th>
+                                        <th>รหัสพนักงาน</th>
+                                        <th>E-mail</th>
+                                        <th>ชื่อ - นามสกุล</th>
+                                        <th>ระดับตำแหน่ง</th>
+                                        <th>ตำแหน่งงาน</th>
+                                        <th>บริษัท</th>
+                                        <th>สังกัด/ฝ่าย</th>
+                                        <th>แผนก</th>
+                                        <th>สังกัดใช้งาน</th>
+                                        <th>สถานะการใช้งาน</th>
                                         <th>จัดการ</th>
                                     </tr>
                                 </thead>
-                            </table> --}}
+                            </table>
                         </div>
                     </div>
 

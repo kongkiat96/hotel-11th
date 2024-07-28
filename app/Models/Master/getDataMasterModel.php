@@ -206,6 +206,18 @@ class getDataMasterModel extends Model
         return $getMenu;
     }
 
+    public function getUserList($idMapEmployee){
+        $getEmployee = $this->getDatabase->table('users')->where('map_employee', $idMapEmployee)->get();
+        return $getEmployee;
+    }
+
+    public function getAccessMenu($idMapEmployee){
+        $getAccessMenu = $this->getDatabase->table('tbt_user_access_menu')
+            ->where('employee_code', $idMapEmployee)
+            ->get();
+        return $getAccessMenu;
+    }
+
     public function getGroupMapID($groupDepartment){
         dd($groupDepartment);
     }

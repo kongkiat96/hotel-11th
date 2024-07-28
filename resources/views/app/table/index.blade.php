@@ -87,7 +87,7 @@
     <div class="card">
         <h5 class="card-header">Complex Headers</h5>
         <div class="card-datatable text-nowrap">
-            <table class="dt-complex-header table table-bordered">
+            <table class="dt-complex-header table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th rowspan="2">Name</th>

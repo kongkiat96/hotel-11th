@@ -37,7 +37,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingStatus table table-bordered">
+                            <table class="dt-settingStatus table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
@@ -59,7 +59,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingFlagType table table-bordered">
+                            <table class="dt-settingFlagType table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>

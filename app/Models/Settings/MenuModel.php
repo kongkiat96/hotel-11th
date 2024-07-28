@@ -18,8 +18,9 @@ class MenuModel extends Model
         $this->getDatabase = DB::connection('mysql');
     }
 
-    public function getDataMenuMain($request){
-        $query = $this->getDatabase->table('tbm_menu_main')->where('deleted',0);
+    public function getDataMenuMain($request)
+    {
+        $query = $this->getDatabase->table('tbm_menu_main')->where('deleted', 0);
         $columns = ['ID', 'menu_name', 'menu_link', 'menu_icon', 'status'];
         $orderColumn = $columns[$request->input('order.0.column')];
         $orderDirection = $request->input('order.0.dir');
@@ -54,13 +55,14 @@ class MenuModel extends Model
         return $output;
     }
 
-    public function getDataMenuSub($request){
+    public function getDataMenuSub($request)
+    {
         $query = $this->getDatabase->table('tbm_menu_sub AS tms')
-        ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
-        ->select('tms.ID','tms.menu_sub_name','tms.menu_sub_link','tms.menu_main_ID','tmm.menu_name','tmm.menu_icon','tmm.menu_link','tms.menu_sub_icon','tms.status')
-        ->where('tms.deleted',0)
-        ->where('tmm.deleted',0);
-        $columns = ['tmm.ID','tmm.menu_name','tmm.menu_link','tms.ID', 'tms.menu_sub_name','tms.menu_main_ID','tms.menu_sub_link'];
+            ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
+            ->select('tms.ID', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_main_ID', 'tmm.menu_name', 'tmm.menu_icon', 'tmm.menu_link', 'tms.menu_sub_icon', 'tms.status')
+            ->where('tms.deleted', 0)
+            ->where('tmm.deleted', 0);
+        $columns = ['tmm.ID', 'tmm.menu_name', 'tmm.menu_link', 'tms.ID', 'tms.menu_sub_name', 'tms.menu_main_ID', 'tms.menu_sub_link'];
         $orderColumn = $columns[$request->input('order.0.column')];
         $orderDirection = $request->input('order.0.dir');
         $query->orderBy($orderColumn, $orderDirection);
@@ -96,8 +98,9 @@ class MenuModel extends Model
         return $output;
     }
 
-    public function saveMenuMain($dataMenuMain){
-        try{
+    public function saveMenuMain($dataMenuMain)
+    {
+        try {
             $saveToDB = $this->getDatabase->table('tbm_menu_main')->insertGetId([
                 'menu_name'     => $dataMenuMain['menuName'],
                 'menu_link'     => $dataMenuMain['pathMenu'],
@@ -111,19 +114,20 @@ class MenuModel extends Model
                 'message'   => 'Success',
                 'ID'        => $saveToDB
             ];
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $returnStatus = [
                 'status'    => intval($e->getCode()),
                 'message'   => $e->getMessage()
             ];
             Log::info($returnStatus);
-        } finally{
+        } finally {
             return $returnStatus;
         }
     }
 
-    public function saveMenuSub($dataMenuSub){
-        try{
+    public function saveMenuSub($dataMenuSub)
+    {
+        try {
             $saveToDB = $this->getDatabase->table('tbm_menu_sub')->insertGetId([
                 'menu_main_ID'      => $dataMenuSub['menuMain'],
                 'menu_sub_name'     => $dataMenuSub['menuName'],
@@ -138,13 +142,59 @@ class MenuModel extends Model
                 'message'   => 'Success',
                 'ID'        => $saveToDB
             ];
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $returnStatus = [
                 'status'    => intval($e->getCode()),
                 'message'   => $e->getMessage()
             ];
             Log::info($returnStatus);
-        } finally{
+        } finally {
+            return $returnStatus;
+        }
+    }
+
+    public function saveAccessMenu($dataAccessMenu)
+    {
+        try {
+            // dd($dataAccessMenu);
+            $deleteDataOld = $this->getDatabase->table('tbt_user_access_menu')->where('employee_code', $dataAccessMenu['emp_code'])->delete();
+            // dd($dataAccessMenu['access_menu_list']);
+            if(!empty($dataAccessMenu['access_menu_list'])){
+                foreach ($dataAccessMenu['access_menu_list'] as $key => $value) {
+                    $getSearchMenu = $this->getDatabase->table('tbm_menu_sub AS tms')
+                    ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
+                    ->select('tms.*','tmm.menu_name')
+                    ->whereIn('tms.ID', $dataAccessMenu['access_menu_list'])->get();
+                    // dd($getSearchMenu);
+                }
+    
+                foreach ($getSearchMenu as $key => $value) {
+                    // dd($value->ID);
+                    $saveDataAccessMenu = $this->getDatabase->table('tbt_user_access_menu')->insertGetId([
+                        'employee_code' => $dataAccessMenu['emp_code'],
+                        'employee_name' => $dataAccessMenu['emp_name'],
+                        'menu_main_ID' => $value->menu_main_ID,
+                        'menu_main_name' => $value->menu_name,
+                        'menu_sub_ID'   => $value->ID,
+                        'menu_sub_name' => $value->menu_sub_name,
+                        'created_at' => Carbon::now(),
+                        'created_user' => Auth::user()->emp_code
+                        //'menu_sub_id' => $value->ID,
+                        //'menu_sub_name' => $value->menu_sub_name
+                    ]);
+                }
+            }
+            $returnStatus = [
+                'status'    => 200,
+                'message'   => 'Success'
+            ];
+        } catch (Exception $e) {
+            $returnStatus = [
+                'status'    => intval($e->getCode()),
+                'message'   => $e->getMessage()
+            ];
+            Log::info($returnStatus);
+        } finally {
             return $returnStatus;
         }
     }
@@ -155,8 +205,9 @@ class MenuModel extends Model
         return $getData;
     }
 
-    public function saveEditDataMenuMain($dataMenuMain, $menuMainID){
-        try{
+    public function saveEditDataMenuMain($dataMenuMain, $menuMainID)
+    {
+        try {
             $saveToDB = $this->getDatabase->table('tbm_menu_main')->where('ID', $menuMainID)->update([
                 'menu_name'     => $dataMenuMain['edit_menuName'],
                 'menu_link'     => $dataMenuMain['edit_pathMenu'],
@@ -173,36 +224,37 @@ class MenuModel extends Model
                 'status'    => 200,
                 'message'   => 'Success'
             ];
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $returnStatus = [
                 'status'    => intval($e->getCode()),
                 'message'   => $e->getMessage()
             ];
             Log::info($returnStatus);
-        } finally{
+        } finally {
             return $returnStatus;
         }
     }
 
-    public function deleteMenuMain($menuMainID){
-        try{
+    public function deleteMenuMain($menuMainID)
+    {
+        try {
             $saveToDB = $this->getDatabase->table('tbm_menu_main')->where('ID', $menuMainID)
-            ->update([
-                'deleted'           => 1,
-                'updated_user'       => Auth::user()->emp_code,
-                'updated_at'         => Carbon::now()
-            ]);
+                ->update([
+                    'deleted'           => 1,
+                    'updated_user'       => Auth::user()->emp_code,
+                    'updated_at'         => Carbon::now()
+                ]);
             $returnStatus = [
                 'status'    => 200,
                 'message'   => 'Success'
             ];
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $returnStatus = [
                 'status'    => intval($e->getCode()),
                 'message'   => $e->getMessage()
             ];
             Log::info($returnStatus);
-        } finally{
+        } finally {
             return $returnStatus;
         }
     }
@@ -213,8 +265,9 @@ class MenuModel extends Model
         return $getData;
     }
 
-    public function saveEditDataMenuSub($dataMenuSub, $menuSubID){
-        try{
+    public function saveEditDataMenuSub($dataMenuSub, $menuSubID)
+    {
+        try {
             // dd($dataMenuSub);
             $saveToDB = $this->getDatabase->table('tbm_menu_sub')->where('ID', $menuSubID)->update([
                 'menu_main_ID'      => $dataMenuSub['menuMain'],
@@ -229,46 +282,47 @@ class MenuModel extends Model
             $getSearchStatusMain = $this->getDatabase->table('tbm_menu_main')->where('ID', $dataMenuSub['menuMain'])->get();
             // dd($getSearchStatusMain);
 
-            if($getSearchStatusMain[0]->status == 0){
+            if ($getSearchStatusMain[0]->status == 0) {
                 $updateMenuMain = $this->getDatabase->table('tbm_menu_main')->where('ID', $dataMenuSub['menuMain'])->update([
                     'status'       => 1,
                 ]);
             }
-            
+
             $returnStatus = [
                 'status'    => 200,
                 'message'   => 'Success'
             ];
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $returnStatus = [
                 'status'    => intval($e->getCode()),
                 'message'   => $e->getMessage()
             ];
             Log::info($returnStatus);
-        } finally{
+        } finally {
             return $returnStatus;
         }
     }
 
-    public function deleteMenuSub($menuSubID){
-        try{
+    public function deleteMenuSub($menuSubID)
+    {
+        try {
             $saveToDB = $this->getDatabase->table('tbm_menu_sub')->where('ID', $menuSubID)
-            ->update([
-                'deleted'       => 1,
-                'updated_user'  => Auth::user()->emp_code,
-                'updated_at'    => Carbon::now()
-            ]);
+                ->update([
+                    'deleted'       => 1,
+                    'updated_user'  => Auth::user()->emp_code,
+                    'updated_at'    => Carbon::now()
+                ]);
             $returnStatus = [
                 'status'    => 200,
                 'message'   => 'Success'
             ];
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $returnStatus = [
                 'status'    => intval($e->getCode()),
                 'message'   => $e->getMessage()
             ];
             Log::info($returnStatus);
-        } finally{
+        } finally {
             return $returnStatus;
         }
     }

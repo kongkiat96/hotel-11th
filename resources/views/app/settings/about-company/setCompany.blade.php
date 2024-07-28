@@ -116,7 +116,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingCompany table table-bordered">
+                            <table class="dt-settingCompany table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
@@ -136,7 +136,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingDepartment table table-bordered">
+                            <table class="dt-settingDepartment table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
@@ -156,7 +156,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingGroup table table-bordered">
+                            <table class="dt-settingGroup table table-bordered table-hover">
                                 <thead>
                                     <tr>
 
@@ -179,7 +179,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingClassList table table-bordered">
+                            <table class="dt-settingClassList table table-bordered table-hover">
                                 <thead>
                                     <tr>
 
@@ -200,7 +200,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingPrefixName table table-bordered">
+                            <table class="dt-settingPrefixName table table-bordered table-hover">
                                 <thead>
                                     <tr>
 

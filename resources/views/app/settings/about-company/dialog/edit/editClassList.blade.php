@@ -6,16 +6,16 @@
     <hr>
     <form id="formEditClassList" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_className">ระดับตำแหน่งงาน</label>
+                    <label class="form-label-md mb-2" for="edit_className">ระดับตำแหน่งงาน</label>
                     <input type="text" id="edit_className" class="form-control" name="edit_className"
                         autocomplete="off" value="{{ $dataClassList[0]->class_name }}" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusOfClassList">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusOfClassList">สถานะการใช้งาน</label>
                     <select id="edit_statusOfClassList" name="edit_statusOfClassList" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

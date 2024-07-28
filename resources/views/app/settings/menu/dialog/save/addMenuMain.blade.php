@@ -6,28 +6,28 @@
     <hr>
     <form id="formAddMenuMain" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="menuName">ชื่อเมนู</label>
+                    <label class="form-label-md mb-2" for="menuName">ชื่อเมนู</label>
                     <input type="text" id="menuName" class="form-control" name="menuName"
                         autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="pathMenu">Path Menu</label>
+                    <label class="form-label-md mb-2" for="pathMenu">Path Menu</label>
                     <input type="text" id="pathMenu" class="form-control" name="pathMenu"
                         autocomplete="off" placeholder="(Route::Prefix), Ex : settings-system"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="iconMenu">Icon Menu <a href="https://boxicons.com/" target="_blank"><i class="fa fa-question-circle"></i></a></label>
+                    <label class="form-label-md mb-2" for="iconMenu">Icon Menu <a href="https://boxicons.com/" target="_blank"><i class="fa fa-question-circle"></i></a></label>
                     <input type="text" id="iconMenu" class="form-control" name="iconMenu"
                         autocomplete="off" placeholder="bx-menu-alt-right"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="statusMenu">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="statusMenu">สถานะการใช้งาน</label>
                     <select id="statusMenu" name="statusMenu" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

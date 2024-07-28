@@ -140,7 +140,7 @@
 
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="password">รหัสผ่าน</label>
+                                    <label class="form-label-md mb-2" for="password">รหัสผ่าน</label>
 
                                 </div>
                                 <div class="input-group input-group-merge">

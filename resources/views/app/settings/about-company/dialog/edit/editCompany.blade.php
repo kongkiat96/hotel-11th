@@ -8,19 +8,19 @@
         <div class="modal-body">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_companyNameTH">ชื่อบริษัท (ภาษาไทย)</label>
+                    <label class="form-label-md mb-2" for="edit_companyNameTH">ชื่อบริษัท (ภาษาไทย)</label>
                     <input type="text" id="edit_companyNameTH" class="form-control" name="edit_companyNameTH"
                         autocomplete="off" value="{{ $dataCompany[0]->company_name_th }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_companyNameEN">ชื่อบริษัท (ภาษาอังกฤษ)</label>
+                    <label class="form-label-md mb-2" for="edit_companyNameEN">ชื่อบริษัท (ภาษาอังกฤษ)</label>
                     <input type="text" id="edit_companyNameEN" class="form-control" name="edit_companyNameEN"
                         autocomplete="off" value="{{ $dataCompany[0]->company_name_en }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusOfCompany">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusOfCompany">สถานะการใช้งาน</label>
                     <select id="edit_statusOfCompany" name="edit_statusOfCompany" class="form-select select2" data-allow-clear="true">
                         <option value="">Select</option>
                         <option value="1" @if ($dataCompany[0]->status == 1) selected @endif>กำลังใช้งาน</option>

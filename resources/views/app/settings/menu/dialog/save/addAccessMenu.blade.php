@@ -6,10 +6,10 @@
     <hr>
     <form id="formAddMenuMain" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
-                <div class="col-md-12 mb-3">-lg mb-2
-                    <label class="form-label" for="selectEmployee">สถานะการใช้งาน</label>
+                <div class="col-md-12 mb-3">
+                    <label class="form-label-md mb-2" for="selectEmployee">สถานะการใช้งาน</label>
                     <select id="selectEmployee" name="selectEmployee" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

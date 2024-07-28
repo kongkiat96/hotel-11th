@@ -8,13 +8,13 @@
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col-md-6">
-                            <label class="form-label" for="statusName">รายการสถานะ</label>
+                            <label class="form-label-md mb-2" for="statusName">รายการสถานะ</label>
                             <input type="text" id="statusName" class="form-control" name="statusName"
                                 autocomplete="off" />
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label" for="statusUse">รูปแบบการใช้งาน</label>
+                            <label class="form-label-md mb-2" for="statusUse">รูปแบบการใช้งาน</label>
                             <select id="statusUse" name="statusUse" class="form-select select2" data-allow-clear="true">
                                 <option value="">Select</option>
                                 <option value="it">ใช้งานฝ่าย IT</option>
@@ -25,7 +25,7 @@
                         </div>
                         {{-- {{ dd($flagType) }} --}}
                         <div class="col-md-6">
-                            <label class="form-label" for="flagType">รูปแบบสถานะทำงาน</label>
+                            <label class="form-label-md mb-2" for="flagType">รูปแบบสถานะทำงาน</label>
                             <select id="flagType" name="flagType" class="form-select select2" data-allow-clear="true">
                                 <option value="">Select</option>
                                 @foreach ($getFlagType as $key => $value)
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label" for="statusOfStatus">สถานะการใช้งาน</label>
+                            <label class="form-label-md mb-2" for="statusOfStatus">สถานะการใช้งาน</label>
                             <select id="statusOfStatus" name="statusOfStatus" class="form-select select2"
                                 data-allow-clear="true">
                                 <option value="">Select</option>

@@ -32,7 +32,7 @@
         <div class="offcanvas-body flex-grow-1">
             <form class="add-new-record pt-0 row g-2" id="form-add-new-record" onsubmit="return false">
                 <div class="col-sm-12">
-                    <label class="form-label" for="basicFullname">Full Name</label>
+                    <label class="form-label-md mb-2" for="basicFullname">Full Name</label>
                     <div class="input-group input-group-merge">
                         <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
                         <input type="text" id="basicFullname" class="form-control dt-full-name" name="basicFullname"
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="form-label" for="basicPost">Post</label>
+                    <label class="form-label-md mb-2" for="basicPost">Post</label>
                     <div class="input-group input-group-merge">
                         <span id="basicPost2" class="input-group-text"><i class="bx bxs-briefcase"></i></span>
                         <input type="text" id="basicPost" name="basicPost" class="form-control dt-post"
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="form-label" for="basicEmail">Email</label>
+                    <label class="form-label-md mb-2" for="basicEmail">Email</label>
                     <div class="input-group input-group-merge">
                         <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                         <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email"
@@ -57,7 +57,7 @@
                     <div class="form-text">You can use letters, numbers & periods</div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="form-label" for="basicDate">Joining Date</label>
+                    <label class="form-label-md mb-2" for="basicDate">Joining Date</label>
                     <div class="input-group input-group-merge">
                         <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
                         <input type="text" class="form-control dt-date" id="basicDate" name="basicDate"
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="form-label" for="basicSalary">Salary</label>
+                    <label class="form-label-md mb-2" for="basicSalary">Salary</label>
                     <div class="input-group input-group-merge">
                         <span id="basicSalary2" class="input-group-text"><i class="bx bx-dollar"></i></span>
                         <input type="number" id="basicSalary" name="basicSalary" class="form-control dt-salary"

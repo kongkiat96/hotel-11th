@@ -10,13 +10,13 @@
 
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_groupName">ชื่อแผนก</label>
+                    <label class="form-label-md mb-2" for="edit_groupName">ชื่อแผนก</label>
                     <input type="text" id="edit_groupName" class="form-control" name="edit_groupName"
                         autocomplete="off" value="{{ $dataGroup[0]->group_name }}" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_companyForGroup">ชื่อบริษัท</label>
+                    <label class="form-label-md mb-2" for="edit_companyForGroup">ชื่อบริษัท</label>
                     <select id="edit_companyForGroup" name="edit_companyForGroup" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>
@@ -28,7 +28,7 @@
                 </div>
 {{-- {{ dd($getDepartment) }} --}}
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_department">สังกัด / ฝ่าย</label>
+                    <label class="form-label-md mb-2" for="edit_department">สังกัด / ฝ่าย</label>
                     <select id="edit_department" name="edit_department" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>
@@ -42,7 +42,7 @@
 
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusOfGroup">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusOfGroup">สถานะการใช้งาน</label>
                     <select id="edit_statusOfGroup" name="edit_statusOfGroup" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

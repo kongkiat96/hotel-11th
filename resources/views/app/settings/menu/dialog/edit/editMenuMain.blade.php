@@ -6,27 +6,27 @@
     <hr>
     <form id="formEditMenuMain" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_menuName">ชื่อเมนู</label>
+                    <label class="form-label-md mb-2" for="edit_menuName">ชื่อเมนู</label>
                     <input type="text" id="edit_menuName" class="form-control" name="edit_menuName"
                         autocomplete="off" value="{{ $dataMenuMain[0]->menu_name }}" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_pathMenu">Path Menu</label>
+                    <label class="form-label-md mb-2" for="edit_pathMenu">Path Menu</label>
                     <input type="text" id="edit_pathMenu" class="form-control" name="edit_pathMenu"
                         autocomplete="off" placeholder="(Route::Prefix), Ex : settings-system" value="{{ $dataMenuMain[0]->menu_link }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_iconMenu">Icon Menu <a href="https://boxicons.com/" target="_blank"><i class="fa fa-question-circle"></i></a></label>
+                    <label class="form-label-md mb-2" for="edit_iconMenu">Icon Menu <a href="https://boxicons.com/" target="_blank"><i class="fa fa-question-circle"></i></a></label>
                     <input type="text" id="edit_iconMenu" class="form-control" name="edit_iconMenu" autocomplete="off" placeholder="bx-menu-alt-right" value="{{ $dataMenuMain[0]->menu_icon }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusMenu">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusMenu">สถานะการใช้งาน</label>
                     <select id="edit_statusMenu" name="edit_statusMenu" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

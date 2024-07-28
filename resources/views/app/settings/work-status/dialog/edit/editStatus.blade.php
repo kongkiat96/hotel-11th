@@ -8,13 +8,13 @@
         <div class="modal-body">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusName">รายการสถานะ</label>
+                    <label class="form-label-md mb-2" for="edit_statusName">รายการสถานะ</label>
                     <input type="text" id="edit_statusName" class="form-control" name="edit_statusName"
                         autocomplete="off" value="{{ $dataStatus[0]->status_name }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusUse">รูปแบบการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusUse">รูปแบบการใช้งาน</label>
                     <select id="edit_statusUse" name="edit_statusUse" class="form-select select2" data-allow-clear="true">
                         <option value="">Select</option>
                         <option value="it" @if ($dataStatus[0]->status_use == 'it') selected @endif>ใช้งานฝ่าย IT</option>
@@ -25,7 +25,7 @@
                 </div>
                 {{-- {{ dd($flagType) }} --}}
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_flagType">รูปแบบสถานะทำงาน</label>
+                    <label class="form-label-md mb-2" for="edit_flagType">รูปแบบสถานะทำงาน</label>
                     <select id="edit_flagType" name="edit_flagType" class="form-select select2" data-allow-clear="true">
                         <option value="">Select</option>
                         @foreach ($getFlagType as $key => $value)
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusOfStatus">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusOfStatus">สถานะการใช้งาน</label>
                     <select id="edit_statusOfStatus" name="edit_statusOfStatus" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

@@ -137,7 +137,7 @@
                                     placeholder="Enter your email" />
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password">Password</label>
+                                <label class="form-label-md mb-2" for="password">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"

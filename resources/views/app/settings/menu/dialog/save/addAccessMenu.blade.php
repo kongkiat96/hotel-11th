@@ -45,7 +45,10 @@
                                     </td>
                                     <td class="text-center">
                                         {{-- <input type="checkbox" name="access_menu_list[]" value=" {{ $menu->ID }}"> --}}
-                                        <input type="checkbox" name="access_menu_list[]" value="{{ $menu->ID }}" @if (in_array($menu->ID, $accessMenuSubIDs)) checked @endif>
+                                        {{-- <input type="checkbox" name="access_menu_list[]" value="{{ $menu->ID }}" @if (in_array($menu->ID, $accessMenuSubIDs)) checked @endif> --}}
+                                        <div class="form-check-primary">
+                                            <input class="form-check-input" type="checkbox"  value="{{ $menu->ID }}" @if (in_array($menu->ID, $accessMenuSubIDs)) checked @endif name="access_menu_list[]" />
+                                          </div>
                                     </td>
 
                                 </tr>

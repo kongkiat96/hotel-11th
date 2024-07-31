@@ -20,11 +20,18 @@ class MenuModel extends Model
 
     public function getDataMenuMain($request)
     {
+        // dd($request->all());
+        $columns = ['menu_sort', 'ID', 'menu_name', 'menu_link', 'menu_icon', 'status'];
+
         $query = $this->getDatabase->table('tbm_menu_main')->where('deleted', 0);
-        $columns = ['ID', 'menu_name', 'menu_link', 'menu_icon', 'status'];
-        $orderColumn = $columns[$request->input('order.0.column')];
-        $orderDirection = $request->input('order.0.dir');
-        $query->orderBy($orderColumn, $orderDirection);
+
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDirection = $request->input('order.0.dir', 'asc');
+
+        if ($orderColumnIndex !== null || isset($columns[$orderColumnIndex])) {
+            $orderColumn = $columns[$orderColumnIndex];
+            $query->orderBy($orderColumn, $orderDirection);
+        }
         // คำสั่งค้นหา (Searching)
         $searchValue = $request->input('search.value');
         if (!empty($searchValue)) {
@@ -42,7 +49,6 @@ class MenuModel extends Model
 
         $data = $query->offset($start)
             ->limit($length)
-            ->orderBy('ID', 'DESC')
             ->get();
 
         $output = [
@@ -59,13 +65,18 @@ class MenuModel extends Model
     {
         $query = $this->getDatabase->table('tbm_menu_sub AS tms')
             ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
-            ->select('tms.ID', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_main_ID', 'tmm.menu_name', 'tmm.menu_icon', 'tmm.menu_link', 'tms.menu_sub_icon', 'tms.status')
+            ->select('tms.ID', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_main_ID', 'tmm.menu_name', 'tmm.menu_icon', 'tmm.menu_link', 'tms.menu_sub_icon', 'tms.status', 'tmm.menu_sort')
             ->where('tms.deleted', 0)
             ->where('tmm.deleted', 0);
-        $columns = ['tmm.ID', 'tmm.menu_name', 'tmm.menu_link', 'tms.ID', 'tms.menu_sub_name', 'tms.menu_main_ID', 'tms.menu_sub_link'];
-        $orderColumn = $columns[$request->input('order.0.column')];
-        $orderDirection = $request->input('order.0.dir');
-        $query->orderBy($orderColumn, $orderDirection);
+        $columns = ['tmm.menu_sort', 'tmm.ID', 'tmm.menu_name', 'tmm.menu_link', 'tms.ID', 'tms.menu_sub_name', 'tms.menu_main_ID', 'tms.menu_sub_link'];
+
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDirection = $request->input('order.0.dir', 'asc');
+
+        if ($orderColumnIndex !== null || isset($columns[$orderColumnIndex])) {
+            $orderColumn = $columns[$orderColumnIndex];
+            $query->orderBy($orderColumn, $orderDirection);
+        }
         // คำสั่งค้นหา (Searching)
         $searchValue = $request->input('search.value');
         if (!empty($searchValue)) {
@@ -85,7 +96,7 @@ class MenuModel extends Model
 
         $data = $query->offset($start)
             ->limit($length)
-            ->orderBy('tms.ID', 'DESC')
+            // ->orderBy('tms.ID', 'DESC')
             ->get();
 
         $output = [
@@ -105,7 +116,8 @@ class MenuModel extends Model
                 'menu_name'     => $dataMenuMain['menuName'],
                 'menu_link'     => $dataMenuMain['pathMenu'],
                 'menu_icon'     => $dataMenuMain['iconMenu'],
-                'status'       => $dataMenuMain['statusMenu'],
+                'status'        => $dataMenuMain['statusMenu'],
+                'menu_sort'     => $dataMenuMain['menuSort'],
                 'created_user'  => Auth::user()->emp_code,
                 'created_at'    => Carbon::now()
             ]);
@@ -159,15 +171,15 @@ class MenuModel extends Model
             // dd($dataAccessMenu);
             $deleteDataOld = $this->getDatabase->table('tbt_user_access_menu')->where('employee_code', $dataAccessMenu['emp_code'])->delete();
             // dd($dataAccessMenu['access_menu_list']);
-            if(!empty($dataAccessMenu['access_menu_list'])){
+            if (!empty($dataAccessMenu['access_menu_list'])) {
                 foreach ($dataAccessMenu['access_menu_list'] as $key => $value) {
                     $getSearchMenu = $this->getDatabase->table('tbm_menu_sub AS tms')
-                    ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
-                    ->select('tms.*','tmm.menu_name')
-                    ->whereIn('tms.ID', $dataAccessMenu['access_menu_list'])->get();
+                        ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
+                        ->select('tms.*', 'tmm.menu_name')
+                        ->whereIn('tms.ID', $dataAccessMenu['access_menu_list'])->get();
                     // dd($getSearchMenu);
                 }
-    
+
                 foreach ($getSearchMenu as $key => $value) {
                     // dd($value->ID);
                     $saveDataAccessMenu = $this->getDatabase->table('tbt_user_access_menu')->insertGetId([
@@ -212,7 +224,8 @@ class MenuModel extends Model
                 'menu_name'     => $dataMenuMain['edit_menuName'],
                 'menu_link'     => $dataMenuMain['edit_pathMenu'],
                 'menu_icon'     => $dataMenuMain['edit_iconMenu'],
-                'status'       => $dataMenuMain['edit_statusMenu'],
+                'menu_sort'     => $dataMenuMain['edit_menuSort'],
+                'status'        => $dataMenuMain['edit_statusMenu'],
                 'updated_user'  => Auth::user()->emp_code,
                 'updated_at'    => Carbon::now()
             ]);

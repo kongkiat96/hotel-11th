@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Helpers\getAccessToMenu;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Master\AllValidator;
 use App\Models\Master\getDataMasterModel;
 use App\Models\Settings\SetStatusModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SetStatusController extends Controller
 {
@@ -30,13 +32,17 @@ class SetStatusController extends Controller
         $url        = request()->segments();
         $urlName    = "ตั้งค่าสถานะงาน";
         $urlSubLink = "work-status";
-        // $getFlagType = $this->getMaster->getDataFlagType();
-        // dd($url);
+        
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
         return view('app.settings.work-status.setStatus', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
-            // 'flagType'      => $getFlagType
+            'listMenus'     => $getAccessMenus
         ]);
     }
 

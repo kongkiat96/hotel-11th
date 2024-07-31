@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Employee;
 
+use App\Helpers\getAccessToMenu;
 use App\Http\Controllers\Controller;
 use App\Models\Employee\EmployeeModel;
 use App\Models\Master\getDataMasterModel;
@@ -23,10 +24,16 @@ class EmployeeController extends Controller
         $urlName    = "ข้อมูลพนักงาน";
         $urlSubLink = "list-all-employee";
 
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
         return view('app.employee.getAllEmployee', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
+            'listMenus'     => $getAccessMenus
         ]);
     }
 
@@ -56,6 +63,11 @@ class EmployeeController extends Controller
         $getClassList   = $this->masterModel->getClassList();
         // dd($provinceName);
 
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
         return view('app.employee.add-employee.addEmployee', [
             'url'           => $url,
             'urlName'       => $urlName,
@@ -63,7 +75,8 @@ class EmployeeController extends Controller
             'dataPrefixName'    => $prefixName,
             'provinceName'      => $provinceName,
             'dataCompany'       => $getCompany,
-            'dataClassList'     => $getClassList
+            'dataClassList'     => $getClassList,
+            'listMenus'     => $getAccessMenus
         ]);
     }
     public function saveEmployee(Request $request)
@@ -89,6 +102,12 @@ class EmployeeController extends Controller
         $getMapAmphoe = $this->masterModel->getDataAmphoe($getDataEmployee->province_code);
         $getMapTambon = $this->masterModel->getDataTambon($getDataEmployee->amphoe_code);
         // dd($getDataEmployee);
+        $urlSubLink = "list-all-employee";
+
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
 
 
         return view('app.employee.edit-employee.editEmployee', [
@@ -102,7 +121,8 @@ class EmployeeController extends Controller
             'getGroup'          => $getGroup,
             'getMapAmphoe'      => $getMapAmphoe,
             'getMapTambon'      => $getMapTambon,
-            'dataEmployee'      => $getDataEmployee
+            'dataEmployee'      => $getDataEmployee,
+            'listMenus'     => $getAccessMenus
         ]);
     }
 
@@ -141,10 +161,16 @@ class EmployeeController extends Controller
         $urlName    = "ค้นหาข้อมูลพนักงาน";
         $urlSubLink = "search-all-employee";
 
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
         return view('app.employee.searchAllEmployee',[
             'url'           => $url,
             'urlName'       => $urlName,
-            'urlSubLink'    => $urlSubLink
+            'urlSubLink'    => $urlSubLink,
+            'listMenus'     => $getAccessMenus
         ]);
     }
 }

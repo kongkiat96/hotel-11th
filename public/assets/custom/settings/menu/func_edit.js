@@ -53,6 +53,17 @@ function setupFormValidationEditMenuMain(formElement) {
                     }
                 }
             },
+            edit_menuSort: {
+                validators: {
+                    notEmpty: {
+                        message: 'ระบุลําดับเมนู'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/u,
+                        message: 'ข้อมูลไม่ถูกต้อง'
+                    }
+                }
+            },
             edit_statusMenu: {
                 validators: {
                     notEmpty: {
@@ -75,7 +86,10 @@ function setupFormValidationEditMenuMain(formElement) {
 
 function onSaveEditMenuMainSuccess(response) {
     handleAjaxEditResponse(response);
-    closeAndResetModal("#editMenuMainModal", "#formEditMenuMain");
+    if (response.status == 200) {
+        closeAndResetModal("#editMenuMainModal", "#formEditMenuMain");
+
+    }
 }
 
 $(document).ready(function () {

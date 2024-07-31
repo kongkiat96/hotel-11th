@@ -28,14 +28,30 @@ function handleAjaxSaveResponse(response) {
 }
 
 function handleAjaxEditResponse(response) {
-    const isSuccess = response.status === 200;
+    let icon, text, timer;
+    switch (response.status) {
+        case 200:
+            icon = 'success';
+            text = 'แก้ไขข้อมูลสำเร็จ';
+            timer = 2500;
+            break;
+        case 23000:
+            icon = 'warning';
+            text = 'พบข้อมูลซ้ำในระบบ';
+            timer = undefined;
+            break;
+        default:
+            icon = 'error';
+            text = 'เกิดข้อผิดพลาดในการแก้ไขข้อมูล';
+            timer = undefined;
+    }
     Swal.fire({
-        icon: isSuccess ? 'success' : 'error',
-        text: isSuccess ? 'แก้ไขข้อมูลสำเร็จ' : 'เกิดข้อผิดพลาดในการแก้ไขข้อมูล',
+        icon: icon,
+        text: text,
         showConfirmButton: false,
-        timer: isSuccess ? 2500 : undefined
+        timer: timer
     });
-    if (isSuccess) {
+    if (response.status === 200) {
         reTable();
     }
 }
@@ -245,15 +261,35 @@ function renderStatusWorkTypeBadge(data, type, full, row) {
 }
 
 
-function renderGroupActionButtons(data, type, row, useFunc) {
+function renderGroupActionButtons(data, type, row, useFunc,disableButtons = false,buttonAction = 'all') {
     // console.log(useFunc)
     const editFunction = `funcEdit${useFunc}`;
     const deleteFunction = `funcDelete${useFunc}`;
+    let disableEdit = '';
+    let disableDelete = '';
+    let classCssEdit = '';
+    let classCssDelete = '';
+
+    if (disableButtons) {
+        if (buttonAction === 'all' || buttonAction === 'edit') {
+            disableEdit = 'disabled';
+            classCssEdit    = 'd-none';
+        }
+        if (buttonAction === 'all' || buttonAction === 'delete') {
+            disableDelete = 'disabled';
+            classCssDelete = 'd-none';
+        }
+    }
+
+    // if (disableButtons) {
+    //     disable = 'disabled';
+    // }
+
     return `
-    <button type="button" class="btn btn-icon btn-label-warning btn-outline-warning" onclick="${editFunction}(${row.ID})">
+    <button type="button" class="btn btn-icon btn-label-warning btn-outline-warning ${classCssEdit}" ${disableEdit} onclick="${editFunction}(${row.ID})">
         <span class="tf-icons bx bx-edit-alt"></span>
     </button>
-    <button type="button" class="btn btn-icon btn-label-danger btn-outline-danger" onclick="${deleteFunction}(${row.ID})">
+    <button type="button" class="btn btn-icon btn-label-danger btn-outline-danger ${classCssDelete}" ${disableDelete} onclick="${deleteFunction}(${row.ID})">
         <span class="tf-icons bx bx-trash"></span>
     </button>
 `;

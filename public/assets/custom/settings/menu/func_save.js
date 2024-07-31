@@ -85,6 +85,17 @@ function setupFormValidationMenuMain(formElement) {
                     }
                 }
             },
+            menuSort: {
+                validators: {
+                    notEmpty: {
+                        message: 'ระบุลําดับเมนู'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/u,
+                        message: 'ข้อมูลไม่ถูกต้อง'
+                    }
+                }
+            },
             statusMenu: {
                 validators: {
                     notEmpty: {
@@ -168,32 +179,11 @@ function setupFormValidationMenuSub(formElement) {
     });
 }
 
-// function setupFormValidationAccessMenu(formElement) {
-//     return FormValidation.formValidation(formElement, {
-//         fields: {
-//             selectUser: {
-//                 validators: {
-//                     notEmpty: {
-//                         message: 'เลือกข้อมูล ผู้ใช้งาน'
-//                     }
-//                 }
-//             },
-//         },
-//         plugins: {
-//             trigger: new FormValidation.plugins.Trigger(),
-//             bootstrap5: new FormValidation.plugins.Bootstrap5({
-//                 eleValidClass: '',
-//                 rowSelector: '.col-md-12'
-//             }),
-//             submitButton: new FormValidation.plugins.SubmitButton(),
-//             autoFocus: new FormValidation.plugins.AutoFocus()
-//         },
-//     });
-// }
-
 function onSaveMenuMainSuccess(response) {
     handleAjaxSaveResponse(response);
-    closeAndResetModal("#menuMainModal", "#formAddMenuMain");
+    if (response.status == 200) {
+        closeAndResetModal("#menuMainModal", "#formAddMenuMain");
+    }
 }
 
 function onSaveMenuSubSuccess(response) {

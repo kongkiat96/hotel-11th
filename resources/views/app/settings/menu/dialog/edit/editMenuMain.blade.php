@@ -26,6 +26,12 @@
                 </div>
 
                 <div class="col-md-6">
+                    <label class="form-label-md mb-2" for="edit_menuSort">ลําดับ</label>
+                    <input type="number" id="edit_menuSort" class="form-control" name="edit_menuSort"
+                        autocomplete="off" value="{{ $dataMenuMain[0]->menu_sort }}" min="1" max="99" />
+                </div>
+
+                <div class="col-md-6">
                     <label class="form-label-md mb-2" for="edit_statusMenu">สถานะการใช้งาน</label>
                     <select id="edit_statusMenu" name="edit_statusMenu" class="form-select select2"
                         data-allow-clear="true">

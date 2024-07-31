@@ -27,6 +27,11 @@
                 </div>
 
                 <div class="col-md-6">
+                    <label class="form-label-md mb-2" for="menuSort">ลําดับ</label>
+                    <input type="number" id="menuSort" class="form-control" name="menuSort" autocomplete="off" min="1" max="99"/>
+                </div>
+
+                <div class="col-md-6">
                     <label class="form-label-md mb-2" for="statusMenu">สถานะการใช้งาน</label>
                     <select id="statusMenu" name="statusMenu" class="form-select select2"
                         data-allow-clear="true">

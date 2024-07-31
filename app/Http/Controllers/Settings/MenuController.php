@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Helpers\getAccessToMenu;
 use App\Http\Controllers\Controller;
 use App\Models\Master\getDataMasterModel;
 use App\Models\Settings\MenuModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -21,10 +23,17 @@ class MenuController extends Controller
         $url = request()->segments();
         $urlName = "รายการเข้าถึงเมนู";
         $urlSubLink = "menu";
+
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
         return view('app.settings.menu.setMenu', [
             'url'           => $url,
             'urlName'       => $urlName,
-            'urlSubLink'    => $urlSubLink
+            'urlSubLink'    => $urlSubLink,
+            'listMenus'     => $getAccessMenus
         ]);
     }
     public function showMenuModal()

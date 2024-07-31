@@ -79,6 +79,7 @@
                                         <th>รายชื่อเมนู (หลัก)</th>
                                         <th>Icon</th>
                                         <th>Menu Link (Main)</th>
+                                        <th>ลำดับเมนู</th>
                                         <th>การใช้งานระบบ</th>
                                         <th>จัดการ</th>
                                     </tr>

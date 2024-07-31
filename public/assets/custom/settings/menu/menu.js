@@ -23,6 +23,7 @@ $(function () {
                     }
                 },
                 { data: "menu_link", class: "text-nowrap text-center" },
+                { data: "menu_sort", searchable: false, class: "text-center" },
                 {
                     data: "status",
                     orderable: false,
@@ -35,7 +36,10 @@ $(function () {
                     orderable: false,
                     searchable: false,
                     class: "text-center",
-                    render: (data, type, row) => renderGroupActionButtons(data, type, row, 'MenuMain')
+                    // render: (data, type, row) => renderGroupActionButtons(data, type, row, 'MenuMain',disableButtons)
+                    render: function (data, type, row) {
+                        return renderGroupActionButtons(data, type, row, 'MenuMain');
+                    }
                 }
             ],
             fnCreatedRow: (nRow, aData, iDisplayIndex) => {
@@ -49,7 +53,7 @@ $(function () {
                     cell.textContent = startIndexOfPage + index + 1;
                 });
             },
-            order: [[1, "desc"]],
+            // order: [[1, "ASC"]],
             dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             displayLength: 20,
             lengthMenu: [20, 25, 50, 75, 100]

@@ -2,7 +2,7 @@
 {{-- {{ dd($listMenus) }} --}}
 <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0">
     <div class="container-xxl d-flex h-100">
-        {{-- <ul class="menu-inner">
+        <ul class="menu-inner">
             <li class="menu-item {{ $url[0] == 'home' ? 'active' : '' }}">
                 <a href="{{ url('/home') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -88,46 +88,6 @@
                     <div data-i18n="ออกจากระบบ"></div>
                 </a>
             </li>
-        </ul> --}}
-        
-
-
-
-        <ul class="menu-inner">
-            <li class="menu-item {{ $url[0] == 'home' ? 'active' : '' }}">
-                <a href="{{ url('/home') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="หน้าแรก">หน้าแรก</div>
-                </a>
-            </li>
-            @foreach ($listMenus as $menuLink => $menuData)
-                <li class="menu-item {{ $url[0] == $menuData['main']['menu_link'] ? 'active' : '' }}">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx {{ $menuData['main']['menu_icon'] }}"></i>
-                        <div data-i18n="{{ $menuData['main']['menu_name'] }}">{{ $menuData['main']['menu_name'] }}</div>
-                    </a>
-                    @if (!empty($menuData['subs']))
-                        <ul class="menu-sub">
-                            @foreach ($menuData['subs'] as $subMenu)
-                                <li class="menu-item {{ @$urlSubLink == $subMenu['menu_sub_link'] ? 'active' : '' }}">
-                                    <a href="{{ url($menuData['main']['menu_link'].'/'.$subMenu['menu_sub_link']) }}" class="menu-link">
-                                        <i class="menu-icon tf-icons bx {{ $subMenu['menu_sub_icon'] }}"></i>
-                                        <div data-i18n="{{ $subMenu['menu_sub_name'] }}">{{ $subMenu['menu_sub_name'] }}</div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </li>
-            @endforeach
-        
-            <li class="menu-item">
-                <a href="{{ url('/logout') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-log-out"></i>
-                    <div data-i18n="ออกจากระบบ"></div>
-                </a>
-            </li>
         </ul>
-        
     </div>
 </aside>

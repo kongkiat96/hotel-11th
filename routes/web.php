@@ -27,6 +27,9 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('home', 'HomeController@index');
 
+    // เพิ่ม Route ที่ใช้ Middleware ตรวจสอบสิทธิ์
+    // Route::get('menu/{menu_sub_ID}', 'MenuController@show')->middleware('check.access:menu_sub_ID');
+
     Route::prefix('table')->group(function () {
         Route::get('', 'Table\TableController@index');
     });
@@ -38,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/table-employee-disable', 'Employee\EmployeeController@showDataEmployeeDisable');
         });
 
-        Route::prefix('/search-employee')->group(function () {
+        Route::prefix('/search-all-employee')->group(function () {
             Route::get('', 'Employee\EmployeeController@searchEmployee');
         });
 

@@ -81,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::prefix('/bank-list')->group(function () {
-            Route::get('', 'Settings\SetMasterAllController@setBankListIndex');
+            Route::get('', 'Settings\BankListController@index');
         });
 
         Route::prefix('/menu')->group(function () {

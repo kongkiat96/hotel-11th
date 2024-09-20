@@ -205,6 +205,8 @@ class getDataMasterModel extends Model
             ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_id', '=', 'tmm.ID')
             ->select('tms.ID', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_main_ID', 'tmm.menu_name', 'tmm.menu_icon', 'tmm.menu_link', 'tms.menu_sub_icon', 'tms.status')
             ->where('tms.deleted', 0)
+            ->orderBy('tmm.menu_sort', 'asc')
+            ->orderBy('tms.ID', 'asc')
             ->get();
         return $getMenu;
     }

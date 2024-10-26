@@ -70,7 +70,7 @@
 {{-- <script src="{{ asset('assets/js/forms-pickers.js') }}"></script> --}}
 
 <script src="{{ asset('assets/vendor/libs/dropzone/dropzone.js') }}"></script>
-<script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script> --}}
 {{-- <script src="{{ asset('assets/js/modal-create-app.js') }}"></script>
 
 <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>

@@ -95,6 +95,7 @@ function handleAjaxSaveError(xhr, textStatus, errorThrown) {
 
 function closeAndResetModal(modalSelector, formSelector) {
     setTimeout(function () {
+        console.log(modalSelector, formSelector)
         $(modalSelector).modal('hide');
         $(formSelector).find('input, select').val('').trigger('change');
     }, 3000);
@@ -261,7 +262,7 @@ function renderStatusWorkTypeBadge(data, type, full, row) {
 }
 
 
-function renderGroupActionButtons(data, type, row, useFunc,disableButtons = false,buttonAction = 'all') {
+function renderGroupActionButtons(data, type, row, useFunc, disableButtons = false, buttonAction = 'all') {
     // console.log(useFunc)
     const editFunction = `funcEdit${useFunc}`;
     const deleteFunction = `funcDelete${useFunc}`;
@@ -273,7 +274,7 @@ function renderGroupActionButtons(data, type, row, useFunc,disableButtons = fals
     if (disableButtons) {
         if (buttonAction === 'all' || buttonAction === 'edit') {
             disableEdit = 'disabled';
-            classCssEdit    = 'd-none';
+            classCssEdit = 'd-none';
         }
         if (buttonAction === 'all' || buttonAction === 'delete') {
             disableDelete = 'disabled';
@@ -465,4 +466,95 @@ function mapSelectedAumphoe(disabledTambon, selectElement, disableStatus) {
             $('#mapIDProvince').val('');
         }
     });
+}
+
+function AddPic(inputPicID) {
+    (function () {
+        const previewTemplate = `
+            <div class="dz-preview dz-file-preview">
+                <div class="dz-details">
+                    <div class="dz-thumbnail">
+                        <img data-dz-thumbnail />
+                        <span class="dz-nopreview">No preview</span>
+                        <div class="dz-success-mark"></div>
+                        <div class="dz-error-mark"></div>
+                        <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+                        </div>
+                    </div>
+                    <div class="dz-filename" data-dz-name></div>
+                    <div class="dz-size" data-dz-size></div>
+                </div>
+            </div>
+        `;
+
+        const myDropzone = new Dropzone(inputPicID, {
+            previewTemplate: previewTemplate,
+            parallelUploads: 1,
+            maxFilesize: 2,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            acceptedFiles: 'image/*'
+        });
+    })();
+}
+function ViewPicEdit(pathPic, inputEditID, tagStatusPicID) {
+    // console.log(inputEditID, tagStatusPicID)
+    (function () {
+        const existingLogo = pathPic;
+        const myDropzone = new Dropzone(inputEditID, {
+            previewTemplate: `
+                <div class="dz-preview dz-file-preview">
+                    <div class="dz-details">
+                        <div class="dz-thumbnail">
+                            <img data-dz-thumbnail />
+                            <span class="dz-nopreview">No preview</span>
+                            <div class="dz-success-mark"></div>
+                            <div class="dz-error-mark"></div>
+                            <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                        <div class="dz-filename" data-dz-name></div>
+                        <div class="dz-size" data-dz-size></div>
+                    </div>
+                </div>
+            `,
+            parallelUploads: 1,
+            maxFilesize: 2,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            acceptedFiles: 'image/*',
+            init: function () {
+                const myDropzone = this;
+
+                myDropzone.on("removedfile", function (file) {
+                    // เปลี่ยนค่าของ hidden input
+                    $(tagStatusPicID).val(0);
+                    // Optionally, display a message or perform any additional actions
+                    console.log("File removed: ", file);
+                });
+
+                myDropzone.on("success", function (file) {
+                    // console.log(response, file['dataURL']);
+                    $(tagStatusPicID).val(1);
+                });
+            }
+        });
+
+        // If there's an existing logo, display it in the Dropzone
+        if (existingLogo) {
+            const mockFile = {
+                name: existingLogo.split('/').pop(),
+                size: 12345
+            }; // Use a mock file object
+            myDropzone.emit("addedfile", mockFile);
+            myDropzone.emit("thumbnail", mockFile, existingLogo); // Use existingLogo for the thumbnail
+            myDropzone.emit("complete"); // Mark the upload as complete
+        }
+
+
+    })();
 }

@@ -10,6 +10,17 @@
         </ol>
     </nav>
     <hr>
+    <div class="modal fade" id="addBankModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="editBankModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="nav-align-top mb-4">
@@ -24,13 +35,12 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="set-bank-list" role="tabpanel">
                         <div class="inline-spacing text-end">
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#addStatusModal">
+                            <button type="button" class="btn btn-info" id="addBank">
                                 <i class='menu-icon tf-icons bx bxs-purchase-tag'></i> เพิ่มข้อมูลรายการบัญชีธนาคาร
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingStatus table table-bordered table-hover">
+                            <table class="dt-bankList table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
@@ -51,5 +61,5 @@
     </div>
 @endsection
 @section('script')
-    {{-- <script type="text/javascript" src="{{ asset('/assets/custom/settings/status/status.js?v=') }}@php echo date("H:i:s") @endphp"></script> --}}
+    <script type="text/javascript" src="{{ asset('/assets/custom/settings/banks/bank.js?v=') }}@php echo date("H:i:s") @endphp"></script>
 @endsection

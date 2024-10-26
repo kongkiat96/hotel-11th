@@ -59,6 +59,12 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::prefix('freeze-account')->group(function () {
+        Route::prefix('agent')->group(function () {
+            Route::get('', 'FreezeAccount\AgentController@index');
+        });
+    });
+
     Route::prefix('settings-system')->group(function () {
         Route::prefix('/work-status')->group(function () {
             Route::get('', 'Settings\SetStatusController@index');
@@ -82,6 +88,14 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('/bank-list')->group(function () {
             Route::get('', 'Settings\BankListController@index');
+
+            Route::get('/add-bank-modal', 'Settings\BankListController@showAddBankModal');
+            Route::post('/save-bank', 'Settings\BankListController@saveDataBank');
+            Route::post('/get-data-banks', 'Settings\BankListController@getDataBanks');
+
+            Route::get('/show-bank-modal/{bankID}', 'Settings\BankListController@showEditBankModal');
+            Route::post('/edit-bank/{bankID}', 'Settings\BankListController@editBank');
+            Route::post('/delete-bank/{bankID}', 'Settings\BankListController@deleteBank');
         });
 
         Route::prefix('/menu')->group(function () {

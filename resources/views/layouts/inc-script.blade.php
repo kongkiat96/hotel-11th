@@ -67,11 +67,17 @@
 <script src="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/pickr/pickr.js') }}"></script>
-{{-- <script src="{{ asset('assets/js/forms-pickers.js') }}"></script> --}}
-
 <script src="{{ asset('assets/vendor/libs/dropzone/dropzone.js') }}"></script>
-{{-- <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script> --}}
-{{-- <script src="{{ asset('assets/js/modal-create-app.js') }}"></script>
-
+<script src="{{ asset('assets/vendor/libs/autosize/autosize.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script> --}}
+<script src="{{ asset('assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+
+<script src="https://cdn.datatables.net/fixedcolumns/4.2.0/js/dataTables.fixedColumns.min.js"></script>
+<!-- DataTables Buttons JS -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<!-- JSZip (required for Excel export) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!-- Buttons HTML5 export JS -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>

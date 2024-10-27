@@ -50,13 +50,14 @@
             </div>
         </div>
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-label-danger" data-bs-dismiss="modal"><i
-                    class='menu-icon tf-icons bx bx-window-close'></i> ปิด</button>
-            <button type="submit" name="saveEditBank" id="saveEditBank"
-                class="btn btn-warning btn-form-block-overlay"><i class='menu-icon tf-icons bx bxs-save'></i>
-                บันทึกข้อมูล</button>
-        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-label-danger" data-bs-dismiss="modal"><i
+                class='menu-icon tf-icons bx bx-window-close'></i> ปิด</button>
+        <button type="submit" name="saveEditBank" id="saveEditBank"
+            class="btn btn-warning btn-form-block-overlay"><i class='menu-icon tf-icons bx bxs-save'></i>
+            บันทึกข้อมูล</button>
     </div>
 
     <script type="text/javascript"

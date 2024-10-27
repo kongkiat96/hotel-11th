@@ -60,8 +60,28 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('freeze-account')->group(function () {
-        Route::prefix('agent')->group(function () {
+        Route::prefix('/agent')->group(function () {
             Route::get('', 'FreezeAccount\AgentController@index');
+            Route::post('/table-freezeAccount-agent', 'FreezeAccount\AgentController@getDataFreezeAccountAgent');
+
+            Route::get('/add-freezeAccount-agent-modal', 'FreezeAccount\AgentController@showAddFreezeAccountAgentModal');
+            Route::post('/save-freezeAccount-agent', 'FreezeAccount\AgentController@saveDataFreezeAccountAgent');
+            Route::get('/show-edit-freezeAccount-agent-modal/{freezeAccountID}', 'FreezeAccount\AgentController@showEditFreezeAccountAgentModal');
+            Route::post('/edit-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@editFreezeAccountAgent');
+
+            Route::post('/delete-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@deleteFreezeAccountAgent');
+        });
+
+        Route::prefix('/department')->group(function () {
+            Route::get('', 'FreezeAccount\DepartmentController@index');
+            Route::post('/table-freezeAccount-department', 'FreezeAccount\DepartmentController@getDataFreezeAccountDepartment');
+
+            Route::get('/add-freezeAccount-department-modal', 'FreezeAccount\DepartmentController@showAddFreezeAccountDepartmentModal');
+            Route::post('/save-freezeAccount-department', 'FreezeAccount\DepartmentController@saveDataFreezeAccountDepartment');
+            Route::get('/show-edit-freezeAccount-department-modal/{freezeAccountID}', 'FreezeAccount\DepartmentController@showEditFreezeAccountDepartmentModal');
+            Route::post('/edit-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@editFreezeAccountDepartment');
+
+            Route::post('/delete-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@deleteFreezeAccountDepartment');
         });
     });
 
@@ -172,6 +192,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/get-province', 'Master\getDataMasterController@getDataProvince');
         Route::get('/get-amphoe/{provinceID}', 'Master\getDataMasterController@getDataAmphoe');
         Route::get('/get-tambon/{aumphoeID}', 'Master\getDataMasterController@getDataTambon');
+        Route::get('/bank-list', 'Master\getDataMasterController@getDataBankList');
     });
 
     Route::prefix('test')->group(function () {

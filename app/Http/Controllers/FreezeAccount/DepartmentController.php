@@ -4,32 +4,32 @@ namespace App\Http\Controllers\FreezeAccount;
 
 use App\Helpers\getAccessToMenu;
 use App\Http\Controllers\Controller;
-use App\Models\FreezeAccount\AgentModel;
+use App\Models\FreezeAccount\DepartmentModel;
 use App\Models\Master\getDataMasterModel;
 use Illuminate\Http\Request;
 
-class AgentController extends Controller
+class DepartmentController extends Controller
 {
     protected $getMaster;
-    protected $agentModel;
-
+    protected $departmentModel;
     public function __construct()
     {
         $this->getMaster = new getDataMasterModel;
-        $this->agentModel = new AgentModel();
+        $this->departmentModel = new DepartmentModel();
     }
+
     public function index()
     {
         $url        = request()->segments();
-        $urlName    = "บัญชีโดนอายัด สำหรับเอเย่นต์";
-        $urlSubLink = "agent";
+        $urlName    = "บัญชีโดนอายัด สำหรับแผนก";
+        $urlSubLink = "department";
 
         if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
             return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
         }
         $getAccessMenus = getAccessToMenu::getAccessMenus();
 
-        return view('app.freezeAccount.agent.index', [
+        return view('app.freezeAccount.department.index', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
@@ -37,39 +37,39 @@ class AgentController extends Controller
         ]);
     }
 
-    public function showAddFreezeAccountAgentModal()
+    public function showAddFreezeAccountDepartmentModal()
     {
         if (request()->ajax()) {
             $getBankList     = $this->getMaster->getDataBankList();
             // dd($getBankList);   
 
-            return view('app.freezeAccount.agent.dialog.save.addFreezeAccountAgent', [
+            return view('app.freezeAccount.department.dialog.save.addFreezeAccountDepartment', [
                 'getBankList'        => $getBankList,
             ]);
         }
         return abort(404);
     }
 
-    public function saveDataFreezeAccountAgent(Request $request)
+    public function saveDataFreezeAccountDepartment(Request $request)
     {
-        $saveData = $this->agentModel->saveDataFreezeAccount($request->input());
+        $saveData = $this->departmentModel->saveDataFreezeAccount($request->input());
         return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
 
-    public function getDataFreezeAccountAgent(Request $request)
+    public function getDataFreezeAccountDepartment(Request $request)
     {
-        $getDataBanks = $this->agentModel->getDataFreezeAccountAgent($request);
+        $getDataBanks = $this->departmentModel->getDataFreezeAccountDepartment($request);
 
         return response()->json($getDataBanks);
     }
 
-    public function showEditFreezeAccountAgentModal($freezeAccountID)
+    public function showEditFreezeAccountDepartmentModal($freezeAccountID)
     {
         if (request()->ajax()) {
             $getBankList = $this->getMaster->getDataBankList();
-            $getFreezeAccount = $this->agentModel->getFreezeAccount($freezeAccountID);
+            $getFreezeAccount = $this->departmentModel->getFreezeAccount($freezeAccountID);
             // dd($getBankList);   
-            return view('app.freezeAccount.agent.dialog.edit.editFreezeAccountAgent', [
+            return view('app.freezeAccount.department.dialog.edit.editFreezeAccountDepartment', [
                 'dataBank' => $getBankList,
                 'dataFreezeAccount' => $getFreezeAccount,
             ]);
@@ -77,16 +77,16 @@ class AgentController extends Controller
         return abort(404);
     }
 
-    public function editFreezeAccountAgent(Request $request, $freezeAccountID)
+    public function editFreezeAccountDepartment(Request $request, $freezeAccountID)
     {
         // dd($freezeAccountID);
-        $saveData = $this->agentModel->editFreezeAccountAgent($request->input(), $freezeAccountID);
+        $saveData = $this->departmentModel->editFreezeAccountDepartment($request->input(), $freezeAccountID);
         return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
 
-    public function deleteFreezeAccountAgent($freezeAccountID)
+    public function deleteFreezeAccountDepartment($freezeAccountID)
     {
-        $deleteData = $this->agentModel->deleteFreezeAccountAgent($freezeAccountID);
+        $deleteData = $this->departmentModel->deleteFreezeAccountDepartment($freezeAccountID);
         return response()->json(['status' => $deleteData['status'], 'message' => $deleteData['message']]);
     }
 }

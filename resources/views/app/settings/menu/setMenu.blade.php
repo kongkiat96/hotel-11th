@@ -1,31 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="modal fade" id="accessMenuModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="accessMenuModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
 
         </div>
     </div>
 
-    <div class="modal fade" id="menuMainModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="menuMainModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="menuSubModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="menuSubModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editMenuMainModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editMenuMainModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editMenuSubModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editMenuSubModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>

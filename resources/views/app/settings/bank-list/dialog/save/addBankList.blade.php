@@ -27,7 +27,8 @@
 
                     <div class="col-md-12 mb-3">
                         <label class="form-label-md mb-2" for="bankNameShort">ชื่อธนาคาร (ย่อ)</label>
-                        <input type="text" id="bankNameShort" class="form-control" name="bankNameShort" autocomplete="off" />
+                        <input type="text" id="bankNameShort" class="form-control" name="bankNameShort"
+                            autocomplete="off" />
                     </div>
 
                     <div class="col-md-12">
@@ -43,13 +44,14 @@
             </div>
 
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-label-danger" data-bs-dismiss="modal"><i
-                    class='menu-icon tf-icons bx bx-window-close'></i> ปิด</button>
 
-            <button type="submit" name="saveBank" id="saveBank" class="btn btn-success btn-form-block-overlay"><i
-                    class='menu-icon tf-icons bx bxs-save'></i> บันทึกข้อมูล</button>
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-label-danger" data-bs-dismiss="modal"><i
+                class='menu-icon tf-icons bx bx-window-close'></i> ปิด</button>
+
+        <button type="submit" name="saveBank" id="saveBank" class="btn btn-success btn-form-block-overlay"><i
+                class='menu-icon tf-icons bx bxs-save'></i> บันทึกข้อมูล</button>
     </div>
 
     <script type="text/javascript" src="{{ asset('/assets/custom/settings/banks/func_save.js?v=') }}@php echo date("H:i:s") @endphp"></script>

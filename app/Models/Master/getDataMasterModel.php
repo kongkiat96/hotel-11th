@@ -258,8 +258,9 @@ class getDataMasterModel extends Model
         return $groupedMenus;
     }
 
-    public function getGroupMapID($groupDepartment)
+    public function getDataBankList()
     {
-        dd($groupDepartment);
+        $getDataBankList = $this->getDatabase->table('tbm_bank_list')->where('status',1)->where('deleted',0)->orderBy('ID')->get();
+        return $getDataBankList;
     }
 }

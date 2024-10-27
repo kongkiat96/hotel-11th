@@ -10,13 +10,13 @@
         </ol>
     </nav>
     <hr>
-    <div class="modal fade" id="addBankModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="addBankModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editBankModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editBankModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
@@ -39,7 +39,7 @@
                                 <i class='menu-icon tf-icons bx bxs-purchase-tag'></i> เพิ่มข้อมูลรายการบัญชีธนาคาร
                             </button>
                         </div>
-                        <div class="text-nowrap">
+                        <div class="text-nowrap table-responsive">
                             <table class="dt-bankList table table-bordered table-hover">
                                 <thead>
                                     <tr>

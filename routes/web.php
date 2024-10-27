@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/save-freezeAccount-agent', 'FreezeAccount\AgentController@saveDataFreezeAccountAgent');
             Route::get('/show-edit-freezeAccount-agent-modal/{freezeAccountID}', 'FreezeAccount\AgentController@showEditFreezeAccountAgentModal');
             Route::post('/edit-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@editFreezeAccountAgent');
-
+            Route::get('/view-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@viewFreezeAccountAgent');
             Route::post('/delete-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@deleteFreezeAccountAgent');
         });
 
@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/save-freezeAccount-department', 'FreezeAccount\DepartmentController@saveDataFreezeAccountDepartment');
             Route::get('/show-edit-freezeAccount-department-modal/{freezeAccountID}', 'FreezeAccount\DepartmentController@showEditFreezeAccountDepartmentModal');
             Route::post('/edit-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@editFreezeAccountDepartment');
-
+            Route::get('/view-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@viewFreezeAccountDepartment');
             Route::post('/delete-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@deleteFreezeAccountDepartment');
         });
     });

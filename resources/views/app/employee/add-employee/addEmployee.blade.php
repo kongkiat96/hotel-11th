@@ -128,10 +128,10 @@
                                     <select id="userClass" name="userClass" class="form-select select2"
                                         autocomplete="off" data-allow-clear="true">
                                         <option value="">Select</option>
-                                        <option value="it">ฝ่าย IT</option>
-                                        <option value="mt">ฝ่ายอาคาร</option>
-                                        <option value="hr">ฝ่าย Hr</option>
-                                        <option value="userOther">ผู้ใช้งานทั่วไป</option>
+                                        <option value="SuperAdmin">ผู้ดูแลระบบ</option>
+                                        <option value="Admin">เจ้าหน้าที่</option>
+                                        <option value="User">ผู้บันทึกข้อมูล</option>
+                                        <option value="Viewer">ผู้ใช้งานทั่วไป</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">

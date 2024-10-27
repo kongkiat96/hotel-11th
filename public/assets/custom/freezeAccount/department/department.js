@@ -73,7 +73,11 @@ $(function () {
                 orderable: false,
                 searchable: false,
                 class: "text-center",
-                render: (data, type, row) => renderGroupActionButtons(data, type, row, 'FreezeList')
+                render: function (data, type, row) {
+                    // console.log(row)
+                    const Permission = (row.Permission);
+                    return renderGroupActionButtonsPermission(data, type, row, 'FreezeList', Permission);
+                }
             }
 
         ],
@@ -158,7 +162,11 @@ $(function () {
                 orderable: false,
                 searchable: false,
                 class: "text-center",
-                render: (data, type, row) => renderGroupActionButtons(data, type, row, 'FreezeList')
+                render: function (data, type, row) {
+                    // console.log(row)
+                    const Permission = (row.Permission);
+                    return renderGroupActionButtonsPermission(data, type, row, 'FreezeList', Permission);
+                }
             }
 
         ],
@@ -198,4 +206,8 @@ function funcEditFreezeList(freezeID) {
 
 function funcDeleteFreezeList(freezeID) {
     handleAjaxDeleteResponse(freezeID, "/accounting/department/delete-freezeAccount-department/" + freezeID);
+}
+
+function funcViewFreezeList(freezeID) {
+    showModalViewWithAjax('#viewFreezeAccountDepartmentModal', '/accounting/department/view-freezeAccount-department/' + freezeID, ['#status_freeze']);
 }

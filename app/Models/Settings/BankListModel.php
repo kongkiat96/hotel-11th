@@ -38,7 +38,7 @@ class BankListModel extends Model
                     'bank_name' => $value->bank_name,
                     'bank_short_name' => $value->bank_short_name,
                     'status' => $value->status,
-                    'premission' => Auth::user()->user_system
+                    'Permission' => Auth::user()->user_system
                 ];
             }
 

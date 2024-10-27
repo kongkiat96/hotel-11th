@@ -56,7 +56,7 @@ class AgentModel extends Model
                     'status_freeze' => $value->status_freeze,
                     'updated_at' => !empty($value->updated_at) ? $value->updated_at : '-',
                     'updated_user' => !empty($value->updated_user) ? $value->updated_user : '-',
-                    'premission' => Auth::user()->user_system
+                    'Permission' => Auth::user()->user_system
                 ];
             }
 

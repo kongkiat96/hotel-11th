@@ -89,4 +89,18 @@ class AgentController extends Controller
         $deleteData = $this->agentModel->deleteFreezeAccountAgent($freezeAccountID);
         return response()->json(['status' => $deleteData['status'], 'message' => $deleteData['message']]);
     }
+
+    public function viewFreezeAccountAgent($freezeAccountID)
+    {
+        if (request()->ajax()) {
+            $getBankList = $this->getMaster->getDataBankList();
+            $getFreezeAccount = $this->agentModel->getFreezeAccount($freezeAccountID);
+            // dd($getBankList);   
+            return view('app.freezeAccount.agent.dialog.view.viewFreezeAccountAgent', [
+                'dataBank' => $getBankList,
+                'dataFreezeAccount' => $getFreezeAccount,
+            ]);
+        }
+        return abort(404);
+    }
 }

@@ -89,4 +89,18 @@ class DepartmentController extends Controller
         $deleteData = $this->departmentModel->deleteFreezeAccountDepartment($freezeAccountID);
         return response()->json(['status' => $deleteData['status'], 'message' => $deleteData['message']]);
     }
+
+    public function viewFreezeAccountDepartment($freezeAccountID)
+    {
+        if (request()->ajax()) {
+            $getBankList = $this->getMaster->getDataBankList();
+            $getFreezeAccount = $this->departmentModel->getFreezeAccount($freezeAccountID);
+            // dd($getBankList);   
+            return view('app.freezeAccount.department.dialog.view.viewFreezeAccountDepartment', [
+                'dataBank' => $getBankList,
+                'dataFreezeAccount' => $getFreezeAccount,
+            ]);
+        }
+        return abort(404);
+    }
 }

@@ -158,6 +158,25 @@ function showModalWithAjax(modalId, url, select2Selectors) {
     });
 }
 
+function showModalViewWithAjax(modalId, url, select2Selectors) {
+    // console.log(modalId)
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function (response) {
+            $(modalId + ' .modal-dialog').html(response);
+            $(modalId + ' input').attr('readonly', true);
+            $(modalId + ' select').attr('disabled', true);
+            $(modalId + ' textarea').attr('readonly', true);
+            initializeSelectWithModal(select2Selectors, modalId);
+            $(modalId).modal('show');
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
 function initializeSelectWithModal(selectors, modalId) {
     if (!Array.isArray(selectors)) {
         console.error('initializeSelect2 expects the first argument to be an array of selectors.');
@@ -239,10 +258,14 @@ function renderStatusWorkBadge(data, type, full, row) {
 
 function renderUserClassBadge(data, type, full, row) {
     const statusMap = {
-        it: { title: 'สังกัด IT', className: 'bg-label-info' },
-        mt: { title: 'สังกัด อาคาร', className: 'bg-label-warning' },
-        hr: { title: 'สังกัด บุคคล', className: 'bg-label-primary' },
-        userOther: { title: 'ผู้ใช้ทั่วไป', className: 'bg-label-danger' }
+        // it: { title: 'สังกัด IT', className: 'bg-label-info' },
+        // mt: { title: 'สังกัด อาคาร', className: 'bg-label-warning' },
+        // hr: { title: 'สังกัด บุคคล', className: 'bg-label-primary' },
+        // userOther: { title: 'ผู้ใช้ทั่วไป', className: 'bg-label-danger' }
+        SuperAdmin: { title: 'ผู้ดูแลระบบ', className: 'bg-label-danger' },
+        Admin: { title: 'เจ้าหน้าที่', className: 'bg-label-success' },
+        User: { title: 'ผู้บันทึกข้อมูล', className: 'bg-label-warning' },
+        Viewer: { title: 'ผู้ใช้งานทั่วไป', className: 'bg-label-info' }
     };
     const status = statusMap[data] || { title: 'Undefined', className: 'bg-label-secondary' };
     return `<span class="badge ${status.className}">${status.title}</span>`;
@@ -287,13 +310,54 @@ function renderGroupActionButtons(data, type, row, useFunc, disableButtons = fal
     // }
 
     return `
-    <button type="button" class="btn btn-icon btn-label-warning btn-outline-warning ${classCssEdit}" ${disableEdit} onclick="${editFunction}(${row.ID})">
+    <button type="button" class="btn btn-icon btn-label-warning btn-warning ${classCssEdit}" ${disableEdit} onclick="${editFunction}(${row.ID})">
         <span class="tf-icons bx bx-edit-alt"></span>
     </button>
-    <button type="button" class="btn btn-icon btn-label-danger btn-outline-danger ${classCssDelete}" ${disableDelete} onclick="${deleteFunction}(${row.ID})">
+    <button type="button" class="btn btn-icon btn-label-danger btn-danger ${classCssDelete}" ${disableDelete} onclick="${deleteFunction}(${row.ID})">
         <span class="tf-icons bx bx-trash"></span>
     </button>
 `;
+}
+
+function renderGroupActionButtonsPermission(data, type, row, useFunc, permission) {
+    // console.log(permission)
+    const editFunction = `funcEdit${useFunc}`;
+    const deleteFunction = `funcDelete${useFunc}`;
+    const ViewerFunction = `funcView${useFunc}`;
+
+    let returnButton = '';
+    const adminRoles = ['SuperAdmin', 'Admin'];
+
+    if (adminRoles.includes(permission)) {
+        returnButton = `
+        <button type="button" class="btn btn-icon btn-label-info btn-info" onclick="${ViewerFunction}(${row.ID})">
+            <span class="tf-icons bx bx-search-alt"></span>
+        </button>&nbsp
+        <button type="button" class="btn btn-icon btn-label-warning btn-warning" onclick="${editFunction}(${row.ID})">
+            <span class="tf-icons bx bx-edit-alt"></span>
+        </button>&nbsp
+        <button type="button" class="btn btn-icon btn-label-danger btn-danger" onclick="${deleteFunction}(${row.ID})">
+            <span class="tf-icons bx bx-trash"></span>
+        </button>
+    `;
+    } else if (permission === 'User') {
+        returnButton = `
+        <button type="button" class="btn btn-icon btn-label-info btn-info" onclick="${ViewerFunction}(${row.ID})">
+            <span class="tf-icons bx bx-search-alt"></span>
+        </button>&nbsp
+        <button type="button" class="btn btn-icon btn-label-warning btn-warning" onclick="${editFunction}(${row.ID})">
+            <span class="tf-icons bx bx-edit-alt"></span>
+        </button>
+    `;
+    } else if (permission === 'Viewer') {
+        returnButton = `
+        <button type="button" class="btn btn-icon btn-label-info btn-info" onclick="${ViewerFunction}(${row.ID})">
+            <span class="tf-icons bx bx-search-alt"></span>
+        </button>
+    `;
+    }
+
+    return returnButton;
 }
 
 function renderGroupActionAccessMenuButtons(data, type, row, useFunc) {
@@ -301,7 +365,7 @@ function renderGroupActionAccessMenuButtons(data, type, row, useFunc) {
     // console.log(type)
     const accessMenuFunction = `func${useFunc}`;
     return `
-    <button type="button" class="btn btn-icon btn-label-danger btn-outline-danger" onclick="${accessMenuFunction}(${row.ID})">
+    <button type="button" class="btn btn-icon btn-label-danger btn-danger" onclick="${accessMenuFunction}(${row.ID})">
         <span class="tf-icons bx bx-sitemap"></span>
     </button>
 `;

@@ -158,14 +158,18 @@
                                     <select id="userClass" name="userClass" class="form-select select2"
                                         autocomplete="off" data-allow-clear="true">
                                         <option value="">Select</option>
-                                        <option value="it" @if ($dataEmployee->user_class == 'it') selected @endif>ฝ่าย IT
+                                        {{-- <option value="it" @if ($dataEmployee->user_class == 'it') selected @endif>ฝ่าย IT
                                         </option>
                                         <option value="mt" @if ($dataEmployee->user_class == 'mt') selected @endif>ฝ่ายอาคาร
                                         </option>
                                         <option value="hr" @if ($dataEmployee->user_class == 'hr') selected @endif>ฝ่าย Hr
                                         </option>
                                         <option value="userOther" @if ($dataEmployee->user_class == 'userOther') selected @endif>
-                                            ผู้ใช้งานทั่วไป</option>
+                                            ผู้ใช้งานทั่วไป</option> --}}
+                                        <option value="SuperAdmin" @if ($dataEmployee->user_class == 'SuperAdmin') selected @endif>ผู้ดูแลระบบ</option>
+                                        <option value="Admin" @if ($dataEmployee->user_class == 'Admin') selected @endif>เจ้าหน้าที่</option>
+                                        <option value="User" @if ($dataEmployee->user_class == 'User') selected @endif>ผู้บันทึกข้อมูล</option>
+                                        <option value="Viewer" @if ($dataEmployee->user_class == 'Viewer') selected @endif>ผู้ใช้งานทั่วไป</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">

@@ -10,7 +10,7 @@
             <div class="row g-2">
 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label-md mb-2" for="freeze_account">แผนก</label>
+                    <label class="form-label-md mb-2" for="freeze_account">ชื่อแผนก</label>
                     <input type="text" id="freeze_account" class="form-control" name="freeze_account"
                         autocomplete="off" value="{{ $dataFreezeAccount->freeze_account }}" />
                 </div>

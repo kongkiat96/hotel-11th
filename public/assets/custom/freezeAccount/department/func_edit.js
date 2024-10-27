@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         fv.validate().then(function (status) {
             if (status === 'Valid') {
-                postFormData("/freeze-account/department/edit-freezeAccount-department/" + freezeID, formData)
+                postFormData("/accounting/department/edit-freezeAccount-department/" + freezeID, formData)
                     .done(onSaveEditFreezeSuccess)
                     .fail(handleAjaxSaveError);
             }

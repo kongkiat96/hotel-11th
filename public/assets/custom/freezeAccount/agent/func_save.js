@@ -8,7 +8,7 @@ $(document).ready(function () {
 
         fv.validate().then(function (status) {
             if (status === 'Valid') {
-                postFormData("/freeze-account/agent/save-freezeAccount-agent", formData)
+                postFormData("/accounting/agent/save-freezeAccount-agent", formData)
                     .done(onSaveFreezeSuccess)
                     .fail(handleAjaxSaveError);
             }

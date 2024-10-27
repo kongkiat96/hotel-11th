@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::prefix('freeze-account')->group(function () {
+    Route::prefix('accounting')->group(function () {
         Route::prefix('/agent')->group(function () {
             Route::get('', 'FreezeAccount\AgentController@index');
             Route::post('/table-freezeAccount-agent', 'FreezeAccount\AgentController@getDataFreezeAccountAgent');
@@ -82,6 +82,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/edit-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@editFreezeAccountDepartment');
 
             Route::post('/delete-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@deleteFreezeAccountDepartment');
+        });
+    });
+
+    Route::prefix('tele')->group(function () {
+        Route::prefix('/telelist')->group(function () {
+            Route::get('', 'Tele\TelelistController@index');
         });
     });
 
@@ -122,7 +128,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('', 'Settings\MenuController@index');
             Route::get('/menu-modal', 'Settings\MenuController@showMenuModal');
             Route::get('/menu-sub-modal', 'Settings\MenuController@showMenuSubModal');
-            Route::get('/access-menu-modal/{idMapEmployee}','Settings\MenuController@showAccessMenuModal');
+            Route::get('/access-menu-modal/{idMapEmployee}', 'Settings\MenuController@showAccessMenuModal');
 
             Route::post('/save-menu-main', 'Settings\MenuController@saveDataMenuMain');
             Route::get('/show-edit-menu-main/{menuMainID}', 'Settings\MenuController@showEditMenuMain');
@@ -138,7 +144,6 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/table-menu', 'Settings\MenuController@showDataMenu');
             Route::get('/table-menu-sub', 'Settings\MenuController@showDataMenuSub');
-
         });
 
         Route::prefix('/about-company')->group(function () {

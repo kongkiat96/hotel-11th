@@ -17,7 +17,7 @@ $(function () {
                 '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden"></span></div></div>',
         },
         ajax: {
-            url: "/freeze-account/agent/table-freezeAccount-agent",
+            url: "/accounting/agent/table-freezeAccount-agent",
             type: 'POST',
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -102,7 +102,7 @@ $(function () {
                 '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden"></span></div></div>',
         },
         ajax: {
-            url: "/freeze-account/agent/table-freezeAccount-agent",
+            url: "/accounting/agent/table-freezeAccount-agent",
             type: 'POST',
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -174,7 +174,7 @@ $(function () {
 
 $(document).ready(function () {
     $('#addFreezeAccountAgent').click(function () {
-        showModalWithAjax('#addFreezeAccountAgentModal', '/freeze-account/agent/add-freezeAccount-agent-modal', ['#status_freeze', '#bankID']);
+        showModalWithAjax('#addFreezeAccountAgentModal', '/accounting/agent/add-freezeAccount-agent-modal', ['#status_freeze', '#bankID']);
     });
 });
 
@@ -193,9 +193,9 @@ function renderStatusFreezeBadge(data, type, full, row) {
 }
 
 function funcEditFreezeList(freezeID) {
-    showModalWithAjax('#editFreezeAccountAgentModal', '/freeze-account/agent/show-edit-freezeAccount-agent-modal/' + freezeID, ['#status_freeze']);
+    showModalWithAjax('#editFreezeAccountAgentModal', '/accounting/agent/show-edit-freezeAccount-agent-modal/' + freezeID, ['#status_freeze']);
 }
 
 function funcDeleteFreezeList(freezeID) {
-    handleAjaxDeleteResponse(freezeID, "/freeze-account/agent/delete-freezeAccount-agent/" + freezeID);
+    handleAjaxDeleteResponse(freezeID, "/accounting/agent/delete-freezeAccount-agent/" + freezeID);
 }

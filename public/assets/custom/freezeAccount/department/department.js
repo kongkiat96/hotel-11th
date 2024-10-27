@@ -17,7 +17,7 @@ $(function () {
                 '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden"></span></div></div>',
         },
         ajax: {
-            url: "/freeze-account/department/table-freezeAccount-department",
+            url: "/accounting/department/table-freezeAccount-department",
             type: 'POST',
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -102,7 +102,7 @@ $(function () {
                 '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden"></span></div></div>',
         },
         ajax: {
-            url: "/freeze-account/department/table-freezeAccount-department",
+            url: "/accounting/department/table-freezeAccount-department",
             type: 'POST',
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -174,7 +174,7 @@ $(function () {
 
 $(document).ready(function () {
     $('#addFreezeAccountDepartment').click(function () {
-        showModalWithAjax('#addFreezeAccountDepartmentModal', '/freeze-account/department/add-freezeAccount-department-modal', ['#status_freeze', '#bankID']);
+        showModalWithAjax('#addFreezeAccountDepartmentModal', '/accounting/department/add-freezeAccount-department-modal', ['#status_freeze', '#bankID']);
     });
 });
 
@@ -193,9 +193,9 @@ function renderStatusFreezeBadge(data, type, full, row) {
 }
 
 function funcEditFreezeList(freezeID) {
-    showModalWithAjax('#editFreezeAccountDepartmentModal', '/freeze-account/department/show-edit-freezeAccount-department-modal/' + freezeID, ['#status_freeze']);
+    showModalWithAjax('#editFreezeAccountDepartmentModal', '/accounting/department/show-edit-freezeAccount-department-modal/' + freezeID, ['#status_freeze']);
 }
 
 function funcDeleteFreezeList(freezeID) {
-    handleAjaxDeleteResponse(freezeID, "/freeze-account/department/delete-freezeAccount-department/" + freezeID);
+    handleAjaxDeleteResponse(freezeID, "/accounting/department/delete-freezeAccount-department/" + freezeID);
 }

@@ -64,5 +64,5 @@ function setupFormValidationTeleList(formElement) {
 
 function onSaveTeleListSuccess(response) {
     handleAjaxSaveResponse(response);
-    closeAndResetModal("#addteleDepartmentModal", "#formAddTeleList");
+    closeAndResetModal("#addTeleDepartmentModal", "#formAddTeleList");
 }

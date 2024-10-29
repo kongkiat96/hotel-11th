@@ -237,6 +237,7 @@ class getDataMasterModel extends Model
             ->where('tms.status', 1)
             ->select('tmm.ID', 'tmm.menu_link', 'menu_icon', 'tmm.menu_name', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_sub_icon')
             ->orderBy('tmm.menu_sort', 'asc')
+            ->orderBy('tms.ID', 'asc')
             ->get();
         // จัดกลุ่มเมนูหลักและย่อย
         $groupedMenus = [];

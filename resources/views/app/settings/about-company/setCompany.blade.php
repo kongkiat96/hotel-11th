@@ -1,61 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="modal fade" id="companyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="companyModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="departmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="departmentModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="groupModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="groupModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="prefixNameModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="prefixNameModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="classListModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="classListModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editCompanyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editCompanyModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editDepartmentModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editGroupModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editGroupModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editPrefixNameModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editPrefixNameModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editClassListModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editClassListModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
@@ -116,7 +116,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingCompany table table-bordered">
+                            <table class="dt-settingCompany table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
@@ -136,7 +136,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingDepartment table table-bordered">
+                            <table class="dt-settingDepartment table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
@@ -156,7 +156,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingGroup table table-bordered">
+                            <table class="dt-settingGroup table table-bordered table-hover">
                                 <thead>
                                     <tr>
 
@@ -179,7 +179,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingClassList table table-bordered">
+                            <table class="dt-settingClassList table table-bordered table-hover">
                                 <thead>
                                     <tr>
 
@@ -200,7 +200,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingPrefixName table table-bordered">
+                            <table class="dt-settingPrefixName table table-bordered table-hover">
                                 <thead>
                                     <tr>
 

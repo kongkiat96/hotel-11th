@@ -62,7 +62,7 @@
         </div>
         <div class="card-body">
             <div class="text-nowrap">
-                <table class="dt-employee-current table table-bordered">
+                <table class="dt-employee-current table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>ลำดับ</th>

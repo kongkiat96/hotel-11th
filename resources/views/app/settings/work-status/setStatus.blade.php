@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="modal fade" id="addStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="addStatusModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editStatusModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="addFlagTypeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="addFlagTypeModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
     </div>
 
-    <div class="modal fade" id="editFlagTypeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editFlagTypeModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
         </div>
@@ -59,7 +59,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingStatus table table-bordered">
+                            <table class="dt-settingStatus table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
@@ -81,7 +81,7 @@
                             </button>
                         </div>
                         <div class="text-nowrap">
-                            <table class="dt-settingFlagType table table-bordered">
+                            <table class="dt-settingFlagType table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>

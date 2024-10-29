@@ -8,13 +8,13 @@
         <div class="modal-body">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="flagName">ชื่อรายการรูปแบบสถานะง</label>
+                    <label class="form-label-md mb-2" for="flagName">ชื่อรายการรูปแบบสถานะง</label>
                     <input type="text" id="flagName" class="form-control" name="flagName"
                         autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="typeWork">รูปแบบของสถานะ</label>
+                    <label class="form-label-md mb-2" for="typeWork">รูปแบบของสถานะ</label>
                     <select id="typeWork" name="typeWork" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

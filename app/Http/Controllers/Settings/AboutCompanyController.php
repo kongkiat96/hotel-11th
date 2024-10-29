@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Helpers\getAccessToMenu;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Master\AllValidator;
 use App\Models\Master\getDataMasterModel;
@@ -34,13 +35,16 @@ class AboutCompanyController extends Controller
         $urlName        = "กำหนดค่าภายในองค์กร";
         $urlSubLink     = "about-company";
 
-        // dd($getCompany);
-        // $getFlagType = $this->getMaster->getDataFlagType();
-        // dd($url);
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
         return view('app.settings.about-company.setCompany', [
             'url'               => $url,
             'urlName'           => $urlName,
             'urlSubLink'        => $urlSubLink,
+            'listMenus'     => $getAccessMenus
         ]);
     }
 

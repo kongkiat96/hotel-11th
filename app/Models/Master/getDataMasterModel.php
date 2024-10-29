@@ -63,12 +63,13 @@ class getDataMasterModel extends Model
         return $getTambon;
     }
 
-    public function getProvinceID($tambonCode) {
+    public function getProvinceID($tambonCode)
+    {
         // dd($tambonCode);
         $getProvinceID = $this->getDatabase->table('tbm_province')
-        ->select('id', 'tambon_code', 'tambon', 'zipcode')
-        ->where('tambon_code', $tambonCode)
-        ->get();
+            ->select('id', 'tambon_code', 'tambon', 'zipcode')
+            ->where('tambon_code', $tambonCode)
+            ->get();
 
         return $getProvinceID;
     }
@@ -188,7 +189,84 @@ class getDataMasterModel extends Model
         return $returnGroup;
     }
 
-    public function getGroupMapID($groupDepartment){
-        dd($groupDepartment);
+    public function getMenuMain()
+    {
+
+        $getMenuMain = $this->getDatabase->table('tbm_menu_main')
+            ->select('ID', 'menu_name')
+            ->where('deleted', 0)
+            ->get();
+        return $getMenuMain;
+    }
+
+    public function getMenuToAccess()
+    {
+        $getMenu = $this->getDatabase->table('tbm_menu_sub AS tms')
+            ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_id', '=', 'tmm.ID')
+            ->select('tms.ID', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_main_ID', 'tmm.menu_name', 'tmm.menu_icon', 'tmm.menu_link', 'tms.menu_sub_icon', 'tms.status')
+            ->where('tms.deleted', 0)
+            ->orderBy('tmm.menu_sort', 'asc')
+            ->orderBy('tms.ID', 'asc')
+            ->get();
+        return $getMenu;
+    }
+
+    public function getUserList($idMapEmployee)
+    {
+        $getEmployee = $this->getDatabase->table('users')->where('map_employee', $idMapEmployee)->get();
+        return $getEmployee;
+    }
+
+    public function getAccessMenu($idMapEmployee)
+    {
+        $getAccessMenu = $this->getDatabase->table('tbt_user_access_menu')
+            ->where('employee_code', $idMapEmployee)
+            ->get();
+        return $getAccessMenu;
+    }
+
+    public static function getMenusName($menuID)
+    {
+        $isDataBase = DB::connection('mysql');
+        $returnMenus = $isDataBase->table('tbm_menu_sub AS tms')
+            ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_ID', '=', 'tmm.ID')
+            ->whereIn('tms.ID', $menuID)
+            ->where('tmm.deleted', 0)
+            ->where('tmm.status', 1)
+            ->where('tms.deleted', 0)
+            ->where('tms.status', 1)
+            ->select('tmm.ID', 'tmm.menu_link', 'menu_icon', 'tmm.menu_name', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_sub_icon')
+            ->orderBy('tmm.menu_sort', 'asc')
+            ->get();
+        // จัดกลุ่มเมนูหลักและย่อย
+        $groupedMenus = [];
+        foreach ($returnMenus as $menu) {
+            $groupedMenus[$menu->menu_name]['main'] = [
+                'ID' => $menu->ID,
+                'menu_link' => $menu->menu_link,
+                'menu_icon' => $menu->menu_icon,
+                'menu_name' => $menu->menu_name,
+            ];
+            $groupedMenus[$menu->menu_name]['subs'][] = [
+                'menu_sub_name' => $menu->menu_sub_name,
+                'menu_sub_link' => $menu->menu_sub_link,
+                'menu_sub_icon' => $menu->menu_sub_icon,
+            ];
+        }
+
+        // dd($groupedMenus);
+        return $groupedMenus;
+    }
+
+    public function getDataBankList()
+    {
+        $getDataBankList = $this->getDatabase->table('tbm_bank_list')->where('status',1)->where('deleted',0)->orderBy('ID')->get();
+        return $getDataBankList;
+    }
+
+    public function getFreezeAccountList()
+    {
+        $getFreezeAccountList = $this->getDatabase->table('tbt_freeze_account')->where('deleted',0)->orderBy('id')->get();
+        return $getFreezeAccountList;
     }
 }

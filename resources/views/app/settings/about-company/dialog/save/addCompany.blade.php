@@ -6,22 +6,22 @@
     <hr>
     <form id="formAddCompany" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="companyNameTH">ชื่อบริษัท (ภาษาไทย)</label>
+                    <label class="form-label-md mb-2" for="companyNameTH">ชื่อบริษัท (ภาษาไทย)</label>
                     <input type="text" id="companyNameTH" class="form-control" name="companyNameTH"
                         autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="companyNameEN">ชื่อบริษัท (ภาษาอังกฤษ)</label>
+                    <label class="form-label-md mb-2" for="companyNameEN">ชื่อบริษัท (ภาษาอังกฤษ)</label>
                     <input type="text" id="companyNameEN" class="form-control" name="companyNameEN"
                         autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="statusOfCompany">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="statusOfCompany">สถานะการใช้งาน</label>
                     <select id="statusOfCompany" name="statusOfCompany" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

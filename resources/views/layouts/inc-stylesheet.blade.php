@@ -55,6 +55,24 @@
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/pickr/pickr-themes.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/dropzone/dropzone.css') }}" />
 
-{{-- <link rel="stylesheet" href="../../assets/vendor/libs/dropzone/dropzone.css" /> --}}
-<link rel="stylesheet" href=" {{ asset('assets/vendor/libs/dropzone/dropzone.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css') }}" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.0/css/fixedColumns.dataTables.min.css">
+
+
+{{-- <link rel="stylesheet" href="../../assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" /> --}}
+{{-- <link rel="stylesheet" href="../../assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" /> --}}
+{{-- <link rel="stylesheet" href="../../assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css" /> --}}
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css') }}" />
+
+{{-- <link rel="stylesheet" href="../../assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" /> --}}
+{{-- <link rel="stylesheet" href="../../assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css" />
+<link rel="stylesheet" href="../../assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css" /> --}}
+
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css') }}" />
+
+
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"> --}}

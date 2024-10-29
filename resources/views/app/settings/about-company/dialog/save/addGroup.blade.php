@@ -10,12 +10,12 @@
 
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="groupName">ชื่อแผนก</label>
+                    <label class="form-label-md mb-2" for="groupName">ชื่อแผนก</label>
                     <input type="text" id="groupName" class="form-control" name="groupName" autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="companyForGroup">ชื่อบริษัท</label>
+                    <label class="form-label-md mb-2" for="companyForGroup">ชื่อบริษัท</label>
                     <select id="companyForGroup" name="companyForGroup" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="department">สังกัด / ฝ่าย</label>
+                    <label class="form-label-md mb-2" for="department">สังกัด / ฝ่าย</label>
                     <select id="department" name="department" class="form-select select2" data-allow-clear="true">
                         <option value="">Select</option>
                         {{-- @foreach ($getDepartment as $key => $value)
@@ -40,7 +40,7 @@
 
 
                 <div class="col-md-6">
-                    <label class="form-label" for="statusOfGroup">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="statusOfGroup">สถานะการใช้งาน</label>
                     <select id="statusOfGroup" name="statusOfGroup" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

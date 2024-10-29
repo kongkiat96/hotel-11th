@@ -105,6 +105,13 @@ class getDataMasterController extends Controller
         return response()->json($getDataTambon);
     }
 
+    public function getDataBankList()
+    {
+        $getDataBankList = $this->masterModel->getDataBankList();
+        // dd($getDataBankList);
+        return response()->json($getDataBankList);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

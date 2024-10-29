@@ -8,13 +8,13 @@
         <div class="modal-body">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_flagName">ชื่อรายการรูปแบบสถานะ</label>
+                    <label class="form-label-md mb-2" for="edit_flagName">ชื่อรายการรูปแบบสถานะ</label>
                     <input type="text" id="edit_flagName" class="form-control" name="edit_flagName"
                         autocomplete="off" value="{{ $dataFlagType[0]->flag_name }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_typeWork">รูปแบบของสถานะ</label>
+                    <label class="form-label-md mb-2" for="edit_typeWork">รูปแบบของสถานะ</label>
                     <select id="edit_typeWork" name="edit_typeWork" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

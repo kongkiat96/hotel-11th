@@ -6,16 +6,16 @@
     <hr>
     <form id="formAddPrefixName" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="prefixName">คำนำหน้าชื่อ</label>
+                    <label class="form-label-md mb-2" for="prefixName">คำนำหน้าชื่อ</label>
                     <input type="text" id="prefixName" class="form-control" name="prefixName"
                         autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="statusOfPrefixName">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="statusOfPrefixName">สถานะการใช้งาน</label>
                     <select id="statusOfPrefixName" name="statusOfPrefixName" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

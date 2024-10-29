@@ -6,16 +6,16 @@
     <hr>
     <form id="formAddClassList" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="className">ระดับตำแหน่งงาน</label>
+                    <label class="form-label-md mb-2" for="className">ระดับตำแหน่งงาน</label>
                     <input type="text" id="className" class="form-control" name="className"
                         autocomplete="off" />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="statusOfClassList">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="statusOfClassList">สถานะการใช้งาน</label>
                     <select id="statusOfClassList" name="statusOfClassList" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

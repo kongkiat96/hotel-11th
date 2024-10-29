@@ -1,0 +1,68 @@
+$(document).ready(function () {
+    $("#saveEditRentAccount").on("click", function (e) {
+        e.preventDefault();
+        removeValidationFeedback();
+        const form = $("#formEditRentAccount")[0];
+        const rentAccountID = $('#rentAccountID').val();
+        const fv = setupFormValidationRentAccount(form);
+        const formData = new FormData(form);
+
+        fv.validate().then(function (status) {
+            if (status === 'Valid') {
+                postFormData("/accounting/rent-account/edit-rent-account/" + rentAccountID, formData)
+                    .done(onSaveEditRentAccountSuccess)
+                    .fail(handleAjaxSaveError);
+            }
+        });
+    });
+});
+
+function setupFormValidationRentAccount(formElement) {
+    const validators = {
+        notEmpty: message => ({
+            validators: {
+                notEmpty: { message }
+            }
+        }),
+        notEmptyAndRegexp: (message, regexp) => ({
+            validators: {
+                notEmpty: { message },
+                regexp: { regexp, message: 'ข้อมูลไม่ถูกต้อง' }
+            }
+        }),
+        dateValidator: message => ({
+            validators: {
+                notEmpty: { message },
+                date: {
+                    format: 'YYYY-MM-DD', // กำหนดรูปแบบที่ต้องการ
+                    message: 'วันที่ไม่ถูกต้อง'
+                }
+            }
+        })
+    };
+
+    const validationRules = {
+        rent_department: validators.notEmptyAndRegexp('ระบุชื่อ แผนก', /^[a-zA-Z0-9ก-๏\s]+$/u),
+        rent_total: validators.notEmptyAndRegexp('ระบุ จำนวน', /^[0-9,]+(\.[0-9]{1,2})?$/u),
+        edit_date_request_rent: validators.dateValidator('ระบุ วันที่แจ้งขอเช่าบัญชี'),
+
+    };
+
+    return FormValidation.formValidation(formElement, {
+        fields: validationRules,
+        plugins: {
+            trigger: new FormValidation.plugins.Trigger(),
+            bootstrap5: new FormValidation.plugins.Bootstrap5({
+                eleValidClass: '',
+                rowSelector: '.col-md-6'
+            }),
+            submitButton: new FormValidation.plugins.SubmitButton(),
+            autoFocus: new FormValidation.plugins.AutoFocus()
+        },
+    });
+}
+
+function onSaveEditRentAccountSuccess(response) {
+    handleAjaxEditResponse(response);
+    closeAndResetModal("#editRentAccountModal", "#formEditRentAccount");
+}

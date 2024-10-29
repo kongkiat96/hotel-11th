@@ -6,16 +6,16 @@
     <hr>
     <form id="formEditPrefixName" class="form-block">
 
-        <div class="modal-body">
+        <div class="modal-body pt-1">
             <div class="row g-2">
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_prefixName">คำนำหน้าชื่อ</label>
+                    <label class="form-label-md mb-2" for="edit_prefixName">คำนำหน้าชื่อ</label>
                     <input type="text" id="edit_prefixName" class="form-control" name="edit_prefixName"
                         autocomplete="off" value="{{ $dataPrefixName[0]->prefix_name }}"/>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="edit_statusOfPrefixName">สถานะการใช้งาน</label>
+                    <label class="form-label-md mb-2" for="edit_statusOfPrefixName">สถานะการใช้งาน</label>
                     <select id="edit_statusOfPrefixName" name="edit_statusOfPrefixName" class="form-select select2"
                         data-allow-clear="true">
                         <option value="">Select</option>

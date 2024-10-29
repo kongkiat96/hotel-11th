@@ -27,6 +27,9 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('home', 'HomeController@index');
 
+    // เพิ่ม Route ที่ใช้ Middleware ตรวจสอบสิทธิ์
+    // Route::get('menu/{menu_sub_ID}', 'MenuController@show')->middleware('check.access:menu_sub_ID');
+
     Route::prefix('table')->group(function () {
         Route::get('', 'Table\TableController@index');
     });
@@ -38,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/table-employee-disable', 'Employee\EmployeeController@showDataEmployeeDisable');
         });
 
-        Route::prefix('/search-employee')->group(function () {
+        Route::prefix('/search-all-employee')->group(function () {
             Route::get('', 'Employee\EmployeeController@searchEmployee');
         });
 
@@ -53,6 +56,71 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/add-employee')->group(function () {
             Route::get('', 'Employee\EmployeeController@addEmployee');
             Route::post('/save-employee', 'Employee\EmployeeController@saveEmployee');
+        });
+    });
+
+    Route::prefix('accounting')->group(function () {
+        Route::prefix('/agent')->group(function () {
+            Route::get('', 'FreezeAccount\AgentController@index');
+            Route::post('/table-freezeAccount-agent', 'FreezeAccount\AgentController@getDataFreezeAccountAgent');
+
+            Route::get('/add-freezeAccount-agent-modal', 'FreezeAccount\AgentController@showAddFreezeAccountAgentModal');
+            Route::post('/save-freezeAccount-agent', 'FreezeAccount\AgentController@saveDataFreezeAccountAgent');
+            Route::get('/show-edit-freezeAccount-agent-modal/{freezeAccountID}', 'FreezeAccount\AgentController@showEditFreezeAccountAgentModal');
+            Route::post('/edit-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@editFreezeAccountAgent');
+            Route::get('/view-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@viewFreezeAccountAgent');
+            Route::post('/delete-freezeAccount-agent/{freezeAccountID}', 'FreezeAccount\AgentController@deleteFreezeAccountAgent');
+        });
+
+        Route::prefix('/department')->group(function () {
+            Route::get('', 'FreezeAccount\DepartmentController@index');
+            Route::post('/table-freezeAccount-department', 'FreezeAccount\DepartmentController@getDataFreezeAccountDepartment');
+
+            Route::get('/add-freezeAccount-department-modal', 'FreezeAccount\DepartmentController@showAddFreezeAccountDepartmentModal');
+            Route::post('/save-freezeAccount-department', 'FreezeAccount\DepartmentController@saveDataFreezeAccountDepartment');
+            Route::get('/show-edit-freezeAccount-department-modal/{freezeAccountID}', 'FreezeAccount\DepartmentController@showEditFreezeAccountDepartmentModal');
+            Route::post('/edit-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@editFreezeAccountDepartment');
+            Route::get('/view-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@viewFreezeAccountDepartment');
+            Route::post('/delete-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@deleteFreezeAccountDepartment');
+        });
+
+        Route::prefix('/rent-account')->group(function () {
+            Route::get('', 'RentAccount\RentAccountController@index');
+            Route::post('/table-rent-account', 'RentAccount\RentAccountController@getDataRentAccount');
+
+            Route::get('/add-rent-account-modal', 'RentAccount\RentAccountController@showAddRentAccountModal');
+            Route::post('/save-rent-account', 'RentAccount\RentAccountController@saveDataRentAccount');
+            Route::get('/show-edit-rent-account-modal/{rentAccountID}', 'RentAccount\RentAccountController@showEditRentAccountModal');
+            Route::post('/edit-rent-account/{rentAccountID}', 'RentAccount\RentAccountController@editRentAccount');
+            Route::get('/view-rent-account/{rentAccountID}', 'RentAccount\RentAccountController@viewRentAccount');
+            Route::post('/delete-rent-account/{rentAccountID}', 'RentAccount\RentAccountController@deleteRentAccount');
+        });
+    });
+
+    Route::prefix('/address')->group(function () {
+        Route::prefix('/agent-address')->group(function () {
+            Route::get('', 'Address\AgentAddressController@index');
+            Route::post('/table-agent-address', 'Address\AgentAddressController@getDataAgentAddress');
+            Route::get('/add-agent-address-modal', 'Address\AgentAddressController@showAddAgentAddressModal');
+            Route::post('/save-agent-address', 'Address\AgentAddressController@saveDataAgentAddress');
+            Route::get('/show-edit-agent-address-modal/{agentAddressID}', 'Address\AgentAddressController@showEditAgentAddressModal');
+            Route::post('/edit-agent-address/{agentAddressID}', 'Address\AgentAddressController@editAgentAddress');
+            Route::get('/view-agent-address/{agentAddressID}', 'Address\AgentAddressController@viewAgentAddress');
+            Route::post('/delete-agent-address/{agentAddressID}', 'Address\AgentAddressController@deleteAgentAddress');
+        });
+    });
+
+    Route::prefix('tele')->group(function () {
+        Route::prefix('/telelist')->group(function () {
+            Route::get('', 'Tele\TelelistController@index');
+            Route::post('/table-telelist', 'Tele\TelelistController@getDataTelelist');
+
+            Route::get('/add-telelist-modal', 'Tele\TelelistController@showAddTelelistModal');
+            Route::post('/save-telelist', 'Tele\TelelistController@saveDataTelelist');
+            Route::get('/show-edit-telelist-modal/{telelistID}', 'Tele\TelelistController@showEditTelelistModal');
+            Route::post('/edit-telelist/{telelistID}', 'Tele\TelelistController@editTelelist');
+            Route::get('/view-telelist/{telelistID}', 'Tele\TelelistController@viewTelelist');
+            Route::post('/delete-telelist/{telelistID}', 'Tele\TelelistController@deleteTelelist');
         });
     });
 
@@ -77,8 +145,38 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete-flag-type/{flagTypeID}', 'Settings\SetStatusController@deleteFlagType');
         });
 
+        Route::prefix('/bank-list')->group(function () {
+            Route::get('', 'Settings\BankListController@index');
+
+            Route::get('/add-bank-modal', 'Settings\BankListController@showAddBankModal');
+            Route::post('/save-bank', 'Settings\BankListController@saveDataBank');
+            Route::post('/get-data-banks', 'Settings\BankListController@getDataBanks');
+
+            Route::get('/show-bank-modal/{bankID}', 'Settings\BankListController@showEditBankModal');
+            Route::post('/edit-bank/{bankID}', 'Settings\BankListController@editBank');
+            Route::post('/delete-bank/{bankID}', 'Settings\BankListController@deleteBank');
+        });
+
         Route::prefix('/menu')->group(function () {
             Route::get('', 'Settings\MenuController@index');
+            Route::get('/menu-modal', 'Settings\MenuController@showMenuModal');
+            Route::get('/menu-sub-modal', 'Settings\MenuController@showMenuSubModal');
+            Route::get('/access-menu-modal/{idMapEmployee}', 'Settings\MenuController@showAccessMenuModal');
+
+            Route::post('/save-menu-main', 'Settings\MenuController@saveDataMenuMain');
+            Route::get('/show-edit-menu-main/{menuMainID}', 'Settings\MenuController@showEditMenuMain');
+            Route::post('/edit-menu-main/{menuMainID}', 'Settings\MenuController@editMenuMain');
+            Route::post('/delete-menu-main/{menuMainID}', 'Settings\MenuController@deleteMenuMain');
+
+            Route::post('/save-menu-sub', 'Settings\MenuController@saveDataMenuSub');
+            Route::get('/show-edit-menu-sub/{menuSubID}', 'Settings\MenuController@showEditMenuSub');
+            Route::post('/edit-menu-sub/{menuSubID}', 'Settings\MenuController@editMenuSub');
+            Route::post('/delete-menu-sub/{menuSubID}', 'Settings\MenuController@deleteMenuSub');
+
+            Route::post('/save-access-menu', 'Settings\MenuController@saveDataAccessMenu');
+
+            Route::get('/table-menu', 'Settings\MenuController@showDataMenu');
+            Route::get('/table-menu-sub', 'Settings\MenuController@showDataMenuSub');
         });
 
         Route::prefix('/about-company')->group(function () {
@@ -132,6 +230,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/get-province', 'Master\getDataMasterController@getDataProvince');
         Route::get('/get-amphoe/{provinceID}', 'Master\getDataMasterController@getDataAmphoe');
         Route::get('/get-tambon/{aumphoeID}', 'Master\getDataMasterController@getDataTambon');
+        Route::get('/bank-list', 'Master\getDataMasterController@getDataBankList');
     });
 
     Route::prefix('test')->group(function () {

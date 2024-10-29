@@ -1,6 +1,8 @@
+{{-- {{ dd(Auth::user()->accessMenus->pluck('menu_sub_ID')->toArray()) }} --}}
+{{-- {{ dd($listMenus) }} --}}
 <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0">
     <div class="container-xxl d-flex h-100">
-        <ul class="menu-inner">
+        {{-- <ul class="menu-inner">
             <li class="menu-item {{ $url[0] == 'home' ? 'active' : '' }}">
                 <a href="{{ url('/home') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -39,12 +41,6 @@
                             <div data-i18n="ค้นหาข้อมูลพนักงาน">ค้นหาข้อมูลพนักงาน</div>
                         </a>
                     </li>
-                    {{-- <li class="menu-item {{ @$urlSubLink == 'request-employee' ? 'active' : '' }}">
-                        <a href="{{ url('employee/request-employee') }}" class="menu-link">
-                            <i class='menu-icon tf-icons bx bxs-user-voice'></i>
-                            <div data-i18n="ขอเพิ่มบุคคลากร">ขอเพิ่มบุคคลากร</div>
-                        </a>
-                    </li> --}}
                 </ul>
             </li>
 
@@ -73,7 +69,17 @@
                             <div data-i18n="กำหนดค่าภายในองค์กร">กำหนดค่าภายในองค์กร</div>
                         </a>
                     </li>
+
+                    <li class="menu-item {{ @$urlSubLink == 'bank-list' ? 'active' : '' }}">
+                        <a href="{{ url('settings-system/bank-list') }}" class="menu-link">
+                            <i class='menu-icon tf-icons bx bx-buildings'></i>
+                            <div data-i18n="กำหนดรายชื่อธนาคาร">กำหนดรายชื่อธนาคาร</div>
+                        </a>
+                    </li>
+                    
                 </ul>
+
+                
             </li>
 
             <li class="menu-item">
@@ -82,6 +88,46 @@
                     <div data-i18n="ออกจากระบบ"></div>
                 </a>
             </li>
+        </ul> --}}
+        
+
+
+
+        <ul class="menu-inner">
+            <li class="menu-item {{ $url[0] == 'home' ? 'active' : '' }}">
+                <a href="{{ url('/home') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="หน้าแรก">หน้าแรก</div>
+                </a>
+            </li>
+            @foreach ($listMenus as $menuLink => $menuData)
+                <li class="menu-item {{ $url[0] == $menuData['main']['menu_link'] ? 'active' : '' }}">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx {{ $menuData['main']['menu_icon'] }}"></i>
+                        <div data-i18n="{{ $menuData['main']['menu_name'] }}">{{ $menuData['main']['menu_name'] }}</div>
+                    </a>
+                    @if (!empty($menuData['subs']))
+                        <ul class="menu-sub w-auto">
+                            @foreach ($menuData['subs'] as $subMenu)
+                                <li class="menu-item {{ @$urlSubLink == $subMenu['menu_sub_link'] ? 'active' : '' }}">
+                                    <a href="{{ url($menuData['main']['menu_link'].'/'.$subMenu['menu_sub_link']) }}" class="menu-link">
+                                        <i class="menu-icon tf-icons bx {{ $subMenu['menu_sub_icon'] }}"></i>
+                                        <div data-i18n="{{ $subMenu['menu_sub_name'] }}">{{ $subMenu['menu_sub_name'] }}</div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </li>
+            @endforeach
+        
+            <li class="menu-item">
+                <a href="{{ url('/logout') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-log-out"></i>
+                    <div data-i18n="ออกจากระบบ"></div>
+                </a>
+            </li>
         </ul>
+        
     </div>
 </aside>

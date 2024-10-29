@@ -43,10 +43,19 @@ $(function () {
             { data: 'rent_department', class: "text-center" },
             { data: 'date_request_rent', class: "text-center" },
             { data: 'date_send', class: "text-center" },
-            
 
-            { data: 'rent_total', class: "text-center" },
-            { data: 'rent_reason', class: "text-center" },
+
+            { data: 'rent_total', class: "text-nowrap" },
+            {
+                data: 'rent_reason',
+                class: "text-center",
+                render: function (data, type, row) {
+                    if (data && data.length > 50) { // เช็คความยาวของข้อความ
+                        return data.substring(0, 50) + '...'; // ตัดข้อความเหลือ 20 ตัวอักษร พร้อมใส่ "..." ต่อท้าย
+                    }
+                    return data; // แสดงข้อความตามปกติหากสั้นกว่า 20 ตัวอักษร
+                }
+            },
             { data: 'created_at', class: "text-center" },
             { data: 'created_user', class: "text-center" },
             { data: 'updated_at', class: "text-center" },
@@ -76,7 +85,7 @@ $(function () {
 
 $(document).ready(function () {
     $('#addRentAccount').click(function () {
-        showModalWithAjax('#addRentAccountModal', '/accounting/rent-account/add-rent-account-modal');
+        showModalWithAjax('#addRentAccountModal', '/accounting/rent-account/add-rent-account-modal',[]);
     });
 
 });
@@ -85,7 +94,7 @@ function reTable() {
 }
 
 function funcEditRentAccount(rentAccountID) {
-    showModalWithAjax('#editRentAccountModal', '/accounting/rent-account/show-edit-rent-account-modal/' + rentAccountID);
+    showModalWithAjax('#editRentAccountModal', '/accounting/rent-account/show-edit-rent-account-modal/' + rentAccountID,[]);
 }
 
 function funcDeleteRentAccount(rentAccountID) {
@@ -93,5 +102,5 @@ function funcDeleteRentAccount(rentAccountID) {
 }
 
 function funcViewRentAccount(rentAccountID) {
-    showModalViewWithAjax('#viewRentAccountModal', '/accounting/rent-account/view-rent-account/' + rentAccountID);
+    showModalViewWithAjax('#viewRentAccountModal', '/accounting/rent-account/view-rent-account/' + rentAccountID,[]);
 }

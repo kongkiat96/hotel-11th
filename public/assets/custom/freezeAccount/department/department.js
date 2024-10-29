@@ -58,7 +58,17 @@ $(function () {
             { data: 'bookbank_name', class: "text-center" },
             { data: 'account_number', class: "text-center" },
             { data: 'amount_total', class: "text-center" },
-            { data: 'reason_freeze', class: "text-center" },
+            // { data: 'reason_freeze', class: "text-center" },
+            {
+                data: 'reason_freeze',
+                class: "text-center",
+                render: function (data, type, row) {
+                    if (data && data.length > 50) { // เช็คความยาวของข้อความ
+                        return data.substring(0, 50) + '...'; // ตัดข้อความเหลือ 20 ตัวอักษร พร้อมใส่ "..." ต่อท้าย
+                    }
+                    return data; // แสดงข้อความตามปกติหากสั้นกว่า 20 ตัวอักษร
+                }
+            },
             { data: 'created_at', class: "text-center" },
             { data: 'created_user', class: "text-center" },
             // { data: 'status_freeze', class: "text-center" },
@@ -150,7 +160,17 @@ $(function () {
             { data: 'bookbank_name', class: "text-center" },
             { data: 'account_number', class: "text-center" },
             { data: 'amount_total', class: "text-center" },
-            { data: 'reason_freeze', class: "text-center" },
+            // { data: 'reason_freeze', class: "text-center" },
+            {
+                data: 'reason_freeze',
+                class: "text-center",
+                render: function (data, type, row) {
+                    if (data && data.length > 50) { // เช็คความยาวของข้อความ
+                        return data.substring(0, 50) + '...'; // ตัดข้อความเหลือ 20 ตัวอักษร พร้อมใส่ "..." ต่อท้าย
+                    }
+                    return data; // แสดงข้อความตามปกติหากสั้นกว่า 20 ตัวอักษร
+                }
+            },
             { data: 'created_at', class: "text-center" },
             { data: 'created_user', class: "text-center" },
             // { data: 'status_freeze', class: "text-center" },

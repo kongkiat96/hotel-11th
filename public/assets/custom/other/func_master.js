@@ -151,6 +151,21 @@ function showModalWithAjax(modalId, url, select2Selectors) {
             $(modalId + ' .modal-dialog').html(response);
             initializeSelectWithModal(select2Selectors, modalId);
             $(modalId).modal('show');
+
+            // ใช้ event เมื่อ modal ถูกแสดง
+            $(modalId).on('shown.bs.modal', function () {
+                const textareas = document.querySelectorAll(modalId + ' textarea');
+                if (textareas.length) {
+                    textareas.forEach(textarea => {
+                        // กำหนดให้ textarea ขยายตัวตามเนื้อหาที่มีอยู่
+                        textarea.style.height = 'auto'; // รีเซ็ตความสูงก่อน
+                        textarea.style.height = textarea.scrollHeight + 'px'; // ตั้งความสูงให้เท่ากับ scrollHeight
+                        autosize(textarea); // เรียกใช้ autosize
+                    });
+                } else {
+                    console.log("No textareas found");
+                }
+            });
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
@@ -170,6 +185,21 @@ function showModalViewWithAjax(modalId, url, select2Selectors) {
             $(modalId + ' textarea').attr('readonly', true);
             initializeSelectWithModal(select2Selectors, modalId);
             $(modalId).modal('show');
+
+            // ใช้ event เมื่อ modal ถูกแสดง
+            $(modalId).on('shown.bs.modal', function () {
+                const textareas = document.querySelectorAll(modalId + ' textarea');
+                if (textareas.length) {
+                    textareas.forEach(textarea => {
+                        // กำหนดให้ textarea ขยายตัวตามเนื้อหาที่มีอยู่
+                        textarea.style.height = 'auto'; // รีเซ็ตความสูงก่อน
+                        textarea.style.height = textarea.scrollHeight + 'px'; // ตั้งความสูงให้เท่ากับ scrollHeight
+                        autosize(textarea); // เรียกใช้ autosize
+                    });
+                } else {
+                    console.log("No textareas found");
+                }
+            });
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);

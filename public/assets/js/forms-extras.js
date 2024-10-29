@@ -5,7 +5,7 @@
 'use strict';
 
 (function () {
-  const textarea = document.querySelector('#autosize-demo'),
+  const textarea = document.querySelectorAll('textarea'),
     creditCard = document.querySelector('.credit-card-mask'),
     phoneMask = document.querySelector('.phone-number-mask'),
     dateMask = document.querySelector('.date-mask'),

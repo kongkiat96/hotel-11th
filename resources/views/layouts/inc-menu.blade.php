@@ -107,7 +107,7 @@
                         <div data-i18n="{{ $menuData['main']['menu_name'] }}">{{ $menuData['main']['menu_name'] }}</div>
                     </a>
                     @if (!empty($menuData['subs']))
-                        <ul class="menu-sub">
+                        <ul class="menu-sub w-auto">
                             @foreach ($menuData['subs'] as $subMenu)
                                 <li class="menu-item {{ @$urlSubLink == $subMenu['menu_sub_link'] ? 'active' : '' }}">
                                     <a href="{{ url($menuData['main']['menu_link'].'/'.$subMenu['menu_sub_link']) }}" class="menu-link">

@@ -60,4 +60,3 @@
         initializeDatePickers(datePickers);
         clearInputDateModal('#addRentAccountModal',datePickers);
     </script>
-    

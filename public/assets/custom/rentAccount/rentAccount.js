@@ -1,6 +1,6 @@
 $(function () {
-    var dt_teleListDepartment = $('.dt-teleListDepartment')
-    dt_teleListDepartment.DataTable({
+    var dt_rentAccount = $('.dt-rentAccount')
+    dt_rentAccount.DataTable({
         processing: true,
         paging: true,
         pageLength: 10,
@@ -19,25 +19,34 @@ $(function () {
         },
         dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         ajax: {
-            url: "/tele/telelist/table-telelist",
+            url: "/accounting/rent-account/table-rent-account",
             type: 'POST',
             headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                    "content"
+                ),
+            },
+            data: function (d) {
+                // return $.extend({}, d, {
+                //     "statusOfFreeze": 'Y',
+                // });
             }
         },
         columns: [
             {
                 data: null,
                 render: function (data, type, row, meta) {
+                    // เริ่มลำดับใหม่ทุกหน้า
                     return meta.row + 1;
                 },
             },
-            { data: 'tele_department', class: "text-center" },
-            { data: 'tele_machine', class: "text-center" },
-            { data: 'date_receive', class: "text-center" },
+            { data: 'rent_department', class: "text-center" },
+            { data: 'date_request_rent', class: "text-center" },
             { data: 'date_send', class: "text-center" },
-            { data: 'tele_reason', class: "text-nowrap" },
-            { data: 'bookbank_name', class: "text-center" },
+            
+
+            { data: 'rent_total', class: "text-center" },
+            { data: 'rent_reason', class: "text-center" },
             { data: 'created_at', class: "text-center" },
             { data: 'created_user', class: "text-center" },
             { data: 'updated_at', class: "text-center" },
@@ -48,44 +57,41 @@ $(function () {
                 searchable: false,
                 class: "text-center",
                 render: function (data, type, row) {
+                    // console.log(row)
                     const Permission = (row.Permission);
-                    return renderGroupActionButtonsPermission(data, type, row, 'TeleListDepartment', Permission);
+                    return renderGroupActionButtonsPermission(data, type, row, 'RentAccount', Permission);
                 }
             }
+
         ],
         columnDefs: [
             {
+                // searchable: false,
+                // orderable: false,
                 targets: 0,
             },
         ],
-        // footerCallback: function (row, data, start, end, display) {
-        //     const api = this.api();
-        //     const totalCount = api.data().count(); // อัปเดตการนับ
-        //     $('#totalCount').html(totalCount);
-        // }
     });
-
 });
 
 $(document).ready(function () {
-    $('#addteleDepartment').click(function () {
-        showModalWithAjax('#addTeleDepartmentModal', '/tele/telelist/add-telelist-modal', ['#freeze_account_id']);
+    $('#addRentAccount').click(function () {
+        showModalWithAjax('#addRentAccountModal', '/accounting/rent-account/add-rent-account-modal');
     });
+
 });
-
 function reTable() {
-    $('.dt-teleListDepartment').DataTable().ajax.reload();
-    // $('.dt-UnfreezeAccountDepartment').DataTable().ajax.reload();
+    $('.dt-rentAccount').DataTable().ajax.reload();
 }
 
-function funcEditTeleListDepartment(teleDepartmentID) {
-    showModalWithAjax('#editTeleDepartmentModal', '/tele/telelist/show-edit-telelist-modal/' + teleDepartmentID, ['#freeze_account_id']);
+function funcEditRentAccount(rentAccountID) {
+    showModalWithAjax('#editRentAccountModal', '/accounting/rent-account/show-edit-rent-account-modal/' + rentAccountID);
 }
 
-function funcDeleteTeleListDepartment(teleDepartmentID) {
-    handleAjaxDeleteResponse(teleDepartmentID, "/tele/telelist/delete-telelist/" + teleDepartmentID);
+function funcDeleteRentAccount(rentAccountID) {
+    handleAjaxDeleteResponse(rentAccountID, "/accounting/rent-account/delete-rent-account/" + rentAccountID);
 }
 
-function funcViewTeleListDepartment(teleDepartmentID) {
-    showModalViewWithAjax('#viewTeleDepartmentModal', '/tele/telelist/view-telelist/' + teleDepartmentID, ['#freeze_account_id']);
+function funcViewRentAccount(rentAccountID) {
+    showModalViewWithAjax('#viewRentAccountModal', '/accounting/rent-account/view-rent-account/' + rentAccountID);
 }

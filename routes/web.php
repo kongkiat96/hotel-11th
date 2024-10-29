@@ -83,6 +83,31 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/view-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@viewFreezeAccountDepartment');
             Route::post('/delete-freezeAccount-department/{freezeAccountID}', 'FreezeAccount\DepartmentController@deleteFreezeAccountDepartment');
         });
+
+        Route::prefix('/rent-account')->group(function () {
+            Route::get('', 'RentAccount\RentAccountController@index');
+            Route::post('/table-rent-account', 'RentAccount\RentAccountController@getDataRentAccount');
+
+            Route::get('/add-rent-account-modal', 'RentAccount\RentAccountController@showAddRentAccountModal');
+            Route::post('/save-rent-account', 'RentAccount\RentAccountController@saveDataRentAccount');
+            Route::get('/show-edit-rent-account-modal/{rentAccountID}', 'RentAccount\RentAccountController@showEditRentAccountModal');
+            Route::post('/edit-rent-account/{rentAccountID}', 'RentAccount\RentAccountController@editRentAccount');
+            Route::get('/view-rent-account/{rentAccountID}', 'RentAccount\RentAccountController@viewRentAccount');
+            Route::post('/delete-rent-account/{rentAccountID}', 'RentAccount\RentAccountController@deleteRentAccount');
+        });
+    });
+
+    Route::prefix('/address')->group(function () {
+        Route::prefix('/agent-address')->group(function () {
+            Route::get('', 'Address\AgentAddressController@index');
+            Route::post('/table-agent-address', 'Address\AgentAddressController@getDataAgentAddress');
+            Route::get('/add-agent-address-modal', 'Address\AgentAddressController@showAddAgentAddressModal');
+            Route::post('/save-agent-address', 'Address\AgentAddressController@saveDataAgentAddress');
+            Route::get('/show-edit-agent-address-modal/{agentAddressID}', 'Address\AgentAddressController@showEditAgentAddressModal');
+            Route::post('/edit-agent-address/{agentAddressID}', 'Address\AgentAddressController@editAgentAddress');
+            Route::get('/view-agent-address/{agentAddressID}', 'Address\AgentAddressController@viewAgentAddress');
+            Route::post('/delete-agent-address/{agentAddressID}', 'Address\AgentAddressController@deleteAgentAddress');
+        });
     });
 
     Route::prefix('tele')->group(function () {

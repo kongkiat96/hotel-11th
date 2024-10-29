@@ -13,10 +13,12 @@ $(function () {
         fixedColumns: {
             leftColumns: 2
         },
+
         language: {
             processing:
                 '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden"></span></div></div>',
         },
+        dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         ajax: {
             url: "/accounting/department/table-freezeAccount-department",
             type: 'POST',
@@ -103,10 +105,12 @@ $(function () {
         fixedColumns: {
             leftColumns: 2
         },
+
         language: {
             processing:
                 '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden"></span></div></div>',
         },
+        dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         ajax: {
             url: "/accounting/department/table-freezeAccount-department",
             type: 'POST',

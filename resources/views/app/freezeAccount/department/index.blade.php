@@ -35,14 +35,14 @@
                 <ul class="nav nav-pills mb-3" role="tablist">
                     <li class="nav-item">
                         <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#freeze-account" aria-controls="#freeze-account" aria-selected="true">
+                            data-bs-target="#freeze-account" aria-controls="#freeze-account" aria-selected="true" id="reTabA">
                             รายการข้อมูลบัญชีที่อายัดในระบบ
                         </button>
                     </li>
 
                     <li class="nav-item">
                         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#unFreeze-Acoount" aria-controls="unFreeze-Acoount" aria-selected="true">
+                            data-bs-target="#unFreeze-Acoount" aria-controls="unFreeze-Acoount" aria-selected="true" id="reTabB">
                             รายการข้อมูลบัญชีที่ยกเลิกอายัดในระบบ
                         </button>
                     </li>

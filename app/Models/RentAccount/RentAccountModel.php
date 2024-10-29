@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Tele;
+namespace App\Models\RentAccount;
 
 use Carbon\Carbon;
 use Exception;
@@ -11,39 +11,32 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class TeleListModel extends Model
+class RentAccountModel extends Model
 {
     use HasFactory;
 
-    public function getDataTelelist($param)
+    public function getDataRentAccount($request)
     {
         try {
-            $sql = DB::connection('mysql')->table('tbt_tele_department AS td')
-                ->leftJoin('tbt_freeze_account AS fa', 'td.freeze_account_id', '=', 'fa.id')
-                ->where('td.deleted', 0);
+            $sql = DB::connection('mysql')->table('tbt_rent_account')->where('deleted', 0);
 
-            $sql = $sql->select('td.*', 'fa.bookbank_name');
-            if ($param['start'] == 0) {
-                $sql = $sql->limit($param['length']);
+            if ($request['start'] == 0) {
+                $sql = $sql->limit($request['length']);
             } else {
-                $sql = $sql->offset($param['start'])
-                    ->limit($param['length']);
+                $sql = $sql->offset($request['start'])
+                    ->limit($request['length']);
             }
-
             $sql = $sql->orderBy('created_at', 'desc')->get();
-            // $sql = $sql->orderBy('created_at', 'desc');
             $dataCount = $sql->count();
-            // dd($sql);
             $newArr = [];
             foreach ($sql as $key => $value) {
                 $newArr[] = [
                     'ID' => $value->id,
-                    'tele_department' => $value->tele_department,
-                    'date_receive' => !empty($value->date_receive) ? $value->date_receive : '-',
+                    'rent_department' => $value->rent_department,
+                    'date_request_rent' => !empty($value->date_request_rent) ? $value->date_request_rent : '-',
                     'date_send' => !empty($value->date_sent) ? $value->date_sent : '-',
-                    'tele_machine' => $value->tele_machine,
-                    'tele_reason' => $value->tele_reason,
-                    'bookbank_name' => $value->bookbank_name,
+                    'rent_total' => number_format($value->rent_total, 0),
+                    'rent_reason' => $value->rent_reason,
                     'created_at' => $value->created_at,
                     'created_user' => $value->created_user,
                     'updated_at' => !empty($value->updated_at) ? $value->updated_at : '-',
@@ -68,14 +61,16 @@ class TeleListModel extends Model
             ];
         }
     }
-    public function saveDataTelelist($data)
+
+    public function saveDataRentAccount($data)
     {
         try {
             // dd($data);
+            $data['rent_total'] = str_replace(',', '', $data['rent_total']);
             $data['created_user'] = Auth::user()->emp_code;
             $data['created_at'] = Carbon::now();
 
-            DB::connection('mysql')->table('tbt_tele_department')->insert($data);
+            DB::connection('mysql')->table('tbt_rent_account')->insert($data);
 
             return [
                 'status' => 200,
@@ -90,14 +85,10 @@ class TeleListModel extends Model
         }
     }
 
-    public function getTeleList($teleDepartmentID)
+    public function getDataRentAccountById($id)
     {
         try {
-            $sql = DB::connection('mysql')->table('tbt_tele_department AS td')
-                ->leftJoin('tbt_freeze_account AS fa', 'td.freeze_account_id', '=', 'fa.id')
-                ->where('td.id', $teleDepartmentID);
-            $sql = $sql->select('td.*', 'fa.bookbank_name');
-            $sql = $sql->first();
+            $sql = DB::connection('mysql')->table('tbt_rent_account')->where('deleted', 0)->where('id', $id)->first();
             return $sql;
         } catch (Exception $e) {
             Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
@@ -108,21 +99,19 @@ class TeleListModel extends Model
         }
     }
 
-    public function editTelelist($data, $teleDepartmentID)
+    public function editRentAccount($data, $id)
     {
         try {
-            
-            $data['date_receive'] = $data['edit_date_receive'];
+            $data['date_request_rent'] = $data['edit_date_request_rent'];
             $data['date_sent'] = $data['edit_date_sent'];
+            $data['rent_total'] = str_replace(',', '', $data['rent_total']);
             $data['updated_user'] = Auth::user()->emp_code;
             $data['updated_at'] = Carbon::now();
-            $data = Arr::except($data, ['edit_date_receive', 'edit_date_sent']);
-
-            // dd($data);
-            DB::connection('mysql')->table('tbt_tele_department')->where('id', $teleDepartmentID)->update($data);
+            $data = Arr::except($data, ['edit_date_request_rent', 'edit_date_sent']);
+            DB::connection('mysql')->table('tbt_rent_account')->where('id', $id)->update($data);
             return [
                 'status' => 200,
-                'message' => 'Delete Success'
+                'message' => 'Update Success'
             ];
         } catch (Exception $e) {
             Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
@@ -133,10 +122,10 @@ class TeleListModel extends Model
         }
     }
 
-    public function deleteTelelist($teleDepartmentID)
+    public function deleteRentAccount($id)
     {
         try {
-            DB::connection('mysql')->table('tbt_tele_department')->where('id', $teleDepartmentID)->update([
+            DB::connection('mysql')->table('tbt_rent_account')->where('id', $id)->update([
                 'deleted' => 1,
                 'updated_user'  => Auth::user()->emp_code,
                 'updated_at'    => Carbon::now()

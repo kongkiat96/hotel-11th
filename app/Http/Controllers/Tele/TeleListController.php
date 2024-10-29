@@ -62,4 +62,46 @@ class TeleListController extends Controller
         $saveData = $this->telelistModel->saveDataTelelist($request->input());
         return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
     }
+
+    public function showEditTelelistModal($teleDepartmentID)
+    {
+        if (request()->ajax()) {
+            $getFreezeAccountList     = $this->getMaster->getFreezeAccountList();
+            $getTeleList = $this->telelistModel->getTeleList($teleDepartmentID);
+            // dd($getFreezeAccountList);
+
+            return view('app.tele.teleList.dialog.edit.editTelelist', [
+                'getFreezeAccountList'   => $getFreezeAccountList,
+                'getTeleList'        => $getTeleList
+            ]);
+        }
+        return abort(404);
+    }
+
+    public function editTelelist(Request $request, $teleDepartmentID)
+    {
+        $saveData = $this->telelistModel->editTelelist($request->input(), $teleDepartmentID);
+        return response()->json(['status' => $saveData['status'], 'message' => $saveData['message']]);
+    }
+
+    public function deleteTelelist($teleDepartmentID)
+    {
+        $deleteData = $this->telelistModel->deleteTelelist($teleDepartmentID);
+        return response()->json(['status' => $deleteData['status'], 'message' => $deleteData['message']]);
+    }
+
+    public function viewTelelist($teleDepartmentID)
+    {
+        if (request()->ajax()) {
+            $getFreezeAccountList     = $this->getMaster->getFreezeAccountList();
+            $getTeleList = $this->telelistModel->getTeleList($teleDepartmentID);
+            // dd($getFreezeAccountList);
+
+            return view('app.tele.teleList.dialog.view.viewTelelist', [
+                'getFreezeAccountList'   => $getFreezeAccountList,
+                'getTeleList'        => $getTeleList
+            ]);
+        }
+        return abort(404);
+    }
 }

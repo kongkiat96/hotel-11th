@@ -50,7 +50,7 @@ class TeleListController extends Controller
             $getFreezeAccountList     = $this->getMaster->getFreezeAccountList();
             // dd($getFreezeAccountList);
 
-            return view('app.tele.teleList.dialog.save.addTelelist', [
+            return view('app.tele.teleList.dialog.save.addTeleList', [
                 'getFreezeAccountList'        => $getFreezeAccountList,
             ]);
         }
@@ -70,7 +70,7 @@ class TeleListController extends Controller
             $getTeleList = $this->telelistModel->getTeleList($teleDepartmentID);
             // dd($getFreezeAccountList);
 
-            return view('app.tele.teleList.dialog.edit.editTelelist', [
+            return view('app.tele.teleList.dialog.edit.editTeleList', [
                 'getFreezeAccountList'   => $getFreezeAccountList,
                 'getTeleList'        => $getTeleList
             ]);
@@ -97,7 +97,7 @@ class TeleListController extends Controller
             $getTeleList = $this->telelistModel->getTeleList($teleDepartmentID);
             // dd($getFreezeAccountList);
 
-            return view('app.tele.teleList.dialog.view.viewTelelist', [
+            return view('app.tele.teleList.dialog.view.viewTeleList', [
                 'getFreezeAccountList'   => $getFreezeAccountList,
                 'getTeleList'        => $getTeleList
             ]);

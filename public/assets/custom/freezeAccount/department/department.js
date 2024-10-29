@@ -7,10 +7,11 @@ $(function () {
         pageLength: 10,
         deferRender: true,
         ordering: true,
-        lengthChange: false,
-        bDestroy: false,
+        lengthChange: true,
+        bDestroy: true, // เปลี่ยนเป็น true
+        scrollX: true,
         fixedColumns: {
-            leftColumns: 2 // ตรึงคอลัมน์แรก
+            leftColumns: 2
         },
         language: {
             processing:
@@ -96,10 +97,11 @@ $(function () {
         pageLength: 10,
         deferRender: true,
         ordering: true,
-        lengthChange: false,
-        bDestroy: false,
+        lengthChange: true,
+        bDestroy: true, // เปลี่ยนเป็น true
+        scrollX: true,
         fixedColumns: {
-            leftColumns: 2 // ตรึงคอลัมน์แรก
+            leftColumns: 2
         },
         language: {
             processing:

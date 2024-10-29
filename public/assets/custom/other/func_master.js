@@ -227,6 +227,23 @@ function initializeDatePickers(pickerIds) {
         }
     });
 }
+
+function clearInputDateModal(modalID,datePickers)
+{
+     // เรียกใช้ฟังก์ชันเมื่อ modal ถูกเปิด
+     const modalElement = document.querySelector(modalID); // แทนที่ด้วย ID ของ modal ของคุณ
+     modalElement.addEventListener('show.bs.modal', function () {
+         initializeDatePickers(datePickers);
+     });
+ 
+     // ทำลาย date pickers เมื่อ modal ถูกปิด
+     modalElement.addEventListener('hide.bs.modal', function () {
+         datePickerInstances.forEach(function(instance) {
+             instance.destroy(); // ทำลาย date picker
+         });
+         datePickerInstances = []; // เคลียร์ instance
+     });
+}
 function renderStatusBadge(data, type, full, row) {
     const statusMap = {
         1: { title: 'กำลังใช้งาน', className: 'bg-label-success' },
@@ -312,7 +329,7 @@ function renderGroupActionButtons(data, type, row, useFunc, disableButtons = fal
     return `
     <button type="button" class="btn btn-icon btn-label-warning btn-warning ${classCssEdit}" ${disableEdit} onclick="${editFunction}(${row.ID})">
         <span class="tf-icons bx bx-edit-alt"></span>
-    </button>
+    </button>&nbsp
     <button type="button" class="btn btn-icon btn-label-danger btn-danger ${classCssDelete}" ${disableDelete} onclick="${deleteFunction}(${row.ID})">
         <span class="tf-icons bx bx-trash"></span>
     </button>

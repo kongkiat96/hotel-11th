@@ -11,7 +11,6 @@
 
     @include('layouts.inc-stylesheet')
     @yield('stylesheets')
-
 </head>
 
 <body>

@@ -263,4 +263,10 @@ class getDataMasterModel extends Model
         $getDataBankList = $this->getDatabase->table('tbm_bank_list')->where('status',1)->where('deleted',0)->orderBy('ID')->get();
         return $getDataBankList;
     }
+
+    public function getFreezeAccountList()
+    {
+        $getFreezeAccountList = $this->getDatabase->table('tbt_freeze_account')->where('deleted',0)->orderBy('id')->get();
+        return $getFreezeAccountList;
+    }
 }

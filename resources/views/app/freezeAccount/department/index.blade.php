@@ -58,8 +58,8 @@
                             @endif
                         </div>
                         <div class="text-nowrap table-responsive">
-                            <table class="dt-freezeAccountDepartment table table-bordered table-hover table-striped">
-                                <thead>
+                            <table class="dt-freezeAccountDepartment table table-hover table-striped">
+                                <thead class="table-bordered">
                                     <tr>
                                         <th>ลำดับ</th>
                                         <th>ชื่อแผนก</th>
@@ -83,8 +83,8 @@
 
                     <div class="tab-pane fade" id="unFreeze-Acoount" role="tabpanel">
                         <div class="text-nowrap table-responsive">
-                            <table class="dt-UnfreezeAccountDepartment table table-bordered table-hover table-striped">
-                                <thead>
+                            <table class="dt-UnfreezeAccountDepartment table table-hover table-striped">
+                                <thead class="table-bordered">
                                     <tr>
                                         <th>ลำดับ</th>
                                         <th>ชื่อแผนก</th>

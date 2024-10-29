@@ -88,6 +88,14 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('tele')->group(function () {
         Route::prefix('/telelist')->group(function () {
             Route::get('', 'Tele\TelelistController@index');
+            Route::post('/table-telelist', 'Tele\TelelistController@getDataTelelist');
+
+            Route::get('/add-telelist-modal', 'Tele\TelelistController@showAddTelelistModal');
+            Route::post('/save-telelist', 'Tele\TelelistController@saveDataTelelist');
+            Route::get('/show-edit-telelist-modal/{telelistID}', 'Tele\TelelistController@showEditTelelistModal');
+            Route::post('/edit-telelist/{telelistID}', 'Tele\TelelistController@editTelelist');
+            Route::get('/view-telelist/{telelistID}', 'Tele\TelelistController@viewTelelist');
+            Route::post('/delete-telelist/{telelistID}', 'Tele\TelelistController@deleteTelelist');
         });
     });
 

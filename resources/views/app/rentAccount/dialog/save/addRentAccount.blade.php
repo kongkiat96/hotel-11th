@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">เพิ่มข้อมูลรายการข้อมูลแจ้งขอเช่าบัญชี</h5>
+        <h5 class="modal-title">เพิ่มข้อมูลรายการแจ้งขอเช่าบัญชี</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <hr>

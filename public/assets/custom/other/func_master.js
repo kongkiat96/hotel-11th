@@ -59,7 +59,7 @@ function handleAjaxEditResponse(response) {
 function handleAjaxDeleteResponse(itemId, deleteUrl) {
     Swal.fire({
         text: "ยืนยันการลบข้อมูล",
-        icon: "question",
+        icon: "warning",
         showCancelButton: true,
         cancelButtonText: "ยกเลิก",
         confirmButtonText: "ยืนยัน",

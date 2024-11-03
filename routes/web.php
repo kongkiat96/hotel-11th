@@ -124,6 +124,15 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::prefix('/document')->group(function () {
+        Route::prefix('/invoice')->group(function () {
+            Route::get('', 'Document\InvoiceController@index');
+            Route::post('/table-invoice', 'Document\InvoiceController@getDataInvoice');
+
+            Route::get('/create-invoice', 'Document\InvoiceController@createInvoice')->name('create-invoice');
+        });
+    });
+
     Route::prefix('settings-system')->group(function () {
         Route::prefix('/work-status')->group(function () {
             Route::get('', 'Settings\SetStatusController@index');

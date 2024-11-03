@@ -108,64 +108,9 @@ if (document.getElementById('layout-menu')) {
   // Style Switcher (Light/Dark Mode)
   //---------------------------------
 
-  // let styleSwitcherToggleEl_Bankup = document.querySelector('.style-switcher-toggle');
-  // if (window.templateCustomizer) {
-  //   // setStyle light/dark on click of styleSwitcherToggleEl
-  //   if (styleSwitcherToggleEl) {
-  //     styleSwitcherToggleEl.addEventListener('click', function () {
-  //       if (window.Helpers.isLightStyle()) {
-  //         window.templateCustomizer.setStyle('dark');
-  //       } else {
-  //         window.templateCustomizer.setStyle('light');
-  //       }
-  //     });
-  //   }
-  //   // Update style switcher icon and tooltip based on current style
-  //   if (window.Helpers.isLightStyle()) {
-  //     if (styleSwitcherToggleEl) {
-  //       styleSwitcherToggleEl.querySelector('i').classList.add('bx-moon');
-  //       new bootstrap.Tooltip(styleSwitcherToggleEl, {
-  //         title: 'Dark mode',
-  //         fallbackPlacements: ['bottom']
-  //       });
-  //     }
-  //     switchImage('light');
-  //   } else {
-  //     if (styleSwitcherToggleEl) {
-  //       styleSwitcherToggleEl.querySelector('i').classList.add('bx-sun');
-  //       new bootstrap.Tooltip(styleSwitcherToggleEl, {
-  //         title: 'Light mode',
-  //         fallbackPlacements: ['bottom']
-  //       });
-  //     }
-  //     switchImage('dark');
-  //   }
-  // }
-
   let styleSwitcherToggleEl = document.querySelector('.style-switcher-toggle');
-
-  // ฟังก์ชันตรวจสอบเวลาและเปลี่ยนโหมด
-  function autoSwitchMode() {
-    const currentHour = new Date().getHours();
-
-    if (currentHour >= 19 || currentHour < 7) {
-      // เปลี่ยนเป็น dark mode ตั้งแต่ 19.00 ถึง 7.00
-      if (window.Helpers.isLightStyle()) {
-        window.templateCustomizer.setStyle('dark');
-      }
-    } else {
-      // เปลี่ยนเป็น light mode ตั้งแต่ 7.00 ถึง 19.00
-      if (!window.Helpers.isLightStyle()) {
-        window.templateCustomizer.setStyle('light');
-      }
-    }
-  }
-
-  // เรียกฟังก์ชัน autoSwitchMode เมื่อโหลดหน้า
-  autoSwitchMode();
-
-  // เช็คการปรับแต่งธีม
   if (window.templateCustomizer) {
+    // setStyle light/dark on click of styleSwitcherToggleEl
     if (styleSwitcherToggleEl) {
       styleSwitcherToggleEl.addEventListener('click', function () {
         if (window.Helpers.isLightStyle()) {
@@ -175,11 +120,10 @@ if (document.getElementById('layout-menu')) {
         }
       });
     }
-
     // Update style switcher icon and tooltip based on current style
     if (window.Helpers.isLightStyle()) {
       if (styleSwitcherToggleEl) {
-        styleSwitcherToggleEl.querySelector('i').classList.add('bx-sun');
+        styleSwitcherToggleEl.querySelector('i').classList.add('bx-moon');
         new bootstrap.Tooltip(styleSwitcherToggleEl, {
           title: 'Dark mode',
           fallbackPlacements: ['bottom']
@@ -188,7 +132,7 @@ if (document.getElementById('layout-menu')) {
       switchImage('light');
     } else {
       if (styleSwitcherToggleEl) {
-        styleSwitcherToggleEl.querySelector('i').classList.add('bx-moon');
+        styleSwitcherToggleEl.querySelector('i').classList.add('bx-sun');
         new bootstrap.Tooltip(styleSwitcherToggleEl, {
           title: 'Light mode',
           fallbackPlacements: ['bottom']
@@ -197,6 +141,62 @@ if (document.getElementById('layout-menu')) {
       switchImage('dark');
     }
   }
+
+  // let styleSwitcherToggleEl = document.querySelector('.style-switcher-toggle');
+
+  // // ฟังก์ชันตรวจสอบเวลาและเปลี่ยนโหมด
+  // function autoSwitchMode() {
+  //   const currentHour = new Date().getHours();
+
+  //   if (currentHour >= 19 || currentHour < 7) {
+  //     // เปลี่ยนเป็น dark mode ตั้งแต่ 19.00 ถึง 7.00
+  //     if (window.Helpers.isLightStyle()) {
+  //       window.templateCustomizer.setStyle('dark');
+  //     }
+  //   } else {
+  //     // เปลี่ยนเป็น light mode ตั้งแต่ 7.00 ถึง 19.00
+  //     if (!window.Helpers.isLightStyle()) {
+  //       window.templateCustomizer.setStyle('light');
+  //     }
+  //   }
+  // }
+
+  // // เรียกฟังก์ชัน autoSwitchMode เมื่อโหลดหน้า
+  // autoSwitchMode();
+
+  // // เช็คการปรับแต่งธีม
+  // if (window.templateCustomizer) {
+  //   if (styleSwitcherToggleEl) {
+  //     styleSwitcherToggleEl.addEventListener('click', function () {
+  //       if (window.Helpers.isLightStyle()) {
+  //         window.templateCustomizer.setStyle('dark');
+  //       } else {
+  //         window.templateCustomizer.setStyle('light');
+  //       }
+  //     });
+  //   }
+
+  //   // Update style switcher icon and tooltip based on current style
+  //   if (window.Helpers.isLightStyle()) {
+  //     if (styleSwitcherToggleEl) {
+  //       styleSwitcherToggleEl.querySelector('i').classList.add('bx-sun');
+  //       new bootstrap.Tooltip(styleSwitcherToggleEl, {
+  //         title: 'Dark mode',
+  //         fallbackPlacements: ['bottom']
+  //       });
+  //     }
+  //     switchImage('light');
+  //   } else {
+  //     if (styleSwitcherToggleEl) {
+  //       styleSwitcherToggleEl.querySelector('i').classList.add('bx-moon');
+  //       new bootstrap.Tooltip(styleSwitcherToggleEl, {
+  //         title: 'Light mode',
+  //         fallbackPlacements: ['bottom']
+  //       });
+  //     }
+  //     switchImage('dark');
+  //   }
+  // }
 
   // Update light/dark image based on current style
   function switchImage(style) {

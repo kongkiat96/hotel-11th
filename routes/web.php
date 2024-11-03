@@ -130,6 +130,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/table-invoice', 'Document\InvoiceController@getDataInvoice');
 
             Route::get('/create-invoice', 'Document\InvoiceController@createInvoice')->name('create-invoice');
+            Route::get('/created-invoice/{id}', 'Document\InvoiceController@createdInvoice')->name('created-invoice');
+            Route::post('/add-detail-invoice', 'Document\InvoiceController@addDetailInvoice');
         });
     });
 

@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^7.4",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -40,7 +40,9 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/GetAccessToMenuHelper.php"
+            "app/Helpers/getAccessToMenu.php",
+            "app/Helpers/NumberHelper.php",
+            "app/Helpers/CalculateDateHelper.php"
         ]
     },
     "autoload-dev": {

@@ -124,6 +124,18 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::prefix('/document')->group(function () {
+        Route::prefix('/invoice')->group(function () {
+            Route::get('', 'Document\InvoiceController@index');
+            Route::post('/table-invoice', 'Document\InvoiceController@getDataInvoice');
+
+            Route::get('/create-invoice', 'Document\InvoiceController@createInvoice')->name('create-invoice');
+            Route::get('/created-invoice/{id}', 'Document\InvoiceController@createdInvoice')->name('created-invoice');
+            Route::post('/add-detail-invoice', 'Document\InvoiceController@addDetailInvoice');
+            Route::delete('/delete-detail-invoice/{id}', 'Document\InvoiceController@deleteDetailInvoice');
+        });
+    });
+
     Route::prefix('settings-system')->group(function () {
         Route::prefix('/work-status')->group(function () {
             Route::get('', 'Settings\SetStatusController@index');

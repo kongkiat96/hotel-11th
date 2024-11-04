@@ -35,19 +35,23 @@
                 <ul class="nav nav-pills mb-3" role="tablist">
                     <li class="nav-item">
                         <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#rent-account" aria-controls="#rent-account" aria-selected="true">
-                            รายการข้อมูลแผนกที่ขอเช่าบัญชี
+                            data-bs-target="#invoice-list" aria-controls="#invoice-list" aria-selected="true">
+                            รายการข้อมูลใบแจ้งหนี้ประจำเดือน
                         </button>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="rent-account" role="tabpanel">
+                    <div class="tab-pane fade show active" id="invoice-list" role="tabpanel">
                         <div class="inline-spacing text-end">
                             @if(Auth::user()->user_system != 'Viewer')
-                            <button type="button" class="btn btn-info" id="addRentAccount">
+                            {{-- <button type="button" class="btn btn-info" id="addRentAccount">
                                 <i class='menu-icon tf-icons bx bx-list-ol'></i> เพิ่มข้อมูลรายการแจ้งขอเช่าบัญชี
-                            </button>
+                            </button> --}}
+
+                            <a href="{{ route('create-invoice') }}" class="btn btn-info">
+                                <i class='menu-icon tf-icons bx bx-file'></i> เพิ่มข้อมูลรายการใบแจ้งหนี้
+                            </a>
                             @endif
                         </div>
                         <div class="text-nowrap table-responsive">

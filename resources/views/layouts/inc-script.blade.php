@@ -83,3 +83,5 @@
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> --}}
 <!-- Buttons HTML5 export JS -->
 {{-- <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script> --}}
+<script src="{{ asset('assets/js/app-invoice-add.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/offcanvas-send-invoice.js') }}"></script> --}}

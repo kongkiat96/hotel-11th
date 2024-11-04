@@ -1,5 +1,15 @@
 @extends('layouts.app')
-
+@section('stylesheets')
+<style>
+    .delete-icon-container {
+    /* background-color: red; สีพื้นหลัง */
+    display: flex;
+    align-items: center; /* จัดกลางแนวตั้ง */
+    justify-content: center; /* จัดกลางแนวนอน */
+    padding: 8px; /* ปรับค่าตามที่ต้องการ */
+}
+</style>
+@endsection
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -15,7 +25,6 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row invoice-add">
             <!-- Invoice Add-->
-            <input type="text" value="{{ $dataInvoice->id }}" id="invoiceId">
             <div class="col-lg-9 col-12 mb-lg-0 mb-4">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
@@ -129,127 +138,146 @@
 
                         <hr class="mx-n4" />
                         {{-- {{ dd($countDetail) }} --}}
-                        @if($countDetail == 0)
-                        <form class="source-item py-sm-3" id="formListInvoice">
-                            <div class="mb-3" data-repeater-list="group-detail-invoice">
-                                <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
-                                    <div class="d-flex border rounded position-relative pe-0">
-                                        <div class="row w-100 m-0 p-3">
-                                            <div class="col-md-6 mb-md-0 mb-3 ps-md-0">
-                                                <p class="mb-2 repeater-title">รายละเอียด</p>
-                                                <textarea class="form-control" rows="2" placeholder="Item Information" name="group-detail-invoice[][detail_list]" required></textarea>
-                                            </div>
-                                            <div class="col-md-2 mb-md-0 mb-3">
-                                                <p class="mb-2 repeater-title">จำนวน / รายการ</p>
-                                                <input type="number" class="form-control invoice-item-price mb-2" placeholder="1" min="1" max="50" name="group-detail-invoice[][quantity]" required />
-                                            </div>
-                                            <div class="col-md-4 mb-md-0 mb-3">
-                                                <p class="mb-2 repeater-title">จำนวนเงิน</p>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control numeral-mask" placeholder="ระบุจำนวนเงิน" name="group-detail-invoice[][amount_total]" oninput="formatAmount(this)" required />
-                                                    <span class="input-group-text">฿</span>
+                        @if ($countDetail == 0)
+                            <form class="source-item py-sm-3" id="formListInvoice">
+                                <div class="mb-3" data-repeater-list="group-detail-invoice">
+                                    <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
+                                        <div class="d-flex border rounded position-relative pe-0">
+                                            <div class="row w-100 m-0 p-3">
+                                                <div class="col-md-6 mb-md-0 mb-3 ps-md-0">
+                                                    <p class="mb-2 repeater-title">รายละเอียด</p>
+                                                    <textarea class="form-control" rows="2" placeholder="Item Information"
+                                                        name="group-detail-invoice[][detail_list]" required></textarea>
+                                                </div>
+                                                <div class="col-md-2 mb-md-0 mb-3">
+                                                    <p class="mb-2 repeater-title">จำนวน / รายการ</p>
+                                                    <input type="number" class="form-control invoice-item-price mb-2"
+                                                        placeholder="1" min="1" max="50"
+                                                        name="group-detail-invoice[][quantity]" required />
+                                                </div>
+                                                <div class="col-md-4 mb-md-0 mb-3">
+                                                    <p class="mb-2 repeater-title">จำนวนเงิน</p>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control numeral-mask"
+                                                            placeholder="ระบุจำนวนเงิน"
+                                                            name="group-detail-invoice[][amount_total]"
+                                                            oninput="formatAmount(this)" required />
+                                                        <span class="input-group-text">฿</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
-                                            <i class="bx bx-x fs-4 text-muted cursor-pointer" data-repeater-delete></i>
+                                            <div class="delete-icon-container border-start p-2">
+                                                <i class="bx bxs-trash-alt text-danger cursor-pointer"
+                                                    data-repeater-delete data-bs-toggle="tooltip"
+                                                    data-bs-offset="0,5" data-bs-placement="top" data-bs-html="true"
+                                                    title="<span>ลบรายการนี้</span>"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="hidden" value="{{ $dataInvoice->id }}" name="invoiceId" id="invoiceId">
-                                    <button type="button" class="btn btn-success" name="saveListInvoice" id="saveListInvoice">
-                                        <i class='bx bx-save bx-xs me-1'></i> บันทึกรายการ
-                                    </button>
-                                    <button type="button" class="btn btn-primary" data-repeater-create>
-                                        <i class='bx bx-plus-medical bx-xs me-1'></i> เพิ่มรายการ
-                                    </button>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="hidden" value="{{ $dataInvoice->id }}" name="invoiceId"
+                                            id="invoiceId">
+                                        <button type="button" class="btn btn-success" name="saveListInvoice"
+                                            id="saveListInvoice">
+                                            <i class='bx bx-save bx-xs me-1'></i> บันทึกรายการ
+                                        </button>
+                                        <button type="button" class="btn btn-primary" data-repeater-create>
+                                            <i class='bx bx-plus-medical bx-xs me-1'></i> เพิ่มรายการ
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
                         @else
-                        <form class="source-item py-sm-3" id="formListInvoice">
-                            <div class="mb-3" data-repeater-list="group-detail-invoice">
-                                @foreach ($dataInvoiceList as $value)
-                                <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
-                                    <div class="d-flex border rounded position-relative pe-0">
-                                        <div class="row w-100 m-0 p-3">
-                                            <div class="col-md-6 mb-md-0 mb-3 ps-md-0">
-                                                <p class="mb-2 repeater-title">รายละเอียด</p>
-                                                <textarea class="form-control" rows="2" placeholder="Item Information"
-                                                    name="group-detail-invoice[][detail_list]" required>{{ $value->detail_list }}</textarea>
-                                            </div>
-                                            <div class="col-md-2 mb-md-0 mb-3">
-                                                <p class="mb-2 repeater-title">จำนวน / รายการ</p>
-                                                <input type="number" class="form-control invoice-item-price mb-2"
-                                                    placeholder="1" min="1" max="50"
-                                                    name="group-detail-invoice[][quantity]" value="{{ $value->quantity }}" required />
-                                            </div>
-                                            <div class="col-md-4 mb-md-0 mb-3">
-                                                <p class="mb-2 repeater-title">จำนวนเงิน</p>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control numeral-mask"
-                                                        placeholder="ระบุจำนวนเงิน"
-                                                        name="group-detail-invoice[][amount_total]"
-                                                        oninput="formatAmount(this)" required value="{{ $value->amount_total }}" />
-                                                    <span class="input-group-text">฿</span>
+                            <form class="source-item py-sm-3" id="formListInvoice">
+                                <div class="mb-3" data-repeater-list="group-detail-invoice">
+                                    @foreach ($dataInvoiceList['data'] as $index => $value)
+                                        <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
+                                            <div class="d-flex border rounded position-relative pe-0">
+                                                <div class="row w-100 m-0 p-3">
+                                                    <div class="col-md-6 mb-md-0 mb-3 ps-md-0">
+                                                        <p class="mb-2 repeater-title">รายละเอียด</p>
+                                                        <textarea class="form-control" rows="2" placeholder="Item Information"
+                                                            name="group-detail-invoice[{{ $index }}][detail_list]" required>{{ $value->detail_list }}</textarea>
+                                                    </div>
+                                                    <div class="col-md-2 mb-md-0 mb-3">
+                                                        <p class="mb-2 repeater-title">จำนวน / รายการ</p>
+                                                        <input type="number" class="form-control invoice-item-price mb-2"
+                                                            placeholder="1" min="1" max="50"
+                                                            name="group-detail-invoice[{{ $index }}][quantity]"
+                                                            value="{{ $value->quantity }}" required />
+                                                    </div>
+                                                    <div class="col-md-4 mb-md-0 mb-3">
+                                                        <p class="mb-2 repeater-title">จำนวนเงิน</p>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control numeral-mask"
+                                                                placeholder="ระบุจำนวนเงิน"
+                                                                name="group-detail-invoice[{{ $index }}][amount_total]"
+                                                                oninput="formatAmount(this)" required
+                                                                value="{{ number_format($value->amount_total, 2) }}" />
+                                                            <span class="input-group-text">฿</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="delete-icon-container border-start p-2">
+                                                    <i class="bx bxs-trash-alt text-danger cursor-pointer"
+                                                        data-repeater-delete data-bs-toggle="tooltip"
+                                                        data-bs-offset="0,5" data-bs-placement="top" data-bs-html="true"
+                                                        title="<span>ลบรายการนี้</span>"></i>
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="group-detail-invoice[{{ $index }}][id]"
+                                                value="{{ $value->id }}">
                                         </div>
-                                        <div class=" justify-content-between border-start p-2">
-                                            <i class="bx bxs-trash-alt  text-danger cursor-pointer" data-repeater-delete></i>
-                                            {{-- <i class='bx bxs-trash-alt' ></i> --}}
-                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="hidden" value="{{ $dataInvoice->id }}" name="invoiceId"
+                                            id="invoiceId">
+                                        <button type="button" class="btn btn-success" name="saveListInvoice"
+                                            id="saveListInvoice">
+                                            <i class='bx bx-save bx-xs me-1'></i> บันทึกรายการ
+                                        </button>
+                                        <button type="button" class="btn btn-primary" data-repeater-create>
+                                            <i class='bx bx-plus-medical bx-xs me-1'></i> เพิ่มรายการ
+                                        </button>
                                     </div>
                                 </div>
-                            @endforeach
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="hidden" value="{{ $dataInvoice->id }}" name="invoiceId" id="invoiceId">
-                                    <button type="button" class="btn btn-success" name="saveListInvoice" id="saveListInvoice">
-                                        <i class='bx bx-save bx-xs me-1'></i> บันทึกรายการ
-                                    </button>
-                                    <button type="button" class="btn btn-primary" data-repeater-create>
-                                        <i class='bx bx-plus-medical bx-xs me-1'></i> เพิ่มรายการ
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
                         @endif
-                        
-                        
+
+
 
                         <hr class="my-4 mx-n4" />
 
                         <div class="row py-sm-3">
 
-                            <div class="col-md-5 mb-md-0 ">
+                            <div class="col-md-7 mb-md-0 ">
                                 <div class="d-flex justify-content-between mt-3">
                                     <span class="">&nbsp </span>
                                     <span class="fw-semibold"> &nbsp </span>
                                 </div>
                                 <div class="d-flex justify-content-between mt-5">
-                                    <span class="">จำนวนเงินรวมทั้งสิ้น : </span>
+                                    <span class="">จำนวนเงินรวมทั้งสิ้น (อักษร) : </span>
                                     <span class="fw-semibold"> &nbsp {{ $bahtTotext }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-7 d-flex justify-content-end">
+                            <div class="col-md-5 d-flex justify-content-end">
                                 <div class="invoice-calculations">
                                     <div class="d-flex justify-content-between mb-2">
                                         <span class="">จำนวนรายการ : </span>
-                                        <span class="fw-semibold"> 1</span>
+                                        <span class="fw-semibold"> {{ $dataInvoiceList['total_quantity'] }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span class="">จำนวนเงินรวมทั้งสิ้น : </span>
-                                        <span class="fw-semibold"> 99</span>
+                                        <span class="fw-semibold"> &nbsp {{ $dataInvoiceList['total_amount'] }}</span>
                                     </div>
                                     <hr />
                                     <div class="d-flex justify-content-between">
                                         <span class="">จำนวนเงินรวมทั้งสิ้น : </span>
-                                        <span class="fw-semibold"> &nbsp 99</span>
+                                        <span class="fw-semibold"> &nbsp {{ $dataInvoiceList['total_amount'] }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -365,7 +393,8 @@
 @endsection
 @section('script')
     <script src="{{ asset('assets/js/forms-extras.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/assets/custom/document/invoice/invoice.js?v=') }}@php echo date("H:i:s") @endphp"></script>
+    <script type="text/javascript"
+        src="{{ asset('/assets/custom/document/invoice/invoice.js?v=') }}@php echo date("H:i:s") @endphp"></script>
     <script>
         var datePickers = ['date_request_rent', 'date_sent'];
         initializeDatePickers(datePickers);

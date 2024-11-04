@@ -69,8 +69,9 @@ class InvoiceController extends Controller
         // dd($getDataInvoiceList);
         // dd($getDataInvoice);
         $dateTH = CalculateDateHelper::convertDateAndCalculateServicePeriod(Carbon::now()->format('Y-m-d'));
-        $number = 99;
-        $bahtTotext = NumberHelper::convertNumberToThaiText($number);
+        // $number = 99;
+        $setNumber = str_replace(',', '', $getDataInvoiceList['total_amount']);
+        $bahtTotext = NumberHelper::convertNumberToThaiText($setNumber);
         return view('app.Document.invoice.save.addInvoice', [
             'url'           => $url,
             'urlName'       => $urlName,
@@ -80,14 +81,22 @@ class InvoiceController extends Controller
             'dateTH'        => $dateTH,
             'bahtTotext'    => $bahtTotext,
             'dataInvoiceList' => $getDataInvoiceList,
-            'countDetail'   => count($getDataInvoiceList)
+            'countDetail'   => count($getDataInvoiceList['data'])
         ]);
     }
 
     public function addDetailInvoice(Request $request)
     {
         
-        $this->invoiceModel->saveDetailInvoice($request);
-        return true;
+        $saveDataList = $this->invoiceModel->saveDetailInvoice($request);
+        // dd($saveDataList);
+        return response()->json(['status' => $saveDataList['status'], 'message' => $saveDataList['message']]);
+    }
+
+    public function deleteDetailInvoice($detailID)
+    {
+        // dd($detailID);
+        $deleteDataList = $this->invoiceModel->deleteDetailInvoice($detailID);
+        return response()->json(['status' => $deleteDataList['status'], 'message' => $deleteDataList['message']]);
     }
 }

@@ -75,17 +75,25 @@ class InvoiceModel extends Model
     public function getDataInvoiceList($invoiceID)
     {
         try {
+            // ดึงข้อมูลจากตาราง
             $sql = DB::connection('mysql')->table('tbt_invoice_list AS il')
                 ->leftJoin('tbt_invoice AS i', 'il.invoice_id', '=', 'i.id')
                 ->where('il.invoice_id', $invoiceID)
                 ->select('il.*')
                 ->get();
 
-            foreach ($sql as $key => $value) {
-                $sql[$key]->amount_total = str_replace(',', '', $value->amount_total);
-            }
-            // dd($sql);
-            return $sql;
+            // คำนวณผลรวมของ quantity และ amount_total
+            $totalQuantity = $sql->sum('quantity'); // คำนวณผลรวมของ quantity
+            $totalAmount = $sql->sum(function ($item) {
+                return str_replace(',', '', $item->amount_total); // แปลง amount_total เป็นตัวเลข
+            });
+
+            // ส่งผลลัพธ์ที่รวมเข้ากับข้อมูล
+            return [
+                'data' => $sql,
+                'total_quantity' => $totalQuantity,
+                'total_amount' => number_format($totalAmount, 2), // จัดรูปแบบจำนวนเงิน
+            ];
         } catch (Exception $e) {
             Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
             return [
@@ -95,55 +103,76 @@ class InvoiceModel extends Model
         }
     }
 
+
     public function saveDetailInvoice($request)
-{
-    // รับค่า invoiceId
-    $invoiceId = $request->input('invoiceId');
+    {
+        try {
+            // รับค่า invoiceId
+            $invoiceId = $request->input('invoiceId');
+            // รับข้อมูล group-detail-invoice
+            $invoiceDetails = $request->input('group-detail-invoice');
 
-    // รับข้อมูล group-detail-invoice
-    $invoiceDetails = $request->input('group-detail-invoice');
+            // ตรวจสอบว่ามีข้อมูลที่ไม่เป็น null ในแต่ละ array และทำการบันทึก
+            foreach ($invoiceDetails as $detail) {
+                $id = $detail['id'] ?? null; // รับค่า id
+                $detailList = $detail['detail_list'] ?? null;
+                $quantity = $detail['quantity'] ?? null;
+                $amountTotal = $detail['amount_total'] ?? null;
 
-    // ตรวจสอบว่ามีข้อมูลที่ไม่เป็น null ในแต่ละ array และทำการบันทึก
-    foreach ($invoiceDetails as $detail) {
-        $detailList = $detail['detail_list'] ?? null;
-        $quantity = $detail['quantity'] ?? null;
-        $amountTotal = $detail['amount_total'] ?? null;
+                // เช็คว่าค่าต่าง ๆ ไม่เป็น null และ quantity มากกว่า 0
+                if (!is_null($detailList) && !is_null($quantity) && !is_null($amountTotal) && $quantity > 0) {
+                    // ลบเครื่องหมายจุลภาคและแปลงเป็นตัวเลข
+                    $amountTotal = str_replace(',', '', $amountTotal);
 
-        // เช็คว่าค่าต่าง ๆ ไม่เป็น null และ quantity มากกว่า 0
-        if (!is_null($detailList) && !is_null($quantity) && !is_null($amountTotal) && $quantity > 0) {
-            // ลบเครื่องหมายจุลภาคและแปลงเป็นตัวเลข
-            $amountTotal = str_replace(',', '', $amountTotal);
-
-            // ตรวจสอบว่ามีรายการนี้อยู่แล้วในฐานข้อมูลหรือไม่
-            $existingRecord = DB::table('tbt_invoice_list')
-                ->where('invoice_id', $invoiceId)
-                ->where('detail_list', $detailList)
-                ->first();
-
-            if ($existingRecord) {
-                // ถ้ามีรายการนี้อยู่แล้ว ให้ทำการอัปเดต
-                DB::table('tbt_invoice_list')
-                    ->where('id', $existingRecord->id) // ใช้ id ของรายการที่มีอยู่
-                    ->update([
-                        'detail_list' => $detailList,
-                        'quantity' => $quantity,
-                        'amount_total' => $amountTotal,
-                    ]);
-            } else {
-                // ถ้าไม่มีรายการซ้ำให้ทำการบันทึก
-                DB::table('tbt_invoice_list')->insert([
-                    'invoice_id' => $invoiceId,
-                    'detail_list' => $detailList,
-                    'quantity' => $quantity,
-                    'amount_total' => $amountTotal, // บันทึกค่าที่ไม่มีเครื่องหมายจุลภาค
-                    'created_at' => now(),
-                    'created_user' => Auth::user()->emp_code
-                ]);
+                    if ($id) {
+                        // ถ้ามี id ให้ทำการอัปเดตรายการที่มีอยู่
+                        DB::table('tbt_invoice_list')
+                            ->where('id', $id)
+                            ->update([
+                                'detail_list' => $detailList,
+                                'quantity' => $quantity,
+                                'amount_total' => $amountTotal,
+                            ]);
+                    } else {
+                        // ถ้าไม่มี id ให้ทำการบันทึกเป็นรายการใหม่
+                        DB::table('tbt_invoice_list')->insert([
+                            'invoice_id' => $invoiceId,
+                            'detail_list' => $detailList,
+                            'quantity' => $quantity,
+                            'amount_total' => $amountTotal,
+                            'created_at' => now(),
+                            'created_user' => Auth::user()->emp_code
+                        ]);
+                    }
+                }
             }
+            return [
+                'status' => 200,
+                'message' => 'Delete Success'
+            ];
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => intval($e->getCode()) ?: 500, // ใช้ 500 เป็นค่าดีฟอลต์สำหรับข้อผิดพลาดทั่วไป
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
         }
     }
 
-    return response()->json(['success' => true, 'message' => 'บันทึกข้อมูลเรียบร้อย']);
-}
-
+    public function deleteDetailInvoice($detailID)
+    {
+        try {
+            DB::table('tbt_invoice_list')->where('id', $detailID)->delete();
+            return [
+                'status' => 200,
+                'message' => 'Delete Success'
+            ];
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => intval($e->getCode()) ?: 500, // ใช้ 500 เป็นค่าดีฟอลต์สำหรับข้อผิดพลาดทั่วไป
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
+        }
+    }
 }

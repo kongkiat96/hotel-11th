@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create-invoice', 'Document\InvoiceController@createInvoice')->name('create-invoice');
             Route::get('/created-invoice/{id}', 'Document\InvoiceController@createdInvoice')->name('created-invoice');
             Route::post('/add-detail-invoice', 'Document\InvoiceController@addDetailInvoice');
+            Route::delete('/delete-detail-invoice/{id}', 'Document\InvoiceController@deleteDetailInvoice');
         });
     });
 

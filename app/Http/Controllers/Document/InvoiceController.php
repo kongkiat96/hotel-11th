@@ -97,7 +97,7 @@ class InvoiceController extends Controller
 
     public function addDetailInvoice(Request $request)
     {
-        
+
         $saveDataList = $this->invoiceModel->saveDetailInvoice($request);
         // dd($saveDataList);
         return response()->json(['status' => $saveDataList['status'], 'message' => $saveDataList['message']]);
@@ -163,5 +163,23 @@ class InvoiceController extends Controller
     {
         $deleteData = $this->invoiceModel->deleteInvoice($invoiceID);
         return response()->json(['status' => $deleteData['status'], 'message' => $deleteData['message']]);
+    }
+
+    public function printInvoice($invoiceID)
+    {
+        // dd($invoiceID);
+        // ดึงข้อมูลใบแจ้งหนี้จากฐานข้อมูล
+        $dataInvoice = Invoice::find($id);
+
+        if (!$dataInvoice) {
+            abort(404, 'Invoice not found');
+        }
+
+        // กำหนด View สำหรับ PDF
+        $pdf = PDF::loadView('invoices.print', compact('dataInvoice'));
+
+        // ตั้งค่าให้ดาวน์โหลดหรือแสดง PDF
+        return $pdf->download('invoice_' . $id . '.pdf'); // ดาวน์โหลด PDF
+        // return $pdf->stream(); // หรือแสดง PDF ในเบราว์เซอร์
     }
 }

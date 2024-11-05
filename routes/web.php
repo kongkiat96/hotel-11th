@@ -138,6 +138,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/save-invoice-drawing', 'Document\InvoiceController@saveDrawingInvoice');
             Route::get('/view-invoice/{id}', 'Document\InvoiceController@viewInvoice')->name('view-invoice');
             Route::post('/delete-invoice/{id}', 'Document\InvoiceController@deleteInvoice');
+            
+            Route::get('/print-invoice/{id}', 'Document\InvoiceController@printInvoice');
         });
     });
 

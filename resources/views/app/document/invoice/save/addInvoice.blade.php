@@ -174,7 +174,7 @@
                                                                 {{ $value->invoice_list }}</option>
                                                         @endforeach
                                                     </select>
-                                                    <textarea class="form-control" rows="2" placeholder="Item Information"
+                                                    <textarea class="form-control mt-2" rows="2" placeholder="Item Information"
                                                         name="group-detail-invoice[][detail_list]" required></textarea>
                                                 </div>
                                                 <div class="col-md-2 mb-md-0 mb-3">
@@ -371,8 +371,8 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
                         </button> --}}
-                        <a href="{{ route('view-invoice', ['id' => $dataInvoice->id]) }}" target="_blank"
-                            class="btn btn-label-info d-grid w-100 mb-3" name="viewInvoice" id="viewInvoice">
+                        <a href="{{ route('view-invoice', ['id' => $dataInvoice->id]) }}"
+                            class="btn btn-label-info d-grid w-100 mb-3 {{ $dataInvoice->customer_name != null ? '' : 'd-none' }}" name="viewInvoice" id="viewInvoice">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-search bx-xs me-1"></i>ตรวจสอบข้อมูล</span></a>
                         <button type="button" class="btn btn-label-warning d-grid w-100 mb-3" name="saveDrawingInvoice"

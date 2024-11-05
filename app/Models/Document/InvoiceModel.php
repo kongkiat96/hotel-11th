@@ -57,8 +57,9 @@ class InvoiceModel extends Model
         try {
             $sql = DB::connection('mysql')->table('tbt_invoice AS i')
                 ->leftJoin('tbm_running_number AS rn', 'i.rn_id', '=', 'rn.id')
+                ->leftJoin('tbm_bank_list AS bl', 'i.payment_tag', '=', 'bl.ID')
                 ->where('i.id', $invoiceID)
-                ->select('i.*')
+                ->select('i.*','bl.bank_name','bl.bank_short_name','bl.bank_logo')
                 ->first();
             // dd($sql);
 
@@ -78,8 +79,9 @@ class InvoiceModel extends Model
             // ดึงข้อมูลจากตาราง
             $sql = DB::connection('mysql')->table('tbt_invoice_list AS il')
                 ->leftJoin('tbt_invoice AS i', 'il.invoice_id', '=', 'i.id')
+                ->leftJoin('tbm_invoice_list AS tbmIls', 'il.tag_list', '=', 'tbmIls.id')
                 ->where('il.invoice_id', $invoiceID)
-                ->select('il.*')
+                ->select('il.*','tbmIls.invoice_list')
                 ->get();
 
             // คำนวณผลรวมของ quantity และ amount_total
@@ -118,6 +120,7 @@ class InvoiceModel extends Model
                 $detailList = $detail['detail_list'] ?? null;
                 $quantity = $detail['quantity'] ?? null;
                 $amountTotal = $detail['amount_total'] ?? null;
+                $tag_list = $detail['tag_list'] ?? null;
 
                 // เช็คว่าค่าต่าง ๆ ไม่เป็น null และ quantity มากกว่า 0
                 if (!is_null($detailList) && !is_null($quantity) && !is_null($amountTotal) && $quantity > 0) {
@@ -129,6 +132,7 @@ class InvoiceModel extends Model
                         DB::table('tbt_invoice_list')
                             ->where('id', $id)
                             ->update([
+                                'tag_list'  => $tag_list,
                                 'detail_list' => $detailList,
                                 'quantity' => $quantity,
                                 'amount_total' => $amountTotal,
@@ -137,6 +141,7 @@ class InvoiceModel extends Model
                         // ถ้าไม่มี id ให้ทำการบันทึกเป็นรายการใหม่
                         DB::table('tbt_invoice_list')->insert([
                             'invoice_id' => $invoiceId,
+                            'tag_list'  => $tag_list,
                             'detail_list' => $detailList,
                             'quantity' => $quantity,
                             'amount_total' => $amountTotal,
@@ -163,6 +168,81 @@ class InvoiceModel extends Model
     {
         try {
             DB::table('tbt_invoice_list')->where('id', $detailID)->delete();
+            return [
+                'status' => 200,
+                'message' => 'Delete Success'
+            ];
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => intval($e->getCode()) ?: 500, // ใช้ 500 เป็นค่าดีฟอลต์สำหรับข้อผิดพลาดทั่วไป
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function saveDataInvoice($data, $invoiceID)
+    {
+        try {
+            // dd($data);
+            $data['updated_user'] = Auth::user()->emp_code;
+            $data['updated_at'] = Carbon::now();
+            $data['draw'] = 2;
+            $getDataInvoice = $this->getInvoiceById($invoiceID);
+            if ($getDataInvoice) {
+                DB::table('tbm_running_number')->where('id', $getDataInvoice->rn_id)->update(['document_id' => $invoiceID]);
+            }
+            DB::table('tbt_invoice')->where('id', $invoiceID)->update($data);
+            return [
+                'status' => 200,
+                'message' => 'Update Success'
+            ];
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => intval($e->getCode()) ?: 500, // ใช้ 500 เป็นค่าดีฟอลต์สำหรับข้อผิดพลาดทั่วไป
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function saveDrawingInvoice($data, $invoiceID)
+    {
+        try {
+            // dd($data);
+            $data['updated_user'] = Auth::user()->emp_code;
+            $data['updated_at'] = Carbon::now();
+            $data['draw'] = 1;
+            $getDataInvoice = $this->getInvoiceById($invoiceID);
+            if ($getDataInvoice) {
+                DB::table('tbm_running_number')->where('id', $getDataInvoice->rn_id)->update(['document_id' => $invoiceID]);
+            }
+            DB::table('tbt_invoice')->where('id', $invoiceID)->update($data);
+            return [
+                'status' => 200,
+                'message' => 'Update Success'
+            ];
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => intval($e->getCode()) ?: 500, // ใช้ 500 เป็นค่าดีฟอลต์สำหรับข้อผิดพลาดทั่วไป
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function deleteInvoice($invoiceID)
+    {
+        try {
+            $getDataInvoice = $this->getInvoiceById($invoiceID);
+            DB::table('tbm_running_number')->where('id', $getDataInvoice->rn_id)->update(['deleted' => 1]);
+            DB::table('tbt_invoice')->where('id', $invoiceID)->update([
+                'draw'  => 0,
+                'deleted' => 1,
+                'updated_user' => Auth::user()->emp_code,
+                'updated_at' => Carbon::now()
+            ]);
+
             return [
                 'status' => 200,
                 'message' => 'Delete Success'

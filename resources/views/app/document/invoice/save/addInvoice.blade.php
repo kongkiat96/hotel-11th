@@ -1,14 +1,28 @@
 @extends('layouts.app')
 @section('stylesheets')
-<style>
-    .delete-icon-container {
-    /* background-color: red; สีพื้นหลัง */
-    display: flex;
-    align-items: center; /* จัดกลางแนวตั้ง */
-    justify-content: center; /* จัดกลางแนวนอน */
-    padding: 8px; /* ปรับค่าตามที่ต้องการ */
-}
-</style>
+    <style>
+        .delete-icon-container {
+            /* background-color: red; สีพื้นหลัง */
+            display: flex;
+            align-items: center;
+            /* จัดกลางแนวตั้ง */
+            justify-content: center;
+            /* จัดกลางแนวนอน */
+            padding: 8px;
+            /* ปรับค่าตามที่ต้องการ */
+        }
+
+        .select2-option {
+            display: flex;
+            align-items: center;
+            /* Center vertically */
+        }
+
+        .select2-option img {
+            margin-right: 10px;
+            /* Space between image and text */
+        }
+    </style>
 @endsection
 @section('content')
     <nav aria-label="breadcrumb">
@@ -25,6 +39,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row invoice-add">
             <!-- Invoice Add-->
+
             <div class="col-lg-9 col-12 mb-lg-0 mb-4">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
@@ -41,7 +56,10 @@
                                                 data-bs-offset="0,5" data-bs-placement="top" data-bs-html="true"
                                                 title="<i class='bx bx-calendar-exclamation bx-xs'></i> <span >เลขที่จะสร้างเมื่อกดบันทึก</span>"/> --}}
                                             <input type="text" class="form-control"
-                                                value="{{ $dataInvoice->running_number }}" id="invoiceId" readonly />
+                                                value="{{ $dataInvoice->running_number }}" id="invoiceId" name="invoiceId"
+                                                readonly />
+                                            <input type="hidden" name="invoice_id" id="invoice_id"
+                                                value="{{ $dataInvoice->id }}">
 
                                         </div>
                                     </dd>
@@ -109,18 +127,19 @@
                         <div class="row p-sm-3 p-0">
                             <div class="col-md-8 mb-2">
                                 <h6>ลูกค้า / Customer</h6>
-                                <input type="text" class="form-control" placeholder="Item Information">
+                                <input type="text" class="form-control" name="customer_name" id="customer_name"
+                                    value="{{ $dataInvoice->customer_name }}" placeholder="Item Information">
                             </div>
-
 
                             <div class="col-md-4 col-sm-7">
                                 <h6>วันที่ / Date</h6>
-                                <input type="text" class="form-control" value="{{ $dateTH['formatted_date'] }}" readonly>
+                                <input type="text" class="form-control" value="{{ $dateTH['formatted_date'] }}"
+                                    name="date_invoice" id="date_invoice" readonly>
                             </div>
 
                             <div class="col-md-8 col-sm-5 col-12 mb-sm-0 mt-2">
                                 <h6>ที่อยู่ / Address</h6>
-                                <textarea class="form-control" rows="5" placeholder="Item Information"></textarea>
+                                <textarea class="form-control" rows="5" placeholder="Item Information" name="address" id="address">{{ $dataInvoice->address }}</textarea>
                             </div>
                         </div>
                         <hr class="my-4 mx-n4" />
@@ -128,11 +147,13 @@
                         <div class="row p-sm-3 p-0">
                             <div class="col-md-6 mb-2">
                                 <h6>ผู้ออก / Issuse</h6>
-                                <input type="text" class="form-control" placeholder="Item Information">
+                                <input type="text" class="form-control" name="issuse" id="issuse"
+                                    value="{{ $dataInvoice->issuse }}" placeholder="Item Information">
                             </div>
                             <div class="col-md-6 mb-2">
                                 <h6>ช่องทางติดต่อ LINE</h6>
-                                <input type="text" class="form-control" placeholder="Item Information">
+                                <input type="text" class="form-control" name="contact" id="contact"
+                                    value="{{ $dataInvoice->contact }}" placeholder="Item Information">
                             </div>
                         </div>
 
@@ -146,6 +167,13 @@
                                             <div class="row w-100 m-0 p-3">
                                                 <div class="col-md-6 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">รายละเอียด</p>
+                                                    <select class="form-select" name="group-detail-invoice[][tag_list]">
+                                                        <option value="" selected>--- เลือกประเภทใช้จ่าย ---</option>
+                                                        @foreach ($getMasterList as $key => $value)
+                                                            <option value="{{ $value->id }}">
+                                                                {{ $value->invoice_list }}</option>
+                                                        @endforeach
+                                                    </select>
                                                     <textarea class="form-control" rows="2" placeholder="Item Information"
                                                         name="group-detail-invoice[][detail_list]" required></textarea>
                                                 </div>
@@ -158,7 +186,7 @@
                                                 <div class="col-md-4 mb-md-0 mb-3">
                                                     <p class="mb-2 repeater-title">จำนวนเงิน</p>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control numeral-mask"
+                                                        <input type="text" class="form-control numeral-mask text-end"
                                                             placeholder="ระบุจำนวนเงิน"
                                                             name="group-detail-invoice[][amount_total]"
                                                             oninput="formatAmount(this)" required />
@@ -167,10 +195,7 @@
                                                 </div>
                                             </div>
                                             <div class="delete-icon-container border-start p-2">
-                                                <i class="bx bxs-trash-alt text-danger cursor-pointer"
-                                                    data-repeater-delete data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,5" data-bs-placement="top" data-bs-html="true"
-                                                    title="<span>ลบรายการนี้</span>"></i>
+                                                <i class="bx bxs-trash-alt text-danger cursor-pointer"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +208,7 @@
                                             id="saveListInvoice">
                                             <i class='bx bx-save bx-xs me-1'></i> บันทึกรายการ
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-repeater-create>
+                                        <button type="button" class="btn btn-warning" data-repeater-create>
                                             <i class='bx bx-plus-medical bx-xs me-1'></i> เพิ่มรายการ
                                         </button>
                                     </div>
@@ -197,8 +222,21 @@
                                             <div class="d-flex border rounded position-relative pe-0">
                                                 <div class="row w-100 m-0 p-3">
                                                     <div class="col-md-6 mb-md-0 mb-3 ps-md-0">
+
                                                         <p class="mb-2 repeater-title">รายละเอียด</p>
-                                                        <textarea class="form-control" rows="2" placeholder="Item Information"
+                                                        {{-- {{ dd($getMasterList) }} --}}
+                                                        <select class="form-select" autocomplete="off"
+                                                            data-allow-clear="true"
+                                                            name="group-detail-invoice[{{ $index }}][tag_list]">
+                                                            <option value="" selected>--- เลือกประเภทใช้จ่าย ---
+                                                            </option>
+                                                            @foreach ($getMasterList as $key => $list)
+                                                                <option value="{{ $list->id }}"
+                                                                    {{ $list->id == $value->tag_list ? 'selected' : '' }}>
+                                                                    {{ $list->invoice_list }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <textarea class="form-control mt-2" rows="2" placeholder="Item Information"
                                                             name="group-detail-invoice[{{ $index }}][detail_list]" required>{{ $value->detail_list }}</textarea>
                                                     </div>
                                                     <div class="col-md-2 mb-md-0 mb-3">
@@ -211,7 +249,8 @@
                                                     <div class="col-md-4 mb-md-0 mb-3">
                                                         <p class="mb-2 repeater-title">จำนวนเงิน</p>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control numeral-mask"
+                                                            <input type="text"
+                                                                class="form-control numeral-mask text-end"
                                                                 placeholder="ระบุจำนวนเงิน"
                                                                 name="group-detail-invoice[{{ $index }}][amount_total]"
                                                                 oninput="formatAmount(this)" required
@@ -221,10 +260,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="delete-icon-container border-start p-2">
-                                                    <i class="bx bxs-trash-alt text-danger cursor-pointer"
-                                                        data-repeater-delete data-bs-toggle="tooltip"
-                                                        data-bs-offset="0,5" data-bs-placement="top" data-bs-html="true"
-                                                        title="<span>ลบรายการนี้</span>"></i>
+                                                    <i class="bx bxs-trash-alt text-danger cursor-pointer"></i>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="group-detail-invoice[{{ $index }}][id]"
@@ -240,16 +276,13 @@
                                             id="saveListInvoice">
                                             <i class='bx bx-save bx-xs me-1'></i> บันทึกรายการ
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-repeater-create>
+                                        <button type="button" class="btn btn-warning" data-repeater-create>
                                             <i class='bx bx-plus-medical bx-xs me-1'></i> เพิ่มรายการ
                                         </button>
                                     </div>
                                 </div>
                             </form>
                         @endif
-
-
-
                         <hr class="my-4 mx-n4" />
 
                         <div class="row py-sm-3">
@@ -261,7 +294,8 @@
                                 </div>
                                 <div class="d-flex justify-content-between mt-5">
                                     <span class="">จำนวนเงินรวมทั้งสิ้น (อักษร) : </span>
-                                    <span class="fw-semibold"> &nbsp {{ $bahtTotext }}</span>
+                                    <span class="fw-semibold"> &nbsp
+                                        {{ $dataInvoiceList['total_amount'] != 0 ? $bahtTotext : '-' }}</span>
                                 </div>
                             </div>
                             <div class="col-md-5 d-flex justify-content-end">
@@ -288,17 +322,27 @@
                         <div class="row p-sm-3 p-0">
                             <div class="col-md-4 mb-2">
                                 <h6>การชำระเงิน / Payment</h6>
-                                <textarea class="form-control" rows="2" placeholder="Item Information"></textarea>
+                                <select id="payment_tag" name="payment_tag" class="form-select select2"
+                                    data-allow-clear="true">
+                                    <option value="">Select</option>
+                                    @foreach ($getBankList as $key => $value)
+                                        <option value="{{ $value->ID }}" data-image="{{ asset('storage/public/uploads/banks/' . $value->bank_logo) }}" {{ $dataInvoice->payment_tag == $value->ID ? 'selected' : '' }}>{{ $value->bank_name }} ({{ $value->bank_short_name }})</option>
+                                    @endforeach
+                                    <option value="other" data-image="{{ asset('storage/public/uploads/not-found.jpg') }}" {{ $dataInvoice->payment_tag == 'other' ? 'selected' : '' }}>อื่น ๆ</option>
+
+
+                                </select>
+                                <textarea class="form-control mt-2" rows="2" placeholder="Item Information" name="payment" id="payment">{{ $dataInvoice->payment }}</textarea>
                             </div>
                             <div class="col-md-4 mb-2 text-center">
                                 <h6>ผู้ชำระ</h6>
-                                <div class="mt-3">&nbsp</div>
+                                <div class="mt-5">&nbsp</div>
                                 <hr class="mt-5">
                             </div>
 
                             <div class="col-md-4 mb-2 text-center">
                                 <h6>ผู้รับเงิน</h6>
-                                <div class="mt-3">&nbsp</div>
+                                <div class="mt-5">&nbsp</div>
                                 <hr class="mt-5">
                             </div>
                         </div>
@@ -309,7 +353,8 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-semibold">Note:</label>
-                                    <textarea class="form-control" rows="2" id="note" placeholder="Invoice note"></textarea>
+                                    <textarea class="form-control" rows="2" id="note" name="note" id="note"
+                                        placeholder="Invoice note">{{ $dataInvoice->note }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -317,7 +362,6 @@
                 </div>
             </div>
             <!-- /Invoice Add-->
-
             <!-- Invoice Actions -->
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
@@ -327,15 +371,21 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
                         </button> --}}
-                        <a href="./app-invoice-preview.html" class="btn btn-label-info d-grid w-100 mb-3">
+                        <a href="{{ route('view-invoice', ['id' => $dataInvoice->id]) }}" target="_blank"
+                            class="btn btn-label-info d-grid w-100 mb-3" name="viewInvoice" id="viewInvoice">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-search bx-xs me-1"></i>ตรวจสอบข้อมูล</span></a>
-                        <button type="button" class="btn btn-label-warning d-grid w-100 mb-3">
+                        <button type="button" class="btn btn-label-warning d-grid w-100 mb-3" name="saveDrawingInvoice"
+                            id="saveDrawingInvoice">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-edit bx-xs me-1"></i>บันทึกแบบร่าง</span></button>
-                        <button type="button" class="btn btn-label-success d-grid w-100"><span
-                                class="d-flex align-items-center justify-content-center text-nowrap"><i
+                        <button type="button" class="btn btn-success d-grid w-100 mb-3" name="saveInvoice"
+                            id="saveInvoice"><span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-save bx-xs me-1"></i>บันทึกข้อมูล</span></button>
+                        <button type="button" class="btn btn-danger d-grid w-100" name="deletedInvoice"
+                            id="deletedInvoice"><span
+                                class="d-flex align-items-center justify-content-center text-nowrap"><i
+                                    class="bx bxs-trash-alt bx-xs me-1"></i>ลบ / ยกเลิกใบแจ้งหนี้</span></button>
                     </div>
                 </div>
 
@@ -395,8 +445,34 @@
     <script src="{{ asset('assets/js/forms-extras.js') }}"></script>
     <script type="text/javascript"
         src="{{ asset('/assets/custom/document/invoice/invoice.js?v=') }}@php echo date("H:i:s") @endphp"></script>
+    <script type="text/javascript"
+        src="{{ asset('/assets/custom/document/invoice/func_save.js?v=') }}@php echo date("H:i:s") @endphp"></script>
     <script>
-        var datePickers = ['date_request_rent', 'date_sent'];
-        initializeDatePickers(datePickers);
+        // Initialize Select2 when the modal is shown
+        $(document).ready(function() {
+            $('#payment_tag').select2({
+                placeholder: 'เลือกข้อมูล',
+                allowClear: true,
+                templateResult: formatState,
+                templateSelection: formatState,
+                escapeMarkup: function(markup) {
+                    return markup;
+                }
+            });
+
+            function formatState(state) {
+                if (!state.id) {
+                    return state.text; // หากไม่มี ID ให้แสดงชื่อปกติ
+                }
+                
+                var imageUrl = $(state.element).data('image'); // ดึงข้อมูลรูปภาพจาก data-image
+                var markup = `
+            <div class="select2-option">
+                <img src="${imageUrl}" class="img-thumbnail" style="width: 30px; height: 30px; margin-right: 10px; vertical-align: middle;" />
+                <span style="vertical-align: middle;">${state.text}</span>
+            </div>`;
+                return markup;
+            }
+        });
     </script>
 @endsection

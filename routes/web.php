@@ -133,6 +133,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/created-invoice/{id}', 'Document\InvoiceController@createdInvoice')->name('created-invoice');
             Route::post('/add-detail-invoice', 'Document\InvoiceController@addDetailInvoice');
             Route::delete('/delete-detail-invoice/{id}', 'Document\InvoiceController@deleteDetailInvoice');
+
+            Route::post('/save-invoice', 'Document\InvoiceController@saveDataInvoice');
+            Route::post('/save-invoice-drawing', 'Document\InvoiceController@saveDrawingInvoice');
+            Route::get('/view-invoice/{id}', 'Document\InvoiceController@viewInvoice')->name('view-invoice');
+            Route::post('/delete-invoice/{id}', 'Document\InvoiceController@deleteInvoice');
         });
     });
 

@@ -270,4 +270,10 @@ class getDataMasterModel extends Model
         $getFreezeAccountList = $this->getDatabase->table('tbt_freeze_account')->where('deleted',0)->orderBy('id')->get();
         return $getFreezeAccountList;
     }
+
+    public function getDataMasterInvoiceList()
+    {
+        $getData = $this->getDatabase->table('tbm_invoice_list')->where('deleted',0)->get();
+        return $getData;
+    }
 }

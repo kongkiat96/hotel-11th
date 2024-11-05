@@ -371,6 +371,8 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
                         </button> --}}
+                      <a href="{{ url('/document/invoice') }}" class="btn btn-label-secondary d-grid w-100 mb-3"><span class="d-flex align-items-center justify-content-center text-nowrap"><i
+                        class="bx bxs-chevron-left bx-xs me-1"></i>ย้อนกลับ</span></a>
                         <a href="{{ route('view-invoice', ['id' => $dataInvoice->id]) }}"
                             class="btn btn-label-info d-grid w-100 mb-3 {{ $dataInvoice->customer_name != null ? '' : 'd-none' }}" name="viewInvoice" id="viewInvoice">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i

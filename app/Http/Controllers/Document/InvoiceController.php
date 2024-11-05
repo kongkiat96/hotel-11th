@@ -9,9 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Document\InvoiceModel;
 use App\Models\Master\getDataMasterModel;
 use Carbon\Carbon;
+use Mpdf\Mpdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
@@ -34,7 +36,7 @@ class InvoiceController extends Controller
         }
         $getAccessMenus = getAccessToMenu::getAccessMenus();
 
-        return view('app.Document.invoice.index', [
+        return view('app.document.invoice.index', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
@@ -80,7 +82,7 @@ class InvoiceController extends Controller
 
         $getMasterList = $this->masterModel->getDataMasterInvoiceList();
         $getBankList = $this->masterModel->getDataBankList();
-        return view('app.Document.invoice.save.addInvoice', [
+        return view('app.document.invoice.save.addInvoice', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
@@ -146,7 +148,7 @@ class InvoiceController extends Controller
         // $number = 99;
         $setNumber = str_replace(',', '', $getDataInvoiceList['total_amount']);
         $bahtTotext = NumberHelper::convertNumberToThaiText($setNumber);
-        return view('app.Document.invoice.view.viewInvoice', [
+        return view('app.document.invoice.view.viewInvoice', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
@@ -167,19 +169,97 @@ class InvoiceController extends Controller
 
     public function printInvoice($invoiceID)
     {
+        $url        = request()->segments();
+        $urlName    = "ตรวจสอบรายการใบแจ้งหนี้";
+        $urlSubLink = "invoice";
+
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $invoiceID = Crypt::decrypt($invoiceID);
+
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+        $getDataInvoice = $this->invoiceModel->getInvoiceById($invoiceID);
+        $getDataInvoiceList = $this->invoiceModel->getDataInvoiceList($invoiceID);
+        // dd($getDataInvoiceList);
+        // dd($getDataInvoice);
+        $dateTH = CalculateDateHelper::convertDateAndCalculateServicePeriod($getDataInvoice->date_invoice);
+        // $number = 99;
+        $setNumber = str_replace(',', '', $getDataInvoiceList['total_amount']);
+        $bahtTotext = NumberHelper::convertNumberToThaiText($setNumber);
+        return view('app.document.invoice.print.printInvoice', [
+            'url'           => $url,
+            'urlName'       => $urlName,
+            'urlSubLink'    => $urlSubLink,
+            'listMenus'     => $getAccessMenus,
+            'dataInvoice'   => $getDataInvoice,
+            'dateTH'        => $dateTH,
+            'bahtTotext'    => $bahtTotext,
+            'dataInvoiceList' => $getDataInvoiceList,
+            'countDetail'   => count($getDataInvoiceList['data'])
+        ]);
+    }
+
+    public function printInvoicePDF($invoiceID)
+    {
         // dd($invoiceID);
         // ดึงข้อมูลใบแจ้งหนี้จากฐานข้อมูล
-        $dataInvoice = Invoice::find($id);
+        $getDataInvoice = $this->invoiceModel->getInvoiceById($invoiceID);
+        $getDataInvoiceList = $this->invoiceModel->getDataInvoiceList($invoiceID);
+        // dd($getDataInvoiceList);
+        // dd($getDataInvoice);
+        $dateTH = CalculateDateHelper::convertDateAndCalculateServicePeriod($getDataInvoice->date_invoice);
+        // $number = 99;
+        $setNumber = str_replace(',', '', $getDataInvoiceList['total_amount']);
+        $bahtTotext = NumberHelper::convertNumberToThaiText($setNumber);
 
-        if (!$dataInvoice) {
+        if (!$getDataInvoice) {
             abort(404, 'Invoice not found');
         }
 
-        // กำหนด View สำหรับ PDF
-        $pdf = PDF::loadView('invoices.print', compact('dataInvoice'));
 
-        // ตั้งค่าให้ดาวน์โหลดหรือแสดง PDF
-        return $pdf->download('invoice_' . $id . '.pdf'); // ดาวน์โหลด PDF
-        // return $pdf->stream(); // หรือแสดง PDF ในเบราว์เซอร์
+        // เตรียมข้อมูลที่จะแสดงใน PDF
+        $html = view('app.document.invoice.print.printInvoice', [
+            'dataInvoice'   => $getDataInvoice,
+            'dateTH'        => $dateTH,
+            'bahtTotext'    => $bahtTotext,
+            'dataInvoiceList' => $getDataInvoiceList,
+            'countDetail'   => count($getDataInvoiceList['data'])
+        ])->render(); // render HTML จาก view ที่จะแสดงผล
+
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'default_font_size' => 12,
+            'default_font' => 'sarabun',
+            'fontDir' => array_merge($fontDirs, [
+                public_path('fonts/THSarabunNew'), // ตำแหน่งที่เก็บฟอนต์
+            ]),
+            'fontdata' => array_merge($fontData, [
+                'sarabun' => [
+                    'R' => 'THSarabunNew.ttf',
+                    'B' => 'THSarabunNew Bold.ttf',
+                    'I' => 'THSarabunNew Italic.ttf',
+                    'BI' => 'THSarabunNew BoldItalic.ttf'
+                ]
+            ]),
+            'default_font' => 'sarabun'
+        ]);
+        $mpdf->autoScriptToLang = true;
+        $mpdf->autoLangToFont = true;
+        $mpdf->SetMargins(2, 2, 5); // ระยะขอบ 15 มม. ด้านซ้าย ขวา และด้านบน
+        // dd($mpdf->fontdata);
+        // dd(mb_detect_encoding($html));
+
+        $mpdf->WriteHTML($html); // เขียน HTML ลง PDF
+
+        // สร้างไฟล์ PDF และดาวน์โหลด
+        return $mpdf->Output('invoice.pdf', 'I'); // 'I' หมายถึงการแสดงใน browser, 'D' สำหรับการดาวน์โหลด
     }
 }

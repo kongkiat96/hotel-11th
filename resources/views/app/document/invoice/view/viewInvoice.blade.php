@@ -245,7 +245,7 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
                         </button> --}}
-                        <a href="{{ url('/document/invoice/print-invoice') . '/' . $dataInvoice->id }}" target="_blank" class="btn btn-label-danger d-grid w-100 mb-3">
+                        <a href="{{ url('/document/invoice/print-invoice') . '/' . Crypt::encrypt($dataInvoice->id) }}" target="_blank" class="btn btn-label-danger d-grid w-100 mb-3">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                 class="bx bxs-file-pdf bx-xs me-1"></i>พิมพ์เอกสาร</span>
                         </a>

@@ -114,7 +114,18 @@
                     <div class="card-body">
                         <div class="row p-sm-3 p-0">
                             <div class="col-md-8 mb-2">
-                                <h6 class="fw-semibold">ลูกค้า / Customer :</h6>
+                                <h6 class="fw-semibold">
+                                    @switch($dataInvoice->tag_invoice)
+                                        @case(1)
+                                            พนักงาน / Employee :
+                                            @break
+                                        @case(5)
+                                            แผนก / Department :
+                                            @break
+                                        @default
+                                            ลูกค้า / Customer :
+                                    @endswitch
+                                </h6>
                                 <br>
                                 <h6 class="text-center">{{ $dataInvoice->customer_name }}</h6>
                                 <hr>
@@ -247,10 +258,20 @@
                         </button> --}}
                         <a href="{{ url('/document/invoice/print-invoice') . '/' . Crypt::encrypt($dataInvoice->id) }}" target="_blank" class="btn btn-label-danger d-grid w-100 mb-3">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
-                                class="bx bxs-file-pdf bx-xs me-1"></i>พิมพ์เอกสาร</span>
+                                class="bx bxs-file-pdf bx-xs me-1"></i>พิมพ์เอกสาร (ใบแจ้งหนี้)</span>
                         </a>
 
-                        <a href="{{ url('/document/invoice/created-invoice') . '/' . $dataInvoice->id }}" class="btn btn-primary d-grid w-100">
+                        <a href="{{ url('/document/invoice/print-receipt') . '/' . Crypt::encrypt($dataInvoice->id) }}" target="_blank" class="btn btn-label-info d-grid w-100 mb-3">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i
+                                class="bx bxs-file-pdf bx-xs me-1"></i>พิมพ์เอกสาร (ใบเสร็จ)</span>
+                        </a>
+
+                        {{-- <a href="{{ url('/document/invoice/created-invoice') . '/' . $dataInvoice->id }}" class="btn btn-primary d-grid w-100">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i
+                                class="bx bxs-chevron-left bx-xs me-1"></i>ย้อนกลับ</span>
+                        </a> --}}
+
+                        <a href="#" onclick="history.back()" class="btn btn-primary d-grid w-100">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                 class="bx bxs-chevron-left bx-xs me-1"></i>ย้อนกลับ</span>
                         </a>

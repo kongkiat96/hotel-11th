@@ -273,7 +273,7 @@ class getDataMasterModel extends Model
 
     public function getDataMasterInvoiceList()
     {
-        $getData = $this->getDatabase->table('tbm_invoice_list')->where('deleted',0)->get();
+        $getData = $this->getDatabase->table('tbm_invoice_list')->where('deleted',0)->orderBy('sort')->get();
         return $getData;
     }
 }

@@ -49,7 +49,10 @@ $(document).ready(function () {
             return key.includes('tag_list') && value.trim() !== '';
         });
 
-        if (hasValidData && hasSelectedTagList) {
+        const hasDetailList = Array.from(formData.entries()).some(([key, value]) => {
+            return key.includes('detail_list') && value.trim() !== '';
+        });
+        if (hasValidData && hasSelectedTagList && hasDetailList) {
             // ส่งข้อมูลไปยังเซิร์ฟเวอร์
             postFormData("/document/invoice/add-detail-invoice", formData)
                 .done(function (response) {
@@ -83,16 +86,37 @@ $(document).ready(function () {
         const note = $("#note").val();
         const invoice_id = $("#invoice_id").val();
         const payment_tag = $("#payment_tag").val();
-        // ตรวจสอบเฉพาะถ้า validate เป็น true
-        if (validate && (!customerName || customerName.trim() === "")) {
+        const tag_invoice = $("#tag_invoice").val();
+
+        if (validate && (!tag_invoice || tag_invoice.trim() === "")) {
             Swal.fire({
                 icon: 'warning',
-                text: 'กรุณาระบุลูกค้า / Customer',
+                text: 'กรุณาระบุประเภทใบแจ้งหนี้',
                 confirmButtonText: 'ตกลง'
             });
             $("#saveInvoice, #saveDrawingInvoice").prop("disabled", false);
             return;
         }
+
+        if (validate && (!customerName || customerName.trim() === "")) {
+            var msg;
+
+            if (tag_invoice === '1') {
+                msg = 'กรุณาระบุพนักงาน / Employee';
+            } else if (tag_invoice === '5') {
+                msg = 'กรุณาระบุแผนก / Department';
+            } else {
+                msg = 'กรุณาระบุลูกค้า / Customer';
+            }
+            Swal.fire({
+                icon: 'warning',
+                text: msg,
+                confirmButtonText: 'ตกลง'
+            });
+            $("#saveInvoice, #saveDrawingInvoice").prop("disabled", false);
+            return;
+        }
+
 
         const formData = new FormData();
         formData.append("customer_name", customerName);
@@ -103,6 +127,7 @@ $(document).ready(function () {
         formData.append("note", note);
         formData.append("invoice_id", invoice_id);
         formData.append("payment_tag", payment_tag);
+        formData.append("tag_invoice", tag_invoice);
 
         // ส่งข้อมูลไปยัง URL ที่กำหนด
         postFormData(url, formData)

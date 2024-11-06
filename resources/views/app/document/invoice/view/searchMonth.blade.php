@@ -6,6 +6,8 @@
             <li class="breadcrumb-item">
                 <a href="{{ url('/home') }}">หน้าแรก</a>
             </li>
+            <li class="breadcrumb-item"><a href="{{ url('/document/invoice') }}">รายการใบแจ้งหนี้</a></li>
+
             <li class="breadcrumb-item active">{{ $urlName }}</li>
         </ol>
     </nav>
@@ -48,29 +50,44 @@
                         </button>
                     </li>
                 </ul>
-
+                <input type="hidden" id="searchMonth" name="searchMonth" value="{{ $searchMonth }}">
+                <input type="hidden" id="searchTag" name="searchTag" value="{{ $searchTag }}">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="invoice-list" role="tabpanel">
-                        <div class="inline-spacing text-end">
-                            @if (Auth::user()->user_system != 'Viewer')
-                                <a href="{{ route('create-invoice') }}" class="btn btn-info">
-                                    <i class='menu-icon tf-icons bx bx-file'></i> เพิ่มข้อมูลรายการใบแจ้งหนี้
-                                </a>
-                            @endif
+                        <div class="row">
+                            {{-- <div class="col-6">
+                                <div class="inline-spacing text-start">
+                                        <a href="{{ url('/document/invoice') }}" class="btn btn-danger">
+                                            <i class='menu-icon tf-icons bx bx-arrow-back'></i> ย้อนกลับ
+                                        </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-6"> --}}
+                                <div class="inline-spacing text-end">
+                                    @if (Auth::user()->user_system != 'Viewer')
+                                        <a href="{{ route('create-invoice') }}" class="btn btn-info">
+                                            <i class='menu-icon tf-icons bx bx-file'></i> เพิ่มข้อมูลรายการใบแจ้งหนี้
+                                        </a>
+                                    @endif
+                                </div>
+                            {{-- </div> --}}
                         </div>
                         <div class="text-nowrap table-responsive">
-                            <table class="dt-InvoiceList table table-hover table-striped">
+                            <table class="dt-InvoiceListSearch table table-hover table-striped">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ลำดับ</th>
-                                        <th>ข้อมูลรายการประจำเดือน</th>
-                                        <th>จำนวนเอกสาร</th>
-                                        {{-- <th>ตรวจสอบ</th> --}}
-                                        <th>จำนวนเอกสาร (แบบร่าง)</th>
-                                        {{-- <th>ตรวจสอบ</th> --}}
-                                        <th>จำนวนเอกสาร (บันทึกแล้ว)</th>
-                                        {{-- <th>ตรวจสอบ</th> --}}
-                                        {{-- <th>จัดการ</th> --}}
+                                        <th>รายการเอกสาร</th>
+                                        <th>ประเภทเอกสาร</th>
+                                        <th>วันที่สร้างเอกสาร</th>
+                                        <th>เอกสารของ</th>
+                                        <th>สถานะเอกสาร</th>
+                                        <th>วันที่บันทึกข้อมูล</th>
+                                        <th>ผู้บันทึกข้อมูล</th>
+                                        <th>วันที่แก้ไขข้อมูล</th>
+                                        <th>ผู้แก้ไขข้อมูล</th>
+                                        <th>จัดการ</th>
                                     </tr>
                                 </thead>
                                 {{-- <tfoot>
@@ -86,6 +103,11 @@
             </div>
         </div>
     </div>
+    <div class="inline-spacing text-start">
+        <a href="{{ url('/document/invoice') }}" class="btn btn-danger">
+            <i class='menu-icon tf-icons bx bx-arrow-back'></i> ย้อนกลับ
+        </a>
+</div>
 @endsection
 @section('script')
     <script type="text/javascript"

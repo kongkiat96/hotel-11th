@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>ใบแจ้งหนี้_{{ $dataInvoice->running_number }}</title>
+    <title>{{ $mapText }}_{{ $dataInvoice->running_number }}</title>
 
     <meta name="description" content="" />
 
@@ -57,10 +57,10 @@
         <div class="d-flex justify-content-between flex-row">
             <div class="mb-4">
                 <dl class="row mb-2">
-                    <dt class="col-sm-5 mb-2 mb-sm-0 text-md-start">
-                        <span class="h4 text-capitalize mb-0 text-nowrap">ใบแจ้งหนี้ #</span>
+                    <dt class="col-sm-7 mb-2 mb-sm-0 text-md-start">
+                        <span class="h4 text-capitalize mb-0 text-nowrap">{{ $mapText }} #</span>
                     </dt>
-                    <dd class="col-sm-7  justify-content-md-start">
+                    <dd class="col-sm-5  justify-content-md-start">
                         <div class="w-auto">
                             <span class="h4 text-capitalize mb-0 text-nowrap">{{ $dataInvoice->running_number }}</span>
                             {{-- <input type="text" class="form-control" value="" id="invoiceId" name="invoiceId" readonly /> --}}

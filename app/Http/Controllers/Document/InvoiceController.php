@@ -46,6 +46,13 @@ class InvoiceController extends Controller
 
     public function createInvoice()
     {
+        $url        = request()->segments();
+        $urlName    = "รายการใบแจ้งหนี้";
+        $urlSubLink = "invoice";
+
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
         $getRunningNumber = $this->invoiceModel->getRunningNumberToSave();
         // เพิ่มข้อมูลใบแจ้งหนี้ใหม่ในตาราง tbt_invoice
         $invoice = DB::table('tbt_invoice')->insertGetId([
@@ -166,7 +173,6 @@ class InvoiceController extends Controller
         $deleteData = $this->invoiceModel->deleteInvoice($invoiceID);
         return response()->json(['status' => $deleteData['status'], 'message' => $deleteData['message']]);
     }
-
     public function printInvoice($invoiceID)
     {
         $url        = request()->segments();
@@ -200,6 +206,45 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function printReceipt($invoiceID)
+    {
+        $url        = request()->segments();
+        $urlName    = "ตรวจสอบรายการใบแจ้งหนี้";
+        $urlSubLink = "invoice";
+
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $invoiceID = Crypt::decrypt($invoiceID);
+
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+        $getDataInvoice = $this->invoiceModel->getInvoiceById($invoiceID);
+        $getDataInvoiceList = $this->invoiceModel->getDataInvoiceList($invoiceID);
+        // dd($getDataInvoiceList);
+        // dd($getDataInvoice);
+        $dateTH = CalculateDateHelper::convertDateAndCalculateServicePeriod($getDataInvoice->date_invoice);
+        // $number = 99;
+        $setNumber = str_replace(',', '', $getDataInvoiceList['total_amount']);
+        $bahtTotext = NumberHelper::convertNumberToThaiText($setNumber);
+
+        if($getDataInvoice->tag_invoice == 1){
+            $mapTitle = "ใบเสร็จรับเงินเดือน";
+        } else {
+            $mapTitle = "ใบเสร็จรับเงิน";
+        }
+        return view('app.document.invoice.print.printReceipt', [
+            'url'           => $url,
+            'urlName'       => $urlName,
+            'urlSubLink'    => $urlSubLink,
+            'listMenus'     => $getAccessMenus,
+            'dataInvoice'   => $getDataInvoice,
+            'dateTH'        => $dateTH,
+            'bahtTotext'    => $bahtTotext,
+            'dataInvoiceList' => $getDataInvoiceList,
+            'countDetail'   => count($getDataInvoiceList['data']),
+            'mapText'       => $mapTitle
+        ]);
+    }
     public function printInvoicePDF($invoiceID)
     {
         // dd($invoiceID);
@@ -261,5 +306,38 @@ class InvoiceController extends Controller
 
         // สร้างไฟล์ PDF และดาวน์โหลด
         return $mpdf->Output('invoice.pdf', 'I'); // 'I' หมายถึงการแสดงใน browser, 'D' สำหรับการดาวน์โหลด
+    }
+
+    public function getDataInvoice(Request $request)
+    {
+        $getDataInvoiceList = $this->invoiceModel->getDataInvoice($request);
+        return response()->json($getDataInvoiceList);
+    }
+
+    public function showDataSearchMonth($searMonth, $tagSearch)
+    {
+        $url        = request()->segments();
+        $urlName    = "ตรวจสอบรายการใบแจ้งหนี้เดือน ". Carbon::parse($searMonth)->translatedFormat('F') . ' ' . (Carbon::parse($searMonth)->year + 543);
+        $urlSubLink = "invoice";
+
+        if (!getAccessToMenu::hasAccessToMenu($urlSubLink)) {
+            return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
+        }
+        $getAccessMenus = getAccessToMenu::getAccessMenus();
+
+        return view('app.document.invoice.view.searchMonth', [
+            'url'           => $url,
+            'urlName'       => $urlName,
+            'urlSubLink'    => $urlSubLink,
+            'listMenus'     => $getAccessMenus,
+            'searchTag'    => $tagSearch,
+            'searchMonth'  => $searMonth
+        ]);
+    }
+
+    public function getDataSearchInvoice(Request $request)
+    {
+        $getDataInvoiceList = $this->invoiceModel->getDataSearchInvoice($request);
+        return response()->json($getDataInvoiceList);
     }
 }

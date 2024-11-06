@@ -44,6 +44,30 @@
                 <div class="card invoice-preview-card">
                     <div class="card-body">
                         <div class="row p-sm-3 p-0">
+                            <div class="col-md-8 mb-md-0">
+                                <dl class="row mb-2">
+                                    <dt class="col-sm-4 mb-2 mb-sm-0 text-md-start pt-2">
+                                        <span class="h4 text-capitalize mb-0 text-nowrap">ประเภทใบแจ้งหนี้</span>
+                                    </dt>
+                                    <dd class="col-sm-8  justify-content-md-start">
+                                        <div class="w-auto">
+                                            <select class="form-select select2" autocomplete="off" data-allow-clear="true"
+                                                name="tag_invoice" id="tag_invoice">
+                                                <option value="" selected>--- เลือกประเภทใช้จ่าย ---
+                                                </option>
+                                                @foreach ($getMasterList as $key => $list)
+                                                    <option value="{{ $list->id }}"
+                                                        {{ $list->id == $dataInvoice->tag_invoice ? 'selected' : '' }}>
+                                                        {{ $list->invoice_list }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <hr class="my-4 mx-n4">
+                        <div class="row p-sm-3 p-0">
                             <div class="col-md-6 mb-md-0 mb-4">
                                 <dl class="row mb-2">
                                     <dt class="col-sm-5 mb-2 mb-sm-0 text-md-start pt-2">
@@ -126,7 +150,18 @@
                         <hr class="my-4 mx-n4" />
                         <div class="row p-sm-3 p-0">
                             <div class="col-md-8 mb-2">
-                                <h6>ลูกค้า / Customer</h6>
+                                <h6 id="customerLabel">
+                                    @switch($dataInvoice->tag_invoice)
+                                        @case(1)
+                                            พนักงาน / Employee :
+                                            @break
+                                        @case(5)
+                                            แผนก / Department :
+                                            @break
+                                        @default
+                                            ลูกค้า / Customer :
+                                    @endswitch
+                                </h6>
                                 <input type="text" class="form-control" name="customer_name" id="customer_name"
                                     value="{{ $dataInvoice->customer_name }}" placeholder="Item Information">
                             </div>
@@ -326,9 +361,14 @@
                                     data-allow-clear="true">
                                     <option value="">Select</option>
                                     @foreach ($getBankList as $key => $value)
-                                        <option value="{{ $value->ID }}" data-image="{{ asset('storage/public/uploads/banks/' . $value->bank_logo) }}" {{ $dataInvoice->payment_tag == $value->ID ? 'selected' : '' }}>{{ $value->bank_name }} ({{ $value->bank_short_name }})</option>
+                                        <option value="{{ $value->ID }}"
+                                            data-image="{{ asset('storage/public/uploads/banks/' . $value->bank_logo) }}"
+                                            {{ $dataInvoice->payment_tag == $value->ID ? 'selected' : '' }}>
+                                            {{ $value->bank_name }} ({{ $value->bank_short_name }})</option>
                                     @endforeach
-                                    <option value="other" data-image="{{ asset('storage/public/uploads/not-found.jpg') }}" {{ $dataInvoice->payment_tag == 'other' ? 'selected' : '' }}>อื่น ๆ</option>
+                                    <option value="other"
+                                        data-image="{{ asset('storage/public/uploads/not-found.jpg') }}"
+                                        {{ $dataInvoice->payment_tag == 'other' ? 'selected' : '' }}>อื่น ๆ</option>
 
 
                                 </select>
@@ -371,10 +411,14 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
                         </button> --}}
-                      <a href="{{ url('/document/invoice') }}" class="btn btn-label-secondary d-grid w-100 mb-3"><span class="d-flex align-items-center justify-content-center text-nowrap"><i
-                        class="bx bxs-chevron-left bx-xs me-1"></i>ย้อนกลับ</span></a>
+
+                        <a href="{{ url('/document/invoice') }}" class="btn btn-label-secondary d-grid w-100 mb-3"><span
+                                class="d-flex align-items-center justify-content-center text-nowrap"><i
+                                    class="bx bxs-chevron-left bx-xs me-1"></i>ย้อนกลับ</span></a>
+
                         <a href="{{ route('view-invoice', ['id' => $dataInvoice->id]) }}"
-                            class="btn btn-label-info d-grid w-100 mb-3 {{ $dataInvoice->customer_name != null ? '' : 'd-none' }}" name="viewInvoice" id="viewInvoice">
+                            class="btn btn-label-info d-grid w-100 mb-3 {{ $dataInvoice->customer_name != null ? '' : 'd-none' }}"
+                            name="viewInvoice" id="viewInvoice">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-search bx-xs me-1"></i>ตรวจสอบข้อมูล</span></a>
                         <button type="button" class="btn btn-label-warning d-grid w-100 mb-3" name="saveDrawingInvoice"
@@ -384,10 +428,12 @@
                         <button type="button" class="btn btn-success d-grid w-100 mb-3" name="saveInvoice"
                             id="saveInvoice"><span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bx-save bx-xs me-1"></i>บันทึกข้อมูล</span></button>
+                                    @if (Auth::user()->user_system != 'User')
                         <button type="button" class="btn btn-danger d-grid w-100" name="deletedInvoice"
                             id="deletedInvoice"><span
                                 class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="bx bxs-trash-alt bx-xs me-1"></i>ลบ / ยกเลิกใบแจ้งหนี้</span></button>
+                                    @endif
                     </div>
                 </div>
 
@@ -466,7 +512,7 @@
                 if (!state.id) {
                     return state.text; // หากไม่มี ID ให้แสดงชื่อปกติ
                 }
-                
+
                 var imageUrl = $(state.element).data('image'); // ดึงข้อมูลรูปภาพจาก data-image
                 var markup = `
             <div class="select2-option">
@@ -475,6 +521,21 @@
             </div>`;
                 return markup;
             }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tag_invoice').change(function() {
+                var selectedValue = $(this).val();
+
+                if (selectedValue === '1') {
+                    $('#customerLabel').text('พนักงาน / Employee');
+                } else if(selectedValue === '5'){
+                    $('#customerLabel').text('แผนก / Department');
+                } else {
+                    $('#customerLabel').text('ลูกค้า / Customer');
+                }
+            });
         });
     </script>
 @endsection

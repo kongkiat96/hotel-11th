@@ -14,6 +14,118 @@ class InvoiceModel extends Model
 {
     use HasFactory;
 
+    public function getDataInvoice($param)
+    {
+        try {
+            $sql = DB::connection('mysql')->table('tbt_invoice AS i')->where('deleted', 0)
+                ->select(
+                    DB::raw("DATE_FORMAT(date_invoice, '%Y-%m') AS GroupMonth"),
+                    DB::raw("SUM(CASE WHEN draw = 1 THEN 1 ELSE 0 END) AS draft_count"),
+                    DB::raw("SUM(CASE WHEN draw = 2 THEN 1 ELSE 0 END) AS save_count"),
+                    DB::raw("COUNT(*) AS total_invoices")
+                )
+                ->groupBy('GroupMonth');
+            if ($param['start'] == 0) {
+                $sql = $sql->limit($param['length'])->orderBy('GroupMonth', 'desc')->get();
+            } else {
+                $sql = $sql->offset($param['start'])
+                    ->limit($param['length'])
+                    ->orderBy('GroupMonth', 'desc')->get();
+            }
+            // $sql = $sql->orderBy('created_at', 'desc');
+            $dataCount = $sql->count();
+            // dd($sql);
+            $newArr = [];
+            foreach ($sql as $key => $value) {
+                $newArr[] = [
+                    'SearchMonth' => $value->GroupMonth,
+                    'GroupMonth' => Carbon::parse($value->GroupMonth)->translatedFormat('F') . ' ' . (Carbon::parse($value->GroupMonth)->year + 543),
+                    'draft_count' => $value->draft_count,
+                    'save_count' => $value->save_count,
+                    'total_invoices' => $value->total_invoices
+                ];
+            }
+
+            $returnData = [
+                "recordsTotal" => $dataCount,
+                "recordsFiltered" => $dataCount,
+                "data" => $newArr
+            ];
+
+            return $returnData;
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => false,
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function getDataSearchInvoice($param)
+    {
+        try {
+            $sql = DB::connection('mysql')->table('tbt_invoice AS i')
+                ->leftJoin('tbm_invoice_list AS tbmIls', 'i.tag_invoice', '=', 'tbmIls.id')
+                ->select('i.*', 'tbmIls.invoice_list')
+                ->where('i.deleted', 0)
+                ->where(DB::raw("DATE_FORMAT(date_invoice, '%Y-%m')"), $param['searchMonth']);
+
+            switch ($param['searchTag']) {
+                case 'draft_month':
+                    $sql = $sql->where('draw', 1);
+                    break;
+                case 'save_month':
+                    $sql = $sql->where('draw', 2);
+                    break;
+                default:
+                    $sql = $sql->where('i.deleted', 0);
+                    break;
+            }
+
+            if ($param['start'] == 0) {
+                $sql = $sql->limit($param['length'])->orderBy('created_at', 'desc')->get();
+            } else {
+                $sql = $sql->offset($param['start'])
+                    ->limit($param['length'])
+                    ->orderBy('created_at', 'desc')->get();
+            }
+            // $sql = $sql->orderBy('created_at', 'desc');
+            $dataCount = $sql->count();
+            // dd($sql);
+            $newArr = [];
+
+            foreach ($sql as $key => $value) {
+                $newArr[] = [
+                    'ID' => $value->id,
+                    'running_number' => $value->running_number,
+                    'tag_invoice'   => !empty($value->tag_invoice) ? $value->invoice_list : '-',
+                    'date_invoice' => $value->date_invoice,
+                    'customer_name' => $value->customer_name,
+                    'document_status' => $value->draw,
+                    'created_at' => $value->created_at,
+                    'created_user' => $value->created_user,
+                    'updated_at' => !empty($value->updated_at) ? $value->updated_at : '-',
+                    'updated_user' => !empty($value->updated_user) ? $value->updated_user : '-',
+                    'Permission' => Auth::user()->user_system
+                ];
+            }
+
+            $returnData = [
+                "recordsTotal" => $dataCount,
+                "recordsFiltered" => $dataCount,
+                "data" => $newArr
+            ];
+
+            return $returnData;
+        } catch (Exception $e) {
+            Log::debug('Error in ' . get_class($this) . '::' . __FUNCTION__ . ', responseCode: ' . $e->getCode() . ', responseMessage: ' . $e->getMessage());
+            return [
+                'status' => false,
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ];
+        }
+    }
     public static function getRunningNumberToSave()
     {
         $today = Carbon::now()->format('Y-m-d'); // วันที่ปัจจุบัน
@@ -59,7 +171,7 @@ class InvoiceModel extends Model
                 ->leftJoin('tbm_running_number AS rn', 'i.rn_id', '=', 'rn.id')
                 ->leftJoin('tbm_bank_list AS bl', 'i.payment_tag', '=', 'bl.ID')
                 ->where('i.id', $invoiceID)
-                ->select('i.*','bl.bank_name','bl.bank_short_name','bl.bank_logo')
+                ->select('i.*', 'bl.bank_name', 'bl.bank_short_name', 'bl.bank_logo')
                 ->first();
             // dd($sql);
 
@@ -81,7 +193,7 @@ class InvoiceModel extends Model
                 ->leftJoin('tbt_invoice AS i', 'il.invoice_id', '=', 'i.id')
                 ->leftJoin('tbm_invoice_list AS tbmIls', 'il.tag_list', '=', 'tbmIls.id')
                 ->where('il.invoice_id', $invoiceID)
-                ->select('il.*','tbmIls.invoice_list')
+                ->select('il.*', 'tbmIls.invoice_list')
                 ->get();
 
             // คำนวณผลรวมของ quantity และ amount_total

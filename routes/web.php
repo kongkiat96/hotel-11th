@@ -128,6 +128,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/invoice')->group(function () {
             Route::get('', 'Document\InvoiceController@index');
             Route::post('/table-invoice', 'Document\InvoiceController@getDataInvoice');
+            Route::get('/search-month/{searchMonth}/{tagSearch}', 'Document\InvoiceController@showDataSearchMonth');
+            Route::post('/table-search-invoice', 'Document\InvoiceController@getDataSearchInvoice');
 
             Route::get('/create-invoice', 'Document\InvoiceController@createInvoice')->name('create-invoice');
             Route::get('/created-invoice/{id}', 'Document\InvoiceController@createdInvoice')->name('created-invoice');
@@ -140,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete-invoice/{id}', 'Document\InvoiceController@deleteInvoice');
             
             Route::get('/print-invoice/{id}', 'Document\InvoiceController@printInvoice');
+            Route::get('/print-receipt/{id}', 'Document\InvoiceController@printReceipt');
         });
     });
 

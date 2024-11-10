@@ -276,4 +276,9 @@ class getDataMasterModel extends Model
         $getData = $this->getDatabase->table('tbm_invoice_list')->where('deleted',0)->orderBy('sort')->get();
         return $getData;
     }
+
+    public function getDataAboutApp(){
+        $getData = $this->getDatabase->table('tbm_about_app')->first();
+        return $getData;
+    }
 }

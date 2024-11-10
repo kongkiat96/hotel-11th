@@ -241,6 +241,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/edit-class-list/{classListID}', 'Settings\AboutCompanyController@editClassList');
             Route::post('/delete-class-list/{classListID}', 'Settings\AboutCompanyController@deleteClassList');
         });
+
+        Route::prefix('/about-app')->group(function () {
+            Route::get('', 'Settings\AboutAppController@index');
+            Route::post('/save-about-app', 'Settings\AboutAppController@saveAboutAppData');
+        });
     });
 
 

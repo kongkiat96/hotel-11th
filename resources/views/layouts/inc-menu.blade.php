@@ -121,12 +121,12 @@
                 </li>
             @endforeach
         
-            <li class="menu-item">
+            {{-- <li class="menu-item">
                 <a href="{{ url('/logout') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-log-out"></i>
                     <div data-i18n="ออกจากระบบ"></div>
                 </a>
-            </li>
+            </li> --}}
         </ul>
         
     </div>

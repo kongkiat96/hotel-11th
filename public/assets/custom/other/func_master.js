@@ -407,6 +407,19 @@ function renderGroupActionButtonsPermission(data, type, row, useFunc, permission
     return returnButton;
 }
 
+function renderGroupActionButtonsSearchMonth(data, type, row, useFunc,tag_search,color,countTotal) {
+    // console.log(row.SearchMonth)
+    const ViewerFunction = `funcView${useFunc}`;
+
+    let returnButton = `
+        <button type="button" class="btn btn-icon btn-label-${color} btn-${color}" onclick="${ViewerFunction}('${row.SearchMonth}','${tag_search}')">
+            ${countTotal}
+        </button>
+    `;
+
+    return returnButton;
+}
+
 function renderGroupActionAccessMenuButtons(data, type, row, useFunc) {
     // console.log(data)
     // console.log(type)

@@ -270,4 +270,44 @@ class getDataMasterModel extends Model
         $getFreezeAccountList = $this->getDatabase->table('tbt_freeze_account')->where('deleted',0)->orderBy('id')->get();
         return $getFreezeAccountList;
     }
+
+    public function getDataMasterInvoiceList()
+    {
+        $getData = $this->getDatabase->table('tbm_invoice_list')->where('deleted',0)->orderBy('sort')->get();
+        return $getData;
+    }
+
+    public function getDataAboutApp(){
+        $getData = $this->getDatabase->table('tbm_about_app')->first();
+        return $getData;
+    }
+
+    public function getEmployeeList()
+    {
+        $getEmployee = $this->getDatabase->table('tbt_employee')
+        ->leftJoin('tbm_group', 'tbt_employee.map_company', '=', 'tbm_group.ID')
+        ->leftJoin('tbm_department', 'tbm_group.department_id', '=', 'tbm_department.ID')
+        ->leftJoin('tbm_company', 'tbm_department.company_id', '=', 'tbm_company.ID')
+        ->leftJoin('tbm_class_list', 'tbt_employee.position_class', '=', 'tbm_class_list.ID')
+        ->leftJoin('tbm_prefix_name', 'tbt_employee.prefix_id', '=', 'tbm_prefix_name.ID')
+        ->leftJoin('tbm_province', 'tbt_employee.map_province', '=', 'tbm_province.ID')
+        ->where('tbt_employee.deleted', 0)
+        ->where('tbt_employee.status_login', 1)
+        ->select(
+            'tbt_employee.ID',
+            'tbt_employee.employee_code',
+            'tbt_employee.email',
+            DB::raw('CONCAT(tbm_prefix_name.prefix_name, " ", tbt_employee.first_name, " ", tbt_employee.last_name) AS full_name'),
+            'tbm_class_list.class_name',
+            'tbt_employee.position_name',
+            'tbm_company.company_name_th',
+            'tbm_department.department_name',
+            'tbm_group.group_name',
+            'tbt_employee.user_class',
+            'status_login'
+        )->get();
+
+        // dd($getEmployee);
+        return $getEmployee;
+    }
 }

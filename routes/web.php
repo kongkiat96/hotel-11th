@@ -128,11 +128,32 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/invoice')->group(function () {
             Route::get('', 'Document\InvoiceController@index');
             Route::post('/table-invoice', 'Document\InvoiceController@getDataInvoice');
+            Route::get('/search-month/{searchMonth}/{tagSearch}', 'Document\InvoiceController@showDataSearchMonth');
+            Route::post('/table-search-invoice', 'Document\InvoiceController@getDataSearchInvoice');
 
             Route::get('/create-invoice', 'Document\InvoiceController@createInvoice')->name('create-invoice');
             Route::get('/created-invoice/{id}', 'Document\InvoiceController@createdInvoice')->name('created-invoice');
             Route::post('/add-detail-invoice', 'Document\InvoiceController@addDetailInvoice');
             Route::delete('/delete-detail-invoice/{id}', 'Document\InvoiceController@deleteDetailInvoice');
+
+            Route::post('/save-invoice', 'Document\InvoiceController@saveDataInvoice');
+            Route::post('/save-invoice-drawing', 'Document\InvoiceController@saveDrawingInvoice');
+            Route::get('/view-invoice/{id}', 'Document\InvoiceController@viewInvoice')->name('view-invoice');
+            Route::post('/delete-invoice/{id}', 'Document\InvoiceController@deleteInvoice');
+            
+            Route::get('/print-invoice/{id}', 'Document\InvoiceController@printInvoice');
+            Route::get('/print-receipt/{id}', 'Document\InvoiceController@printReceipt');
+        });
+    });
+
+    Route::prefix('/evaluation')->group(function () {
+        Route::prefix('/form-department')->group(function () {
+            Route::get('', 'Evaluation\FormDepartmentController@index')->name('form-department');
+
+            Route::get('/add-form-department-modal', 'Evaluation\FormDepartmentController@showAddFormDepartmentModal');
+            Route::post('/save-select-employee', 'Evaluation\FormDepartmentController@saveSelectEmployee');
+            Route::get('/show-evaluation/{id}', 'Evaluation\FormDepartmentController@showEvaluation');
+
         });
     });
 
@@ -230,6 +251,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/show-edit-class-list/{classListID}', 'Settings\AboutCompanyController@showEditClassList');
             Route::post('/edit-class-list/{classListID}', 'Settings\AboutCompanyController@editClassList');
             Route::post('/delete-class-list/{classListID}', 'Settings\AboutCompanyController@deleteClassList');
+        });
+
+        Route::prefix('/about-app')->group(function () {
+            Route::get('', 'Settings\AboutAppController@index');
+            Route::post('/save-about-app', 'Settings\AboutAppController@saveAboutAppData');
         });
     });
 

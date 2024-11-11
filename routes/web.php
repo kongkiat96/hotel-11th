@@ -146,6 +146,17 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::prefix('/evaluation')->group(function () {
+        Route::prefix('/form-department')->group(function () {
+            Route::get('', 'Evaluation\FormDepartmentController@index')->name('form-department');
+
+            Route::get('/add-form-department-modal', 'Evaluation\FormDepartmentController@showAddFormDepartmentModal');
+            Route::post('/save-select-employee', 'Evaluation\FormDepartmentController@saveSelectEmployee');
+            Route::get('/show-evaluation/{id}', 'Evaluation\FormDepartmentController@showEvaluation');
+
+        });
+    });
+
     Route::prefix('settings-system')->group(function () {
         Route::prefix('/work-status')->group(function () {
             Route::get('', 'Settings\SetStatusController@index');

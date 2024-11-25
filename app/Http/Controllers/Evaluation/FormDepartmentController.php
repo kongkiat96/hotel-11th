@@ -29,7 +29,7 @@ class FormDepartmentController extends Controller
         }
         $getAccessMenus = getAccessToMenu::getAccessMenus();
 
-        return view('app.Evaluation.formDepartment.index', [
+        return view('app.evaluation.formDepartment.index', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
@@ -56,11 +56,12 @@ class FormDepartmentController extends Controller
 
         $encyptId = encrypt($saveSelectEmployee);
         // return redirect()->route('show-evaluation', ['id' => $encyptId]);
-        return response()->json(['status' => 200, 'message' => $encyptId]); 
+        return response()->json(['status' => 200, 'message' => $encyptId]);
     }
 
     public function showEvaluation($id)
     {
+
         $id = decrypt($id);
         $url        = request()->segments();
         $urlName    = "แบบฟอร์มการประเมินพนักงาน";
@@ -72,6 +73,7 @@ class FormDepartmentController extends Controller
         $getAccessMenus = getAccessToMenu::getAccessMenus();
 
         $getDataEvaluation = $this->evaluation->getDataEvaluation($id);
+        // dd($getDataEvaluation);
         return view('app.evaluation.formDepartment.save.showFormDepartment', [
             'url'           => $url,
             'urlName'       => $urlName,
@@ -79,5 +81,21 @@ class FormDepartmentController extends Controller
             'listMenus'     => $getAccessMenus,
             'getDataEvaluation' => $getDataEvaluation
         ]);
+    }
+
+    public function saveFormEvaluation(Request $request)
+    {
+        $saveFormEvaluation = $this->evaluation->saveFormEvaluation($request->input());
+        return response()->json(['status' => $saveFormEvaluation['status'], 'message' => $saveFormEvaluation['message']]);
+    }
+
+    public function drawFormEvaluation(Request $request)
+    {
+        $addDrawData = [
+            'drawing' => '1',
+        ];
+        $request->merge($addDrawData);
+        $drawFormEvaluation = $this->evaluation->saveFormEvaluation($request->input());
+        return response()->json(['status' => $drawFormEvaluation['status'], 'message' => $drawFormEvaluation['message']]);
     }
 }

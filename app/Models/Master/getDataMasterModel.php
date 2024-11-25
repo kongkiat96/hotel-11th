@@ -12,16 +12,9 @@ class getDataMasterModel extends Model
 {
     use HasFactory;
 
-    private $getDatabase;
-
-    public function __construct()
-    {
-        $this->getDatabase = DB::connection('mysql');
-    }
-
     public function getDataPrefixName()
     {
-        $getPrefixName = $this->getDatabase->table('tbm_prefix_name')
+        $getPrefixName = DB::connection('mysql')->table('tbm_prefix_name')
             ->select('prefix_name', 'ID')
             ->where('status', 1)
             ->where('deleted', 0)
@@ -31,7 +24,7 @@ class getDataMasterModel extends Model
 
     public function getDataProvince()
     {
-        $getProvince = $this->getDatabase->table('tbm_province')
+        $getProvince = DB::connection('mysql')->table('tbm_province')
             ->select('province_code', 'province')
             ->where('deleted', 0)
             ->groupBy('province_code', 'province')
@@ -41,7 +34,7 @@ class getDataMasterModel extends Model
 
     public function getDataAmphoe($provinceCode)
     {
-        $getAmphoe = $this->getDatabase->table('tbm_province')
+        $getAmphoe = DB::connection('mysql')->table('tbm_province')
             ->select('amphoe_code', 'amphoe')
             ->where('province_code', $provinceCode)
             ->where('deleted', 0)
@@ -53,7 +46,7 @@ class getDataMasterModel extends Model
 
     public function getDataTambon($aumphoeCode)
     {
-        $getTambon = $this->getDatabase->table('tbm_province')
+        $getTambon = DB::connection('mysql')->table('tbm_province')
             ->select('id', 'tambon_code', 'tambon', 'zipcode')
             ->where('amphoe_code', $aumphoeCode)
             ->where('deleted', 0)
@@ -66,7 +59,7 @@ class getDataMasterModel extends Model
     public function getProvinceID($tambonCode)
     {
         // dd($tambonCode);
-        $getProvinceID = $this->getDatabase->table('tbm_province')
+        $getProvinceID = DB::connection('mysql')->table('tbm_province')
             ->select('id', 'tambon_code', 'tambon', 'zipcode')
             ->where('tambon_code', $tambonCode)
             ->get();
@@ -76,7 +69,7 @@ class getDataMasterModel extends Model
 
     public function getClassList()
     {
-        $getClassList = $this->getDatabase->table('tbm_class_list')
+        $getClassList = DB::connection('mysql')->table('tbm_class_list')
             ->select('class_name', 'ID')
             ->where('status', 1)
             ->where('deleted', 0)
@@ -86,7 +79,7 @@ class getDataMasterModel extends Model
 
     public function getDataFlagType()
     {
-        $getFlagType = $this->getDatabase->table('tbm_flag_type')
+        $getFlagType = DB::connection('mysql')->table('tbm_flag_type')
             ->select('flag_name', 'type_work', 'ID')
             ->where('deleted', 0)
             ->get();
@@ -97,7 +90,7 @@ class getDataMasterModel extends Model
     {
         Log::info('getDataCompany: Retrieving companies from the database.');
         try {
-            $getCompany = $this->getDatabase->table('tbm_company')
+            $getCompany = DB::connection('mysql')->table('tbm_company')
                 ->select('ID', 'company_name_th', 'company_name_en')
                 ->where('status', 1)
                 ->where('deleted', 0)
@@ -117,7 +110,7 @@ class getDataMasterModel extends Model
     {
         Log::info('getDataDepartment: Starting to retrieve departments.');
         try {
-            $getDepartment = $this->getDatabase->table('tbm_department AS depart')
+            $getDepartment = DB::connection('mysql')->table('tbm_department AS depart')
                 ->leftJoin('tbm_company AS company', 'depart.company_id', '=', 'company.ID')
                 ->select(
                     'depart.ID',
@@ -141,7 +134,7 @@ class getDataMasterModel extends Model
     public function getDataCompanyForID($id)
     {
         // dd($id);
-        $returnCompany = $this->getDatabase->table('tbm_department AS depart')
+        $returnCompany = DB::connection('mysql')->table('tbm_department AS depart')
             ->leftJoin('tbm_company AS company', 'depart.company_id', '=', 'company.ID')
             ->select(
                 'company.ID',
@@ -160,7 +153,7 @@ class getDataMasterModel extends Model
 
     public function getDataDepartmentForID($id)
     {
-        $returnDepartment = $this->getDatabase->table('tbm_department AS depart')
+        $returnDepartment = DB::connection('mysql')->table('tbm_department AS depart')
             ->leftJoin('tbm_company AS company', 'depart.company_id', '=', 'company.ID')
             ->select(
                 'depart.ID',
@@ -180,7 +173,7 @@ class getDataMasterModel extends Model
 
     public function getDataGroupOfDepartment($departmentID)
     {
-        $returnGroup = $this->getDatabase->table('tbm_group')
+        $returnGroup = DB::connection('mysql')->table('tbm_group')
             ->select('ID', 'group_name', 'department_id')
             ->where('department_id', $departmentID)
             ->where('deleted', 0)
@@ -192,7 +185,7 @@ class getDataMasterModel extends Model
     public function getMenuMain()
     {
 
-        $getMenuMain = $this->getDatabase->table('tbm_menu_main')
+        $getMenuMain = DB::connection('mysql')->table('tbm_menu_main')
             ->select('ID', 'menu_name')
             ->where('deleted', 0)
             ->get();
@@ -201,7 +194,7 @@ class getDataMasterModel extends Model
 
     public function getMenuToAccess()
     {
-        $getMenu = $this->getDatabase->table('tbm_menu_sub AS tms')
+        $getMenu = DB::connection('mysql')->table('tbm_menu_sub AS tms')
             ->leftJoin('tbm_menu_main AS tmm', 'tms.menu_main_id', '=', 'tmm.ID')
             ->select('tms.ID', 'tms.menu_sub_name', 'tms.menu_sub_link', 'tms.menu_main_ID', 'tmm.menu_name', 'tmm.menu_icon', 'tmm.menu_link', 'tms.menu_sub_icon', 'tms.status')
             ->where('tms.deleted', 0)
@@ -213,13 +206,13 @@ class getDataMasterModel extends Model
 
     public function getUserList($idMapEmployee)
     {
-        $getEmployee = $this->getDatabase->table('users')->where('map_employee', $idMapEmployee)->get();
+        $getEmployee = DB::connection('mysql')->table('users')->where('map_employee', $idMapEmployee)->get();
         return $getEmployee;
     }
 
     public function getAccessMenu($idMapEmployee)
     {
-        $getAccessMenu = $this->getDatabase->table('tbt_user_access_menu')
+        $getAccessMenu = DB::connection('mysql')->table('tbt_user_access_menu')
             ->where('employee_code', $idMapEmployee)
             ->get();
         return $getAccessMenu;
@@ -261,30 +254,30 @@ class getDataMasterModel extends Model
 
     public function getDataBankList()
     {
-        $getDataBankList = $this->getDatabase->table('tbm_bank_list')->where('status',1)->where('deleted',0)->orderBy('ID')->get();
+        $getDataBankList = DB::connection('mysql')->table('tbm_bank_list')->where('status',1)->where('deleted',0)->orderBy('ID')->get();
         return $getDataBankList;
     }
 
     public function getFreezeAccountList()
     {
-        $getFreezeAccountList = $this->getDatabase->table('tbt_freeze_account')->where('deleted',0)->orderBy('id')->get();
+        $getFreezeAccountList = DB::connection('mysql')->table('tbt_freeze_account')->where('deleted',0)->orderBy('id')->get();
         return $getFreezeAccountList;
     }
 
     public function getDataMasterInvoiceList()
     {
-        $getData = $this->getDatabase->table('tbm_invoice_list')->where('deleted',0)->orderBy('sort')->get();
+        $getData = DB::connection('mysql')->table('tbm_invoice_list')->where('deleted',0)->orderBy('sort')->get();
         return $getData;
     }
 
     public function getDataAboutApp(){
-        $getData = $this->getDatabase->table('tbm_about_app')->first();
+        $getData = DB::connection('mysql')->table('tbm_about_app')->first();
         return $getData;
     }
 
     public function getEmployeeList()
     {
-        $getEmployee = $this->getDatabase->table('tbt_employee')
+        $getEmployee = DB::connection('mysql')->table('tbt_employee')
         ->leftJoin('tbm_group', 'tbt_employee.map_company', '=', 'tbm_group.ID')
         ->leftJoin('tbm_department', 'tbm_group.department_id', '=', 'tbm_department.ID')
         ->leftJoin('tbm_company', 'tbm_department.company_id', '=', 'tbm_company.ID')

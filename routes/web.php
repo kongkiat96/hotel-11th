@@ -153,7 +153,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/add-form-department-modal', 'Evaluation\FormDepartmentController@showAddFormDepartmentModal');
             Route::post('/save-select-employee', 'Evaluation\FormDepartmentController@saveSelectEmployee');
             Route::get('/show-evaluation/{id}', 'Evaluation\FormDepartmentController@showEvaluation');
-
+            Route::post('/save-form-evaluation', 'Evaluation\FormDepartmentController@saveFormEvaluation');
+            Route::post('/draw-form-evaluation', 'Evaluation\FormDepartmentController@drawFormEvaluation');
         });
     });
 

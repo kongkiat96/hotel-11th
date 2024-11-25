@@ -30,7 +30,7 @@ class AboutAppController extends Controller
         
         $getDataAboutApp = $this->aboutAppModel->getDataAboutApp();
 
-        return view('app.Settings.aboutApp.index', [
+        return view('app.settings.aboutApp.index', [
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,

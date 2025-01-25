@@ -26,6 +26,11 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('home', 'HomeController@index');
+    Route::get('my-profile', 'HomeController@myProfile');
+    Route::prefix('/show-manager')->group(function () {
+        Route::get('/get-hierarchy', 'HomeController@getHierarchy');
+    });
+    Route::post('/change-password', 'HomeController@changePassword');
 
     // เพิ่ม Route ที่ใช้ Middleware ตรวจสอบสิทธิ์
     // Route::get('menu/{menu_sub_ID}', 'MenuController@show')->middleware('check.access:menu_sub_ID');
@@ -43,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('/search-all-employee')->group(function () {
             Route::get('', 'Employee\EmployeeController@searchEmployee');
+            Route::post('/get-data-search-employee', 'Employee\EmployeeController@getDataSearchEmployee');
         });
 
         Route::post('/delete-employee/{employeeID}', 'Employee\EmployeeController@deleteEmployee');
@@ -155,6 +161,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/show-evaluation/{id}', 'Evaluation\FormDepartmentController@showEvaluation');
             Route::post('/save-form-evaluation', 'Evaluation\FormDepartmentController@saveFormEvaluation');
             Route::post('/draw-form-evaluation', 'Evaluation\FormDepartmentController@drawFormEvaluation');
+            Route::get('/view-evaluation/{id}', 'Evaluation\FormDepartmentController@viewEvaluation');
+            Route::post('/delete-evaluation/{id}', 'Evaluation\FormDepartmentController@deleteEvaluation');
+
+            Route::post('/table-evaluation', 'Evaluation\FormDepartmentController@getDataEvaluation');
+            Route::get('/search-month/{searchMonth}/{tagSearch}', 'Evaluation\FormDepartmentController@showDataSearchMonth');
+            Route::post('/table-search-evaluation', 'Evaluation\FormDepartmentController@getDataSearchEvaluationDetail');
         });
     });
 

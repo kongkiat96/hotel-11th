@@ -165,12 +165,22 @@ class EmployeeController extends Controller
             return redirect('/')->with('error', 'คุณไม่มีสิทธิ์เข้าถึงเมนู');
         }
         $getAccessMenus = getAccessToMenu::getAccessMenus();
+        $getCompany     = $this->masterModel->getDataCompany();
+        $getClassList   = $this->masterModel->getClassList();
 
         return view('app.employee.searchAllEmployee',[
             'url'           => $url,
             'urlName'       => $urlName,
             'urlSubLink'    => $urlSubLink,
-            'listMenus'     => $getAccessMenus
+            'listMenus'     => $getAccessMenus,
+            'dataCompany'       => $getCompany,
+            'dataClassList'     => $getClassList,
         ]);
+    }
+
+    public function getDataSearchEmployee(Request $request)
+    {
+        $getDataSearch = $this->employeeModel->getDataSearchEmployee($request);
+        return response()->json($getDataSearch);
     }
 }

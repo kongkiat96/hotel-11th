@@ -47,12 +47,26 @@ class LoginController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
+
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'emp_code';
-        if(Auth::attempt([$fieldType => $request->username, 'password' => $request->password ])){
-            return redirect('home');
-        }
-        else
-        {
+
+        $credentials = [
+            $fieldType => $request->username,
+            'password' => $request->password,
+        ];
+
+        // ตรวจสอบการ Login
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user(); // ดึงข้อมูลผู้ใช้ที่เข้าสู่ระบบ
+
+            // ตรวจสอบ status_login
+            if ($user->status_login !== 1) {
+                Auth::logout(); // Logout ผู้ใช้ทันที
+                return redirect('login')->with('error', 'บัญชีของคุณถูกระงับการใช้งาน กรุณาติดต่อผู้ดูแลระบบ');
+            }
+
+            return redirect('home'); // หากทุกอย่างปกติ ให้ไปที่หน้า Home
+        } else {
             return redirect('login')->with('error', 'ไม่พบผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง !');
         }
     }

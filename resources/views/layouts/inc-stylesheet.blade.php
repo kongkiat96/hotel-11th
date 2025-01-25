@@ -1,5 +1,5 @@
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('storage/public/uploads/aboutApp/' . config('aboutApp.about_app_img')) }}" />
 
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />

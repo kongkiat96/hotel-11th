@@ -39,7 +39,7 @@
                             @endif
                         </div>
                         <div class="text-nowrap table-responsive">
-                            <table class="dt-InvoiceList table table-hover table-striped">
+                            <table class="dt-EvaluationFormDepartment table table-hover table-striped">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ลำดับ</th>

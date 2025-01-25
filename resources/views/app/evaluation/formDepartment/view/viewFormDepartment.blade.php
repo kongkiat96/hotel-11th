@@ -68,7 +68,8 @@
 
                                                     <td><input type="number" name="score_a" id="score_a"
                                                             class="form-control score-input text-center" style="width: 100%"
-                                                            min="1" max="5" value="{{ $getDataEvaluation->score_a }}"></td>
+                                                            min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_a }}"></td>
                                                     <td>รูปแบบโครงสร้างหน้าเว็บไซต์สีสันสวยงาม ทันสมัย
                                                         ขนาดตัวอักษรอ่านเข้าใจง่ายและเด่นชัด มีการจัดวางข้อมูลที่น่าสนใจ
                                                         <br>
@@ -83,11 +84,12 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_b"
-                                                            name="date_b" value="{{ $getDataEvaluation->date_b }}"/></td>
+                                                            name="date_b" value="{{ $getDataEvaluation->date_b }}" /></td>
 
                                                     <td><input type="number" name="score_b" id="score_b"
                                                             class="form-control score-input text-center" style="width: 100%"
-                                                            min="1" max="5" value="{{ $getDataEvaluation->score_b }}"></td>
+                                                            min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_b }}"></td>
                                                     <td>เมนูปุ่มสมัครสมาชิก และ ปุ่มโปรโมชั่นสามารถใช้งานได้จริงทั้งระบบ ios
                                                         ,
                                                         Android และ Computer</td>
@@ -106,7 +108,8 @@
 
                                                     <td><input type="number" name="score_c" id="score_c"
                                                             class="form-control score-input text-center" style="width: 100%"
-                                                            min="1" max="5" value="{{ $getDataEvaluation->score_c }}"></td>
+                                                            min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_c }}"></td>
                                                     <td>มีแบนเนอร์โปรโมชั่นหน้าเว็บและหน้าระบบ
                                                         พร้อมแจ้งรายละเอียดแต่ละโปรโมชั่นได้ชัดเจน</td>
                                                 </tr>
@@ -117,11 +120,13 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_d"
-                                                            name="date_d" value="{{ $getDataEvaluation->date_d }}" /></td>
+                                                            name="date_d" value="{{ $getDataEvaluation->date_d }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_d" id="score_d"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="5" value="{{ $getDataEvaluation->score_d }}"></td>
+                                                            style="width: 100%" min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_d }}"></td>
                                                     <td>เบอร์โทรศัพท์สามารถติดต่อได้จริง ไอดีไลน์และ QR Code
                                                         สามารถใช้งานได้จริง
                                                         ทั้งหน้าเว็บไซต์และหน้าระบบ </td>
@@ -133,11 +138,13 @@
                                                     <td class="text-center">15</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_e"
-                                                            name="date_e" value="{{ $getDataEvaluation->date_e }}" /></td>
+                                                            name="date_e" value="{{ $getDataEvaluation->date_e }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_e" id="score_e"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="15" value="{{ $getDataEvaluation->score_e }}"></td>
+                                                            style="width: 100%" min="1" max="15"
+                                                            value="{{ $getDataEvaluation->score_e }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -148,11 +155,13 @@
                                                     <td class="text-center">8</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_f"
-                                                            name="date_f" value="{{ $getDataEvaluation->date_f }}" /></td>
+                                                            name="date_f" value="{{ $getDataEvaluation->date_f }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_f" id="score_f"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="8" value="{{ $getDataEvaluation->score_f }}"></td>
+                                                            style="width: 100%" min="1" max="8"
+                                                            value="{{ $getDataEvaluation->score_f }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -160,11 +169,13 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_g"
-                                                            name="date_g" value="{{ $getDataEvaluation->date_g }}" /></td>
+                                                            name="date_g" value="{{ $getDataEvaluation->date_g }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_g" id="score_g"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="5" value="{{ $getDataEvaluation->score_g }}"></td>
+                                                            style="width: 100%" min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_g }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -172,11 +183,13 @@
                                                     <td class="text-center">2</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_h"
-                                                            name="date_h" value="{{ $getDataEvaluation->date_h }}" /></td>
+                                                            name="date_h" value="{{ $getDataEvaluation->date_h }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_h" id="score_h"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="2" value="{{ $getDataEvaluation->score_h }}"></td>
+                                                            style="width: 100%" min="1" max="2"
+                                                            value="{{ $getDataEvaluation->score_h }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -188,11 +201,13 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_i"
-                                                            name="date_i" value="{{ $getDataEvaluation->date_i }}" /></td>
+                                                            name="date_i" value="{{ $getDataEvaluation->date_i }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_i" id="score_i"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="5" value="{{ $getDataEvaluation->score_i }}"></td>
+                                                            style="width: 100%" min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_i }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -200,11 +215,13 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_j"
-                                                            name="date_j" value="{{ $getDataEvaluation->date_j }}" /></td>
+                                                            name="date_j" value="{{ $getDataEvaluation->date_j }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_j" id="score_j"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="5" value="{{ $getDataEvaluation->score_j }}"></td>
+                                                            style="width: 100%" min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_j }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -215,11 +232,13 @@
                                                     <td class="text-center">3</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_k"
-                                                            name="date_k" value="{{ $getDataEvaluation->date_k }}" /></td>
+                                                            name="date_k" value="{{ $getDataEvaluation->date_k }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_k" id="score_k"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="3" value="{{ $getDataEvaluation->score_k }}"></td>
+                                                            style="width: 100%" min="1" max="3"
+                                                            value="{{ $getDataEvaluation->score_k }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -227,11 +246,13 @@
                                                     <td class="text-center">2</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_l"
-                                                            name="date_l" value="{{ $getDataEvaluation->date_l }}" /></td>
+                                                            name="date_l" value="{{ $getDataEvaluation->date_l }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_l" id="score_l"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="2" value="{{ $getDataEvaluation->score_l }}"></td>
+                                                            style="width: 100%" min="1" max="2"
+                                                            value="{{ $getDataEvaluation->score_l }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -243,11 +264,13 @@
                                                     <td class="text-center">15</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_m"
-                                                            name="date_m" value="{{ $getDataEvaluation->date_m }}" /></td>
+                                                            name="date_m" value="{{ $getDataEvaluation->date_m }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_m" id="score_m"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="15" value="{{ $getDataEvaluation->score_m }}"></td>
+                                                            style="width: 100%" min="1" max="15"
+                                                            value="{{ $getDataEvaluation->score_m }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -259,11 +282,13 @@
                                                     <td class="text-center">10</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_n"
-                                                            name="date_n" value="{{ $getDataEvaluation->date_n }}" /></td>
+                                                            name="date_n" value="{{ $getDataEvaluation->date_n }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_n" id="score_n"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="10" value="{{ $getDataEvaluation->score_n }}"></td>
+                                                            style="width: 100%" min="1" max="10"
+                                                            value="{{ $getDataEvaluation->score_n }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -275,11 +300,13 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_o"
-                                                            name="date_o" value="{{ $getDataEvaluation->date_o }}" /></td>
+                                                            name="date_o" value="{{ $getDataEvaluation->date_o }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_o" id="score_o"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="5" value="{{ $getDataEvaluation->score_o }}"></td>
+                                                            style="width: 100%" min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_o }}"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -291,11 +318,13 @@
                                                     <td class="text-center">5</td>
                                                     <td><input type="text" class="form-control" style="width: 140px"
                                                             autocomplete="off" placeholder="YYYY-MM-DD" id="date_p"
-                                                            name="date_p" value="{{ $getDataEvaluation->date_p }}" /></td>
+                                                            name="date_p" value="{{ $getDataEvaluation->date_p }}" />
+                                                    </td>
 
                                                     <td><input type="number" name="score_p" id="score_p"
                                                             class="form-control score-input text-center"
-                                                            style="width: 100%" min="1" max="5" value="{{ $getDataEvaluation->score_p }}"></td>
+                                                            style="width: 100%" min="1" max="5"
+                                                            value="{{ $getDataEvaluation->score_p }}"></td>
                                                     <td></td>
                                                 </tr>
                                             </tbody>
@@ -308,25 +337,14 @@
                                             </tfoot>
                                         </table>
                                     </div>
-                                    <input type="hidden" name="id" id="id" value="{{ $getDataEvaluation->id }}">
+                                    <input type="hidden" name="id" id="id"
+                                        value="{{ $getDataEvaluation->id }}">
                                 </form>
                             </div>
                             <div class="card-footer text-center">
                                 <button type="button" name="cancelFormEvaluation" id="cancelFormEvaluation"
                                     class="btn btn-warning btn-form-block-overlay" onclick="history.back()"><i
                                         class='menu-icon tf-icons bx bxs-chevron-left'></i> กลับ
-                                </button>
-                                <button type="button" name="deleteFormEvaluation" id="deleteFormEvaluation"
-                                    class="btn btn-danger btn-form-block-overlay"><i
-                                        class='menu-icon tf-icons bx bxs-trash'></i> ลบข้อมูล
-                                </button>
-                                <button type="button" name="drawFormEvaluation" id="drawFormEvaluation"
-                                    class="btn btn-secondary btn-form-block-overlay"><i
-                                        class='menu-icon tf-icons bx bxs-edit'></i> บันทึกข้อมูล (แบบร่าง)
-                                </button>
-                                <button type="button" name="saveFormEvaluation" id="saveFormEvaluation"
-                                    class="btn btn-success btn-form-block-overlay"><i
-                                        class='menu-icon tf-icons bx bxs-save'></i> บันทึกข้อมูล
                                 </button>
                             </div>
                         </div>
@@ -359,5 +377,10 @@
 
     <script type="text/javascript"
         src="{{ asset('/assets/custom/evaluation/formDepartment/func_save.js?v=') }}@php echo date("H:i:s") @endphp">
+    </script>
+
+    <script>
+        // Disable all inputs except password fields
+        $('input').attr('readonly', true);
     </script>
 @endsection

@@ -34,12 +34,12 @@
                         <div class="inline-spacing text-end">
                             @if (Auth::user()->user_system != 'Viewer')
                             <button type="button" class="btn btn-info" id="addFormDepartment">
-                                <i class='menu-icon tf-icons bx bxs-lock-alt'></i> เพิ่มข้อมูลประเมิน
+                                <i class='menu-icon tf-icons bx bxs-food-menu'></i> เพิ่มข้อมูลการประเมิน
                             </button>
                             @endif
                         </div>
                         <div class="text-nowrap table-responsive">
-                            <table class="dt-InvoiceList table table-hover table-striped">
+                            <table class="dt-EvaluationFormDepartment table table-hover table-striped">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ลำดับ</th>

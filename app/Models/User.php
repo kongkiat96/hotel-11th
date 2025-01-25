@@ -18,7 +18,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'emp_code', 'email', 'password',
+        'emp_code',
+        'email',
+        'password',
     ];
 
     /**
@@ -27,7 +29,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -44,5 +47,10 @@ class User extends Authenticatable
     public function accessMenus()
     {
         return $this->hasMany(AccessMenuUserModel::class, 'employee_code', 'emp_code');
+    }
+    // Method ตรวจสอบสถานะ
+    public function isActive()
+    {
+        return $this->status_login === 1;
     }
 }

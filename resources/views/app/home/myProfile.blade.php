@@ -1,15 +1,34 @@
 @extends('layouts.app')
 
+@section('stylesheets')
+    <style>
+        #tree-container {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+        }
+
+        .boc-edit-form-instruments {
+            margin-top: 0px !important;
+        }
+
+        input[data-binding="ImgUrl"] {
+            display: none;
+        }
+    </style>
+@endsection
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
-            <a href="{{ url('/home') }}">หน้าแรก</a>
-        </li>
-    </ol>
-</nav>
-<hr>
-    <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url('/home') }}">หน้าแรก</a>
+            </li>
+            <li class="breadcrumb-item active">{{ $urlName }}</li>
+        </ol>
+    </nav>
+    <hr>
+
+    <div class="container-p-y">
         <div class="row">
             <!-- User Sidebar -->
             <div class="col-md-4 order-md-0">
@@ -293,6 +312,7 @@
             <!--/ User Content -->
         </div>
     </div>
+    {{-- {{ dd($dataManager[0]) }} --}}
 @endsection
 @section('script')
     <script src="{{ asset('/assets/custom/myProfile/my_profile.js?v=') }}@php echo date("H:i:s") @endphp"></script>

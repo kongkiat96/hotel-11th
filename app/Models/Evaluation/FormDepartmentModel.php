@@ -49,6 +49,12 @@ class FormDepartmentModel extends Model
     public function getDataEvaluation($id)
     {
         try {
+            $setCountText = strlen($id);
+            if($setCountText > 5){
+                $id = decrypt($id);
+            } else {
+                $id = $id;
+            }
             $getData = DB::connection('mysql')->table('tbt_evaluation')->where('id', $id)->first();
             return $getData;
         } catch (Exception $e) {

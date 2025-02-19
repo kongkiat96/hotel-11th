@@ -146,7 +146,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/save-invoice-drawing', 'Document\InvoiceController@saveDrawingInvoice');
             Route::get('/view-invoice/{id}', 'Document\InvoiceController@viewInvoice')->name('view-invoice');
             Route::post('/delete-invoice/{id}', 'Document\InvoiceController@deleteInvoice');
-            
+
             Route::get('/print-invoice/{id}', 'Document\InvoiceController@printInvoice');
             Route::get('/print-receipt/{id}', 'Document\InvoiceController@printReceipt');
         });
@@ -272,6 +272,16 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::prefix('/import')->group(function () {
+        Route::get('/import-blacklist', 'Import\ImportBlacklistController@index');
+        Route::post('/import-data-blacklist', 'Import\ImportBlacklistController@importData');
+        Route::post('/get-data-blacklist', 'Import\ImportBlacklistController@getData');
+
+        Route::get('/show-edit-blacklist-modal/{blacklist}', 'Import\ImportBlacklistController@showEditBlacklist');
+        Route::post('/edit-blacklist/{blacklistID}', 'Import\ImportBlacklistController@editBlacklist');
+        Route::get('/view-blacklist/{blacklistID}', 'Import\ImportBlacklistController@viewBlacklist');
+        Route::post('/delete-blacklist/{blacklistID}', 'Import\ImportBlacklistController@deleteBlacklist');
+    });
 
     Route::prefix('getMaster')->group(function () {
         Route::get('/get-company/{id}', 'Master\getDataMasterController@getDataCompany');

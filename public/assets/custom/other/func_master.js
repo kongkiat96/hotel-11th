@@ -318,6 +318,19 @@ function renderUserClassBadge(data, type, full, row) {
     return `<span class="badge ${status.className}">${status.title}</span>`;
 }
 
+function renderFlagBlacklistBadge(data, type, full, row) {
+    const statusMap = {
+        // it: { title: 'สังกัด IT', className: 'bg-label-info' },
+        // mt: { title: 'สังกัด อาคาร', className: 'bg-label-warning' },
+        // hr: { title: 'สังกัด บุคคล', className: 'bg-label-primary' },
+        // userOther: { title: 'ผู้ใช้ทั่วไป', className: 'bg-label-danger' }
+        Y: { title: 'Blacklist', className: 'bg-label-danger' },
+        N: { title: 'Un Blacklist', className: 'bg-label-success' },
+    };
+    const status = statusMap[data] || { title: 'Undefined', className: 'bg-label-secondary' };
+    return `<span class="badge ${status.className}">${status.title}</span>`;
+}
+
 function renderStatusWorkTypeBadge(data, type, full, row) {
     const statusMap = {
         Complete: { title: 'ดำเนินงานเสร็จสิ้น', className: 'bg-label-success' },

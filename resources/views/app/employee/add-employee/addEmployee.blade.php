@@ -64,13 +64,13 @@
                             </div>
                             <div class="row g-2">
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="employee_code">รหัสพนักงาน</label>
+                                    <label class="form-label-md mb-2" for="employee_code">รหัสพนักงาน <span class="text-danger">*</span></label>
                                     <input type="text" name="employee_code" id="employee_code" class="form-control" autocomplete="off">
                                 </div>
 
 
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="company">บริษัท</label>
+                                    <label class="form-label-md mb-2" for="company">บริษัท <span class="text-danger">*</span></label>
                                     <select id="company" name="company" class="form-select select2" autocomplete="off"
                                         data-allow-clear="true">
                                         <option value="">Select</option>
@@ -81,14 +81,14 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="department">สังกัด / ฝ่าย</label>
+                                    <label class="form-label-md mb-2" for="department">สังกัด / ฝ่าย <span class="text-danger">*</span></label>
                                     <select id="department" name="department" class="form-select select2" autocomplete="off"
                                         data-allow-clear="true">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="groupOfDepartment">แผนก</label>
+                                    <label class="form-label-md mb-2" for="groupOfDepartment">แผนก <span class="text-danger">*</span></label>
                                     <select id="groupOfDepartment" name="groupOfDepartment" class="form-select select2"
                                         autocomplete="off" data-allow-clear="true">
                                         <option value="">Select</option>
@@ -96,7 +96,7 @@
                                 </div>
                                 <input type="text" name="mapIDGroup" id="mapIDGroup" readonly hidden autocomplete="off" >
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="positionClass">ระดับตําแหน่ง</label>
+                                    <label class="form-label-md mb-2" for="positionClass">ระดับตําแหน่ง <span class="text-danger">*</span></label>
                                     <select id="positionClass" name="positionClass" class="form-select select2" autocomplete="off"
                                         data-allow-clear="true">
                                         <option value="">Select</option>
@@ -107,7 +107,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="positionName">ตำแหน่ง</label>
+                                    <label class="form-label-md mb-2" for="positionName">ตำแหน่ง <span class="text-danger">*</span></label>
                                     <input type="text" name="positionName" id="positionName" class="form-control"
                                         autocomplete="off">
                                 </div>
@@ -123,7 +123,7 @@
                                         placeholder="YYYY-MM-DD" id="dateEnd" name="dateEnd" />
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="userClass">ระดับสิทธิ์ผู้ใช้งาน</label>
+                                    <label class="form-label-md mb-2" for="userClass">ระดับสิทธิ์ผู้ใช้งาน <span class="text-danger">*</span></label>
 
                                     <select id="userClass" name="userClass" class="form-select select2"
                                         autocomplete="off" data-allow-clear="true">
@@ -164,7 +164,7 @@
                             </div>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="prefixName">คำนำหน้าชื่อ</label>
+                                    <label class="form-label-md mb-2" for="prefixName">คำนำหน้าชื่อ <span class="text-danger">*</span>`</label>
 
                                     <select id="prefixName" name="prefixName" class="form-select select2"
                                         autocomplete="off" data-allow-clear="true">
@@ -177,12 +177,12 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="firstName">ชื่อ</label>
+                                    <label class="form-label-md mb-2" for="firstName">ชื่อ <span class="text-danger">*</span>`</label>
                                     <input type="text" id="firstName" name="firstName" class="form-control"
                                         autocomplete="off" />
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="lastName">นามสกุล</label>
+                                    <label class="form-label-md mb-2" for="lastName">นามสกุล <span class="text-danger">*</span>`</label>
                                     <input type="text" id="lastName" name="lastName" class="form-control"
                                         autocomplete="off" />
                                 </div>
@@ -197,7 +197,7 @@
                                         autocomplete="off" readonly />
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label-md mb-2" for="email">อีเมล</label>
+                                    <label class="form-label-md mb-2" for="email">อีเมล <span class="text-danger">*</span>`</label>
                                     <input type="email" id="email" name="email" class="form-control"
                                         autocomplete="off" />
                                 </div>
